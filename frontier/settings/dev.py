@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'business',
+    'survey',
 ]
 
 MIDDLEWARE = [
@@ -124,4 +125,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'business.BaseUser'
+AUTH_USER_MODEL = 'business.User'

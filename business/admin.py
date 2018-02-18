@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from business.models import Administrator, Candidate, HiringManager
+from business.models import Administrator, Applicant, HiringManager, Company
 
 
 class BaseUserAdmin(UserAdmin):
@@ -34,7 +34,7 @@ class AdministratorAdmin(BaseUserAdmin):
     )
 
 
-class CandidateAdmin(BaseUserAdmin):
+class ApplicantAdmin(BaseUserAdmin):
     fieldsets = user_fieldsets
 
 
@@ -43,5 +43,6 @@ class HiringManagerAdmin(BaseUserAdmin):
 
 
 admin.site.register(Administrator, AdministratorAdmin)
-admin.site.register(Candidate, CandidateAdmin)
+admin.site.register(Applicant, ApplicantAdmin)
 admin.site.register(HiringManager, HiringManagerAdmin)
+admin.site.register(Company)

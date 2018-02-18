@@ -7,42 +7,54 @@ from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 from djchoices import ChoiceItem, DjangoChoices
 
-from frontier.models import BaseModel
+from frontier.models import AddressFields, BaseModel
 
 
-class BaseUser(BaseModel, AbstractUser):
+class User(BaseModel, AbstractUser, AddressFields):
     token_prefix = 'user'
 
     class Type(DjangoChoices):
         administrator = ChoiceItem()
-        candidate = ChoiceItem()
+        applicant = ChoiceItem()
         hiring_manager = ChoiceItem()
 
     REQUIRED_FIELDS = ['email', 'password']
 
-    type = models.CharField(_('type'), choices=Type.choices, max_length=16)
-    username = models.CharField(_('username'), max_length=64, unique=True,
-                                default=get_random_string)
-    email = models.EmailField(_('email address'), unique=True)
+    type = models.CharField(choices=Type.choices, max_length=16)
+    username = models.CharField(max_length=64, unique=True, default=get_random_string)
+    email = models.EmailField(unique=True)
+    company = models.ForeignKey('business.Company', null=True, on_delete=models.SET_NULL)
 
     def is_administrator(self):
         return self.type == Type.administrator
 
-    def is_candidate(self):
-        return self.type == Type.candidate
-
     def is_hiring_manager(self):
         return self.type == Type.hiring_manager
+
+    def is_applicant(self):
+        return self.type == Type.applicant
+
+    def rich_user(self):
+        if type(self) is not User:
+            return self
+
+        if self.type == Type.administrator:
+            return Administrator.objects.get(token=self.token)
+        elif self.type == Type.applicant:
+            return Applicant.objects.get(token=self.token)
+        elif self.type == Type.hiring_manager:
+            return HiringManager.objects.get(token=self.token)
 
 
 class AdministratorManager(models.Manager):
     def get_queryset(self):
         return super(AdministratorManager, self).get_queryset().filter(
-            type=BaseUser.Type.administrator
+            type=User.Type.administrator
         )
 
 
-class Administrator(BaseUser):
+class Administrator(User):
+    token_prefix = 'admin'
     objects = AdministratorManager()
 
     class Meta:
@@ -50,40 +62,42 @@ class Administrator(BaseUser):
         verbose_name = 'Administrator'
         verbose_name_plural = 'Administrators'
 
-    def save(*args, **kwargs):
-        self.type = BaseUser.Type.administrator
+    def save(self, *args, **kwargs):
+        self.type = User.Type.administrator
         self.is_staff = True
         super(Administrator, self).save(*args, **kwargs)
 
 
-class CandidateManager(models.Manager):
+class ApplicantManager(models.Manager):
     def get_queryset(self):
-        return super(CandidateManager, self).get_queryset().filter(
-            type=BaseUser.Type.candidate
+        return super(ApplicantManager, self).get_queryset().filter(
+            type=User.Type.applicant
         )
 
 
-class Candidate(BaseUser):
-    objects = CandidateManager()
+class Applicant(User):
+    token_prefix = 'applicant'
+    objects = ApplicantManager()
 
     class Meta:
         proxy = True
-        verbose_name = 'Candidate'
-        verbose_name_plural = 'Candidates'
+        verbose_name = 'Applicant'
+        verbose_name_plural = 'Applicants'
 
-    def save(*args, **kwargs):
-        self.type = BaseUser.Type.candidate
-        super(Candidate, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        self.type = User.Type.applicant
+        super(Applicant, self).save(*args, **kwargs)
 
 
 class HiringManagerManager(models.Manager):
     def get_queryset(self):
         return super(HiringManagerManager, self).get_queryset().filter(
-            type=BaseUser.Type.hiring_manager
+            type=User.Type.hiring_manager
         )
 
 
-class HiringManager(BaseUser):
+class HiringManager(User):
+    token_prefix = 'hm'
     objects = HiringManagerManager()
 
     class Meta:
@@ -91,24 +105,13 @@ class HiringManager(BaseUser):
         verbose_name = 'Hiring Manager'
         verbose_name_plural = 'Hiring Managers'
 
-    def save(*args, **kwargs):
-        self.type = BaseUser.Type.hiring_manager
+    def save(self, *args, **kwargs):
+        self.type = User.Type.hiring_manager
         super(HiringManager, self).save(*args, **kwargs)
 
 
-def get_invite_code():
-    return get_random_string(length=20)
+class Company(BaseModel, AddressFields):
+    token_prefix = 'company'
 
-
-class Invite(BaseModel):
-    token_prefix = 'invite'
-
-    class State(DjangoChoices):
-        pending = ChoiceItem()
-        in_progress = ChoiceItem()
-        completed = ChoiceItem()
-
-    email = models.EmailField(_('email address'))
-    candidate = models.ForeignKey(Candidate, Candidate, null=True)
-    code = models.CharField(_('code'), default=get_invite_code, max_length=16, unique=True)
-    state = models.CharField(_('state'), max_length=20, default=State.pending)
+    name = models.CharField(max_length=64)
+    logo = models.ImageField()
