@@ -3,8 +3,10 @@ from __future__ import unicode_literals
 
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from jsonschema import validate
 
 from frontier.models import BaseModel, LocationFields
+from survey.schema import ANSWER_SCHEMA, QUESTION_SCHEMA
 
 
 class Job(BaseModel, LocationFields):
@@ -113,6 +115,12 @@ class QuestionTemplate(BaseModel):
     note = models.TextField()
     data = JSONField(default={})
 
+    def save(self, *args, **kwargs):
+        schema = QUESTION_SCHEMA[self.type]
+        validate(self.data, schema)
+
+        super(QuestionTemplate, self).save(*args, **kwargs)
+
 
 class Question(BaseModel):
     token_prefix = 'question'
@@ -131,3 +139,9 @@ class Answer(BaseModel):
     survey_response = models.ForeignKey(SurveyResponse, on_delete=models.CASCADE, related_name='answers')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
     data = JSONField(default={})
+
+    def save(self, *args, **kwargs):
+        schema = ANSWER_SCHEMA[self.question.template.type]
+        validate(self.data, schema)
+
+        super(QuestionTemplate, self).save(*args, **kwargs)
