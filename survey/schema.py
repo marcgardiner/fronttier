@@ -3,7 +3,6 @@ from survey.models import QuestionTemplate
 
 Type = QuestionTemplate.Type
 
-
 SIMPLE_ITEMS_ONLY = {
     "type": "object",
     "properties": {
@@ -12,13 +11,14 @@ SIMPLE_ITEMS_ONLY = {
             "items": {
                 "type": "object",
                 "properties": {
-                    "value": "string"
+                    "value": "string",
+                    "key": "string"
                 },
-                "required": ["value"]
+                "required": ["value", "key"]
             }
         }
-    }
-    "required": ["items"],
+    },
+    "required": ["items"]
 }
 
 SIMPLE_ITEMS_AND_NUM_ALLOWED = {
@@ -29,9 +29,10 @@ SIMPLE_ITEMS_AND_NUM_ALLOWED = {
             "items": {
                 "type": "object",
                 "properties": {
-                    "value": "string"
+                    "value": "string",
+                    "key": "string"
                 },
-                "required": ["value"]
+                "required": ["value", "key"]
             }
         },
         "num_allowed": {
@@ -42,13 +43,13 @@ SIMPLE_ITEMS_AND_NUM_ALLOWED = {
 }
 
 QUESTION_SCHEMA = {
-    Type.multiple_choice_multi_select: SIMPLE_ITEMS_AND_NUM_ALLOWED,
-    Type.multiple_choice_single_select: SIMPLE_ITEMS_ONLY,
-    Type.open_ended_paragraph: {
+    Type.MULTI_CHOICE_MULTI_SELECT: SIMPLE_ITEMS_AND_NUM_ALLOWED,
+    Type.MULTI_CHOICE_SINGLE_SELECT: SIMPLE_ITEMS_ONLY,
+    Type.OPEN_ENDED_PARAGRAPH: {
         "type": "object",
         "properties": {}
     },
-    Type.open_ended_multi_fields: {
+    Type.OPEN_ENDED_MULTI_FIELDS: {
         "type": "object",
         "properties": {
             "items": {
@@ -57,17 +58,18 @@ QUESTION_SCHEMA = {
                     "type": "object",
                     "properties": {
                         "value": "string",
-                        "required": "boolean",
+                        "key": "string",
+                        "optional": "boolean"
                     },
-                    "required": ["value"]
+                    "required": ["value", "key"]
                 }
             }
         },
         "required": ["items"]
     },
-    Type.reorder: SIMPLE_ITEMS_ONLY,
-    Type.drag_drop: SIMPLE_ITEMS_AND_NUM_ALLOWED,
-    Type.type_ahead: {
+    Type.REORDER: SIMPLE_ITEMS_ONLY,
+    Type.DRAG_DROP: SIMPLE_ITEMS_AND_NUM_ALLOWED,
+    Type.TYPE_AHEAD: {
         "type": "object",
         "properties": {
             "items": {
@@ -76,17 +78,18 @@ QUESTION_SCHEMA = {
                     "type": "object",
                     "properties": {
                         "value": "string",
-                        "type": "string",
+                        "key": "string",
+                        "type": "string"
                     },
-                    "required": ["value"]
+                    "required": ["value", "key", "type"]
                 }
             }
         },
         "required": ["items"]
     },
-    Type.drop_down: SIMPLE_ITEMS_ONLY,
-    Type.rank_order_table: SIMPLE_ITEMS_ONLY,
-    Type.rank_order_matrix: {
+    Type.DROPDOWN: SIMPLE_ITEMS_ONLY,
+    Type.RANK_ORDER_TABLE: SIMPLE_ITEMS_ONLY,
+    Type.RANK_ORDER_MATRIX: {
         "type": "object",
         "properties": {
             "items": {
@@ -94,9 +97,10 @@ QUESTION_SCHEMA = {
                 "items": {
                     "type": "object",
                     "properties": {
-                        "value": "string"
+                        "value": "string",
+                        "key": "string"
                     },
-                    "required": ["value"]
+                    "required": ["value", "key"]
                 }
             },
             "choices":{
@@ -104,9 +108,10 @@ QUESTION_SCHEMA = {
                 "items": {
                     "type": "object",
                     "properties": {
-                        "value": "string"
+                        "value": "string",
+                        "key": "string"
                     },
-                    "required": ["value"]
+                    "required": ["value", "key"]
                 }
             }
         },
