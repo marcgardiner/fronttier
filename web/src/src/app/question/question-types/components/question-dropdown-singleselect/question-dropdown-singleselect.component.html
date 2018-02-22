@@ -1,0 +1,18 @@
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+      <p class="fz-22 mb-5">{{question.questionLabel}}</p>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-5 text-left">
+      <div class="dropdown input-dropdown" [formGroup]="QuestionForm">
+        <div class="dropdown-wrap d-flex justify-content-between" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <input type="text" class="form-control" placeholder="Please select value" [formControl]="QuestionForm.controls.option">
+        </div>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" *ngFor="let option of question.options" (click)="saveValue(option.label)">{{option.label}}</a>
+        </div>
+      </div>
+    </div>
+  </div>

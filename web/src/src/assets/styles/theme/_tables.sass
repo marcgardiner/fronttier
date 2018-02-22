@@ -1,0 +1,46 @@
+table.table 
+	thead 
+		th
+			font-family: "Poppins"
+			font-size: 10px
+			font-weight: 500
+			letter-spacing: 1.7px	
+			text-transform: uppercase
+			color: #2e2e2e
+			border-bottom: 0
+	td, th
+		border-bottom: 1px solid #e2e2e2
+		border-top: 0
+		font-size: inherit
+		padding: 15px 30px
+		padding-left: 0 !important
+	.table-descr
+		font-weight: normal
+		text-align: left
+		min-width: 180px
+	&.table-radio
+		thead 
+			th
+				&.th-radio
+					width: 126px
+		td, th
+			vertical-align: middle
+		.radio-wrap
+			padding-bottom: 0
+			height: auto
+	&.table-dropdown
+		thead 
+			white-space: nowrap
+			th
+				min-width: 165px
+
+@media (max-width: 991px)
+	table.table 
+		td, th
+			padding: 15px
+		&.table-radio
+			thead 
+				th
+					&.th-radio
+						width: 100px
+						min-width: 100px

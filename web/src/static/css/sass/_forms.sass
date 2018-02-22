@@ -1,0 +1,108 @@
+input, textarea
+	&.form-control
+		box-shadow: none !important
+		height: auto
+		box-sizing: inherit
+		border: none
+		border-bottom: 0 !important
+		border-left: 1px solid $color-gray
+		padding: 11px 14px 0
+		color: inherit
+		caret-color: $color-sky
+		margin-top: 0
+		margin-bottom: 0
+		font-weight: 300
+		&:focus
+			border-color: $color-sky
+		&.error
+			border-color: $color-error
+		&[disabled]
+			border-left-color: #e2e2e2
+
+.form-control::-webkit-input-placeholder
+	color: #6c6c6c
+.form-control::-moz-placeholder         
+	color: #6c6c6c
+.form-control:-ms-input-placeholder     
+	color: #6c6c6c
+
+textarea
+	resize: none
+	&.textarea-lg
+		height: 300px
+
+.md-form 
+	label
+		&:not(.error)
+			color: #6c6c6c
+			left: 14px
+			top: 0.4rem
+			&.active
+				font-family: Poppins
+				font-weight: 500
+				letter-spacing: 1.7px
+				color: $color-gray
+				font-size: 0.625rem
+				text-transform: uppercase
+				transform: translateY(-30%)
+				+ .form-control
+					padding-top: 21px
+		&.error
+			display: block
+			position: static
+			color: $color-error !important
+			text-align: left
+			cursor: inherit
+			font-size: 13px
+			padding-left: 14px
+			transform: none !important
+			margin-top: 9px
+			a 
+				color: inherit
+				text-decoration: underline
+			> div 
+				font-size: 10px
+				font-weight: 500
+				font-family: "Poppins"
+				text-transform: uppercase
+				letter-spacing: 1.7px
+				position: relative
+				margin-bottom: 3px
+			.close-link
+				display: inline-block
+				width: 11px
+				height: 11px
+				position: absolute
+				top: 2px
+				left: -19px
+				background-image: url(../img/close.svg)
+				background-position: center
+				background-size: cover
+.md-form-group
+	overflow: hidden
+	margin-bottom: 1.5rem
+	.md-form
+		margin-bottom: 0
+		.form-control
+			+ hr
+				position: absolute
+				top: 50%
+				bottom: 0
+				width: 1px
+				height: 100vh
+				margin-top: -50vh
+				margin-bottom: 0
+				background-color: $color-sky
+				border-top: 0
+				z-index: 9
+				display: none
+			&:focus + hr
+				display: block
+			&.error
+				+ hr
+					display: block
+					background-color: $color-error
+			&[disabled]
+				+ hr
+					display: block
+					background-color: #e2e2e2

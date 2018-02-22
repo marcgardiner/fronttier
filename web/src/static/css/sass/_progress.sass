@@ -1,0 +1,67 @@
+.progress-wrap
+	.progress
+		height: 22px
+		font-family: "Poppins"
+		font-size: 10px
+		font-weight: 500
+		letter-spacing: 1.7px
+		text-transform: uppercase
+		overflow: visible
+		background-color: #fff
+		border-radius: 100px
+		span.segment, span.quantity
+			display: inline-block
+			position: absolute
+			top: 6px
+			line-height: 1.2
+			white-space: nowrap
+		span.segment
+			left: 12px
+			color: $color-gray
+		span.quantity
+			right: 12px
+			color: #8b8b8b
+		.progress-bar-wrap
+			overflow: hidden
+			height: 100%
+			width: 100%
+			border-radius: 100px
+			box-shadow: inset 0 1px 1px 0 rgba(66, 68, 70, 0.25)
+			z-index: 3
+		.progress-bar
+			height: 100%
+			background-color: $color-blue
+			overflow: hidden
+			position: relative
+			box-shadow: inset 0 1px 1px 0 rgba(66, 68, 70, 0.25)
+			transition: $transition
+			.segment, .quantity
+				z-index: 3
+				color: #fff !important
+	&.complete
+		.progress
+			span
+				&.segment
+					text-align: center
+			.progress-bar
+				span
+					&.quantity
+						width: 12px
+						height: 8px
+						top: 7px
+						right: 8px
+						background-image: url(../img/check.svg)
+						background-size: cover
+	&.disabled
+		cursor: inherit !important
+		.progress
+			span
+				&.segment
+					color: #575757
+					div
+						display: inline
+
+@media (min-width: 768px)
+	.progress-wrap
+		&.complete, &.disabled
+			max-width: 110px

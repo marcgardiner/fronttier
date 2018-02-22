@@ -1,0 +1,123 @@
+@keyframes fadeInDown2
+  from
+    opacity: 0
+    transform: translate3d(0, -10px, 0)
+  to
+    opacity: 1
+    transform: none
+
+@keyframes fadeInDown3
+  from
+    opacity: 0
+    transform: translate3d(0, -30px, 0)
+  to
+    opacity: 1
+    transform: none
+
+@keyframes bounceIn2
+  0%
+    opacity: 0
+    transform: scale3d(0, 0, 0)
+  70% 
+    opacity: 1
+    transform: scale3d(1.1, 1.1, 1.1)
+  90% 
+    transform: scale3d(0.98, 0.98, 0.98)
+  to
+    transform: scale3d(1, 1, 1)
+
+@keyframes dash
+  from 
+    stroke-dashoffset: 400
+  to 
+    stroke-dashoffset: 0
+
+@keyframes zoomIn1
+  from 
+    opacity: 0
+    transform: translate(19.5px, 19.5px) scale(0, 0) translate(-19.5px, -19.5px)
+  50%
+    opacity: 1
+    transform: translate(19.5px, 19.5px) scale(1, 1) translate(-19.5px, -19.5px)
+
+@keyframes zoomIn2
+  from 
+    opacity: 0
+    transform: translate(12px, 12px) scale(0, 0) translate(-12px, -12px)
+  50%
+    opacity: 1
+    transform: translate(12px, 12px) scale(1, 1) translate(-12px, -12px)
+
+@keyframes zoomIn3
+  from 
+    opacity: 0
+    transform: translate(16.5px, 16.5px) scale(0, 0) translate(-16.5px, -16.5px)
+  50%
+    opacity: 1
+    transform: translate(16.5px, 16.5px) scale(1, 1) translate(-16.5px, -16.5px)
+
+@keyframes rotate1
+  from 
+    stroke-dashoffset: 0
+  25%
+    stroke-dashoffset: 400
+  to
+    stroke-dashoffset: 400
+
+@keyframes rotate3
+  from 
+    stroke-dashoffset: 0
+  25%
+    stroke-dashoffset: -400
+  to
+    stroke-dashoffset: -400
+
+.fadeInDown2
+  animation-name: fadeInDown2
+.fadeInDown3
+  animation-name: fadeInDown3
+.bounceIn2
+  animation-name: bounceIn2
+.dash
+  animation-name: dash
+  stroke-dasharray: 400
+.zoomIn1
+  animation-name: zoomIn1
+.zoomIn2
+  animation-name: zoomIn2
+  animation-delay: 0.4s
+.zoomIn3
+  animation-name: zoomIn3
+  animation-delay: 0.8s
+.rotate1
+  animation-name: rotate1
+  animation-duration: 4s
+  animation-iteration-count: infinite
+.rotate2
+  animation-name: rotate1
+  animation-duration: 4s
+  animation-iteration-count: infinite
+  animation-delay: 0.4s
+.rotate3
+  animation-name: rotate3
+  animation-duration: 4s
+  animation-iteration-count: infinite
+  animation-delay: 0.8s
+
+.animated.bounceIn2 
+  animation-duration: .5s
+
+.delay-0-5
+  animation-delay: 0.5s
+.delay-1
+  animation-delay: 1s
+.delay-1-2
+  animation-delay: 1.2s
+.delay-2
+  animation-delay: 2s
+.delay-2-2
+  animation-delay: 2.2s
+.delay-2-5
+  animation-delay: 2.5s
+.delay-3
+  animation-delay: 3s

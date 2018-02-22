@@ -1,0 +1,60 @@
+
+$transition: .5s
+
+*
+	outline: none !important
+
+a
+	transition: $transition
+	&:hover
+		color: $color-sky
+
+img
+	max-width: 100%
+	height: auto
+
+body
+	font-family: "Roboto", sans-serif
+	color: $color-black
+	min-height: 100vh
+	&.body-grad
+		background-image: linear-gradient(165deg, #f8f8f8, #f4f4f4 50%, rgba(247, 247, 247, 0)), url(../img/bg.svg)
+	&.body-grad-2
+		background-image: linear-gradient(350deg, rgba(230, 234, 243, 0.56), rgba(255, 255, 255, 0)), url(../img/bg.svg)
+
+app-auth
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+
+header
+	&.center-header
+		padding: 30px 0
+		.center-logo
+			display: inline-block
+	&.main-header
+		padding-top: 13px
+		padding-bottom: 13px
+		background-color: rgba(243, 243, 243, 0.52)
+		box-shadow: 1px 0 4px 1px rgba(0, 0, 0, 0.16)
+footer.main-footer
+	color: #bebebe
+	background-color: $color-gray
+	font-size: 13px
+	a 
+		color: #fff
+		&:hover
+			color: $color-sky
+			
+@media (min-width: 992px)
+	header
+		&.center-header
+			padding: 30px 75px
+			.center-logo
+				margin-top: 37px
+				margin-bottom: 29px
+		&.main-header
+			padding-left: 14px
+			padding-right: 14px
+	footer.main-footer
+		padding: 0 35px

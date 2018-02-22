@@ -1,0 +1,15 @@
+
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <p class="fz-22">{{question.questionLabel}}</p>
+        <p class="fz-15 italic mb-5">{{question.description}}</p>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-7 text-left">
+        <div class="md-form" [formGroup]="QuestionForm">
+          <textarea class="form-control textarea-lg" placeholder="Type your answer here" [formControl]="QuestionForm.controls.answer"></textarea>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,38 @@
+
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <p class="fz-22 mb-5">{{question.questionLabel}}</p>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-xl-11">
+        <div class="table-responsive">
+          <form [formGroup]="QuestionForm">
+            <table class="table table-radio">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th class="th-radio">strongly disagree</th>
+                  <th class="th-radio">disagree</th>
+                  <th class="th-radio">neither agree nor disagree</th>
+                  <th class="th-radio">agree</th>
+                  <th class="th-radio">Strongly agree</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="options">
+                <tr *ngFor="let option of QuestionForm.get('options').controls; let i = index">
+                  <td class="table-descr">{{question.options[i].label}}</td>
+                  <td *ngFor="let radio of [0,1,2,3,4]">
+                      <label class="radio-wrap">
+                        <input type="radio" [value]="radio" [formControlName]="i">
+                        <span class="switch waves-effect"></span>
+                      </label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FrontierSignal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="libs/MDB-Free/css/mdb.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body class="body-grad d-flex flex-column">
+
+    <header class="center-header">
+      <div class="container-fluid text-center">
+        <a href="#!" class="center-logo"><img src="img/logo-full.svg" alt=""></a>
+      </div>
+    </header>
+
+    <section class="main-content text-center pb-5">
+      <div class="container">
+
+        <div class="row justify-content-center">
+          <div class="col-md-10 col-lg-7 col-xl-6">
+            <p class="poppins fz-38 weight-500">Hello!</p>
+            <p class="fz-19 pb-4">Welcome to Frontier Signal, please sign in using the password issued to you via email.</p>
+
+            <div class="row justify-content-center">
+              <div class="col-md-10">
+                <form action="#!">
+                  <div class="md-form">
+                    <label for="form1">First Name</label>
+                    <input type="text" id="form1" class="form-control" name="name">
+                  </div>
+                  <div class="md-form">
+                    <label for="form2">Email address</label>
+                    <input type="email" id="form2" class="form-control" name="email">
+                  </div>
+                  <div class="md-form">
+                    <label for="form3">Password</label>
+                    <input type="password" id="form3" class="form-control" name="password">
+                  </div>
+                  <button class="btn btn-dark btn-rounded mt-3">log in</button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <footer class="main-footer poppins text-center text-md-left mt-auto pt-3 pb-2">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md pb-2 uppercase">©2018 Frontier Signals</div>
+          <div class="col-md-auto pb-2 ml-md-4"><a href="#!">Terms & Conditions</a></div>
+          <div class="col-md-auto pb-2 ml-md-4"><a href="#!">Privacy Policy</a></div>
+          <div class="col-md-auto pb-2 ml-md-4"><a href="#!">Get In Touch</a></div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="libs/MDB-Free/js/mdb.min.js"></script>
+    <script src="libs/jquery.validate.min.js"></script>
+    <script>
+      $(document).ready(function () {
+
+        $('form').validate({
+          rules: {
+            name: {
+              required: true,
+              minlength: 2,
+            },
+            email: {
+              required: true,
+              minlength: 6,
+            },
+            password: {
+              required: true,
+              minlength: 8,
+            },
+          },
+          messages: {
+            name: {
+              required: "<div><a href='#!' class='close-link'></a> does not compute</div>",
+            },
+            email: {
+              required: "<div><a href='#!' class='close-link'></a> does not compute</div> We don’t recognize that email address. Try again or <a href='#!'>request an invite.</a>",
+            },
+            password: {
+              required: "<div><a href='#!' class='close-link'></a> that’s a no-go</div> That password is incorrect. Try again or <a href='#!'>reset your password.</a>",
+            },
+          }
+        });
+
+        $("form").on("click", ".close-link", function () {
+          $(this).closest("label.error").hide();
+        });
+
+      });
+    </script>
+
+  </body>
+</html>

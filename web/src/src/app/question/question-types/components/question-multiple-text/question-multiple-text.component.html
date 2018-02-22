@@ -1,0 +1,24 @@
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+    <p class="fz-22">{{question.questionLabel}}</p>
+    <p class="fz-15 italic mb-5">{{question.description}}</p>
+  </div>
+</div>
+
+<div class="row justify-content-center" [formGroup]="QuestionForm">
+  <div class="col-lg-7 text-left" formArrayName="options">
+    <div class="md-form-group" *ngFor="let option of QuestionForm.controls['options'].controls; let k = index">
+      <div [formGroupName]="k">
+        <div formArrayName="fields">
+            <div class="md-form" *ngFor="let field of option.controls['fields'].controls; let i = index" >
+              <div [formGroupName]="i">
+                  <label [class.active]="field.value.value" for="form1">{{field.value.label}}</label>
+                  <input type="text" id="form1" class="form-control" formControlName="value">
+                  <hr>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

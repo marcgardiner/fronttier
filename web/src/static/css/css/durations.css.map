@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,WAAW;EACT,kBAAkB,EAAE,aAAa;;AACnC,aAAa;EACX,kBAAkB,EAAE,eAAe;;AACrC,WAAW;EACT,kBAAkB,EAAE,aAAa",
+"sources": ["../sass/durations.sass"],
+"names": [],
+"file": "durations.css"
+}

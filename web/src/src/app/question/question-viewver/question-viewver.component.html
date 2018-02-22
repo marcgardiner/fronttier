@@ -1,0 +1,24 @@
+
+<section class="main-content question-content text-center">
+  <div class="container">
+    
+    <div class="text-left">
+      <a class="prev" (click)="getQuestionare(questionIndex - 1)"></a>
+    </div>
+    <section>
+      <div class="container">
+        
+        <div class="text-left">
+          <a class="prev" (click)="getQuestionare(questionIndex - 1)"></a>
+        </div>
+    <div #questionComponent ></div>
+    </div>
+    </section>
+  </div>
+</section>
+
+<section class="question-button text-center mt-auto">
+  <div class="container">
+    <button class="btn btn-dark btn-rounded mt-5" [disabled]="!formGroup?.valid" (click)="getQuestionare(questionIndex + 1)">continue</button>
+  </div>
+</section>

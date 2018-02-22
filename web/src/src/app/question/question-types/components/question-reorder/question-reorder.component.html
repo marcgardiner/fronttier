@@ -1,0 +1,11 @@
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+      <p class="fz-22 mb-5">In general, what would get you energized to go to work every day? Please rank order the items listed below from the most energizing (1) to the least energizing (6).</p>
+      <div class="text-left">
+        <ol class="drag-list numbers-list" [dragula]='"bag-one"' [dragulaModel]='question.options'>
+          <li *ngFor="let option of question.options;let i = index;" (mousedown)="draggedItem(i)" 
+          [class.drag]="hightlightStatus[i]">{{option.label}}</li>
+        </ol>
+      </div>
+    </div>
+  </div>

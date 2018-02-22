@@ -1,0 +1,46 @@
+<div class="row justify-content-center text-center">
+  <div class="col-lg-9">
+    <p class="fz-22">Below is a list of tasks, the approximate length of each task, the due date for each task, and the people to whom you
+      should send each completed task. Assuming it is the morning of your workday, please rank the independent tasks in the
+      order that you would do them.</p>
+    <p class="fz-15 italic mb-5">1 = the first task and 6 = the last task. Use all given information to inform your ranking.</p>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-xl-11">
+    <div class="table-responsive">
+        <table class="table table-dropdown" [formGroup]="QuestionForm">
+          <thead>
+            <tr>
+              <th>Task Rank</th>
+              <th>task</th>
+              <th>Approximate duration</th>
+              <th>due date</th>
+              <th>submitted to…</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="options">
+            <tr *ngFor="let option of question.options; let i = index;">
+              <td>
+                <div class="dropdown input-dropdown">
+                  <div class="dropdown-wrap d-flex justify-content-between" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <input type="text" class="form-control" placeholder="rank" [formControlName]="i">
+                  </div>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" (click)="saveValue('One', i)">One</a>
+                    <a class="dropdown-item" (click)="saveValue('Two', i)">Two</a>
+                  </div>
+                </div>
+              </td>
+              <td class="table-descr">{{option.task}}</td>
+              <td>{{option.duration}}</td>
+              <td>{{option.duedate}}</td>
+              <td>{{option.submittedto}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+    </div>
+  </div>
+</div>

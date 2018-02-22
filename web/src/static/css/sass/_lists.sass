@@ -1,0 +1,107 @@
+ol
+	&.drag-list, &.values-list
+		padding-left: 0
+		list-style: none
+		li 
+			strong
+				font-weight: normal
+ol.drag-list
+	li
+		border-bottom: 1px solid #e2e2e2
+		padding: 18px 60px 18px 0
+		position: relative
+		margin-top: -1px
+		&:after
+			content: ""
+			display: block
+			width: 44px
+			height: 44px
+			border-radius: 22px
+			background-image: url(../img/drag-drop.svg)
+			background-repeat: no-repeat
+			background-position: center
+			position: absolute
+			right: 5px
+			top: 50%
+			margin-top: -22px
+			cursor: move
+			transition: $transition
+		&:hover:after
+			background-color: #f5f5f5
+		+ li 
+			border-top: 1px solid #e2e2e2
+		&.drag
+			border: 2px solid $color-sky
+			border-radius: 100px
+			z-index: 9
+			padding: 16px 60px 16px 20px
+			margin-top: 0
+			margin-bottom: 1px
+			&:after
+				width: 40px
+				height: 40px
+				background-color: $color-sky
+				background-image: url(../img/drag-drop-white.svg)
+				right: 10px
+				margin-top: -20px
+	&.numbers-list
+		padding-left: 58px
+		li
+			&:before
+				position: absolute
+				left: -58px
+				margin-top: -3px
+			&.drag
+				&:before
+					content: ""
+
+ol.values-list
+	li 
+		display: -ms-flexbox
+		display: flex
+		-ms-flex-pack: center
+		justify-content: center
+		-ms-flex-align: center
+		align-items: center
+		background-color: #f5f5f5
+		margin-bottom: 10px
+		border-radius: 25px
+		padding: 11.5px 11px
+		&.drag
+			-ms-flex-pack: center justify
+			justify-content: space-between
+			background-color: $color-sky
+			color: #fff
+			&:after
+				content: ''
+				width: 40px
+				height: 20px
+				background-image: url(../img/drag-drop-white.svg)
+				background-repeat: no-repeat
+				background-position: center
+				opacity: 0.4
+	&.numbers-list
+		li
+			&.drag
+				&:before
+					color: #b9d1ed
+
+ol.numbers-list
+	counter-reset: item
+	li
+		&:before
+			content: counter(item)""
+			counter-increment: item
+			font-family: "Poppins"
+			font-size: 18px
+			width: 44px
+			text-align: center
+			color: #8b8b8b
+
+@media (max-width: 767px)
+	ol.drag-list.numbers-list
+		padding-left: 34px
+		li
+			&:before
+				width: 26px
+				left: -34px

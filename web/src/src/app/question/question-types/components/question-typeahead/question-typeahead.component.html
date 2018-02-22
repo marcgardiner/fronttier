@@ -1,0 +1,17 @@
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+      <p class="fz-22 mb-5">{{question.questionLabel}}</p>
+    </div>
+  </div>
+
+  <div class="row justify-content-center" [formGroup]="QuestionForm">
+    <div class="col-lg-5 text-left" formArrayName="options">
+      <div class="md-form" *ngFor="let option of question.options;let i = index;">
+        <label for="form" [class.active]="question.answers[i]">{{option.label}}</label>
+        <input type="text" id="form-{{i}}" class="form-control" [formControlName]="i" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="dropdown-menu">
+            <a class="dropdown-item" *ngFor="let value of option.values;let k = index;" (click)="setSelectedValue(value, i)">{{value}}</a>
+          </div>
+      </div>
+    </div>
+  </div>

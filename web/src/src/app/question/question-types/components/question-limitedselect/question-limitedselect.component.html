@@ -1,0 +1,18 @@
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+    <p class="fz-22 fw-300 mb-5">{{question.questionLabel}}</p>
+  </div>
+</div>
+
+<div class="row justify-content-center" [formGroup]="QuestionForm">
+  <div class="col-lg-7">
+    <div class="row" formArrayName="options">
+      <div class="col-6" *ngFor="let option of question.options; let i = index">
+        <label class="radio-wrap">
+          <input type="radio" [value]="option.label" [formControlName]="i" [attr.disabled]="(QuestionForm.valid && !QuestionForm.get(['options', i]).value) ? '' : null">
+          <span [class.disabled]=" QuestionForm.valid && !QuestionForm.get(['options', i]).value" class="btn btn-outline-primary btn-rounded btn-block waves-effects">{{option.label}}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

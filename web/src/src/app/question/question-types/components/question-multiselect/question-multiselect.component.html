@@ -1,0 +1,18 @@
+
+
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+        <p class="fz-22 fw-300 mb-5">{{question.questionLabel}}</p>
+      </div>
+    </div>
+
+    <div class="row justify-content-center" [formGroup]="QuestionForm">
+      <div class="col-lg-7 text-left" formArrayName="options">
+        <label class="checkbox-wrap" *ngFor="let option of question.options; let i = index">
+          <input type="checkbox" [value]="question.options[i].value" [formControlName]="i">
+          <span class="btn btn-outline-primary btn-rounded btn-floating waves-effect">{{nextChar(i)}}</span>
+          <div>{{question.options[i].label}}</div>
+        </label>
+      </div>
+    </div>
+    
