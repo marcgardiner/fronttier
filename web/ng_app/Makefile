@@ -2,5 +2,8 @@
 
 build:
 	npm install
-	ln -sf node_modules/mdbootstrap/sass node_modules/mdbootstrap/scss
+	ln -sf sass node_modules/mdbootstrap/scss
 	PATH=$$(npm bin):$$PATH ng build
+
+test:
+	PATH=$$(npm bin):$$PATH ng test
