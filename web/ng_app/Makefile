@@ -1,9 +1,11 @@
-.PHONY: build
+.PHONY: ngbuild
 
 build:
+	PATH=$$(npm bin):$$PATH ng build --base-href /web/
+
+install:
 	npm install
 	ln -sf sass node_modules/mdbootstrap/scss
-	PATH=$$(npm bin):$$PATH ng build
 
 test:
 	PATH=$$(npm bin):$$PATH ng test

@@ -6,7 +6,6 @@ from django.db import models
 from jsonschema import validate
 
 from frontier.models import BaseModel, LocationFields
-from survey.schema import ANSWER_SCHEMA, QUESTION_SCHEMA
 
 
 class Job(BaseModel, LocationFields):
@@ -116,6 +115,8 @@ class QuestionTemplate(BaseModel):
     data = JSONField(default={})
 
     def save(self, *args, **kwargs):
+        from survey.schema import QUESTION_SCHEMA
+
         schema = QUESTION_SCHEMA[self.type]
         validate(self.data, schema)
 
@@ -141,6 +142,8 @@ class Answer(BaseModel):
     data = JSONField(default={})
 
     def save(self, *args, **kwargs):
+        from survey.schema import ANSWER_SCHEMA
+
         schema = ANSWER_SCHEMA[self.question.template.type]
         validate(self.data, schema)
 
