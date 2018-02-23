@@ -1,4 +1,4 @@
-.PHONY: ngbuild
+.PHONY: build
 
 build:
 	PATH=$$(npm bin):$$PATH ng build --base-href /web/
