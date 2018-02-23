@@ -6,6 +6,7 @@ import { QuestionMultiselectComponent } from '../question-types/components/quest
 import { QuestionBaseComponent } from '../question-types/components/question-base.component';
 import { FormGroup } from '@angular/forms';
 import { ThinkingStateService } from '../../shared/thinking-state.service';
+import { SegmentService } from '../segments/segments.service';
 
 @Component({
   selector: 'app-question-viewver',
@@ -29,11 +30,20 @@ export class QuestionViewverComponent implements OnInit {
   constructor(
     private questionFieldService: QuestionFieldService,
     private factoryResolver: ComponentFactoryResolver,
-    private thinkingState: ThinkingStateService
-  ) { }
+    private thinkingState: ThinkingStateService,
+    private segmentService: SegmentService
+  ) {
+  }
 
   ngOnInit() {
     this.getQuestionare(0);
+    const data = {
+      type: 1,
+      completed: this.questionIndex + 1,
+      total: this.questionFieldService.questionsArr.length
+    };
+    this.segmentService.segment = data;
+    console.log(this.segmentService.segment);
   }
 
   getQuestionare(index) {
@@ -59,6 +69,10 @@ export class QuestionViewverComponent implements OnInit {
     const component = factory.create(this.containerRef.parentInjector);
     const componentInstance = (<QuestionBaseComponent<Question>>component.instance);
     componentInstance.question = question;
+    // if (componentInstance.question['answers']) {
+    //   this.getQuestionare(this.questionIndex + 1);
+    //   return;
+    // }
     this.formGroup = componentInstance.QuestionForm;
     this.containerRef.insert(component.hostView);
   }

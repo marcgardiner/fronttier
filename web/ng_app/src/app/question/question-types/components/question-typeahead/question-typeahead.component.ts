@@ -44,14 +44,13 @@ export class QuestionTypeaheadComponent extends QuestionBaseComponent<TypeAhead>
     });
     this.QuestionForm.get('options').valueChanges
       .subscribe(value => {
-        console.log(value);
         this.question.answers = value;
       });
   }
 
   setSelectedValue(value, index) {
-    console.log(value, index);
     this.QuestionForm.get(['options', index]).setValue(value);
   }
+
 
 }
