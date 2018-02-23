@@ -37,13 +37,6 @@ export class QuestionViewverComponent implements OnInit {
 
   ngOnInit() {
     this.getQuestionare(0);
-    const data = {
-      type: 1,
-      completed: this.questionIndex + 1,
-      total: this.questionFieldService.questionsArr.length
-    };
-    this.segmentService.segment = data;
-    console.log(this.segmentService.segment);
   }
 
   getQuestionare(index) {
