@@ -1,12 +1,11 @@
-<!-- Learn front-end development at rocket speed! http://inarocket.com -->
 <section>
-  <h3 class="header">Hello, world!</h3>
+  <p class="header">List uploaded with errors. Review and resolve them</p>
 
   <div class="container">
-    <h2 class="mb-4 invite-heading">
+    <h2 class="invite-heading">
       <strong>InviteApplicants</strong>
     </h2>
-    <div class="row d-flex justify-content-space-between">
+    <div class="row">
       <div class="col-lg-7">
         <div class="card-heading">
           <h4><strong>Recipients</strong></h4>
@@ -17,7 +16,7 @@
           </div>
         </div>
 
-        <div class="card card-padded">
+        <div class="card card-padded outer-cards">
           <div class="card-block">
             <i class="card-text">seperate entries with a comma or line break</i>
 
@@ -31,7 +30,7 @@
             <div class="md-form-group row">
               <div class="md-form col-sm-6">
                 <label class="mt-2 ml-4">Added recipients</label>
-                <textarea type="text" rows="7" id="form1" class="form-control mt-3"></textarea>
+                <textarea type="text" rows="7" id="form1" class="form-control"></textarea>
               </div>
               <div class="col-sm-6">
                 <p class="mb-0">chris@gmail.com</p>
@@ -59,7 +58,7 @@
         </div>
         <button class="btn btn-dark btn-rounded mt-4 send-invite-btn">Send invites</button>
       </div>
-      <div class="col-lg-5">
+      <div class="col-lg-5 mb-5">
 
         <div class="card-heading">
           <h5>
@@ -71,8 +70,8 @@
             </p>
           </div>
         </div>
-        <div class="card email-preview card-padded">
-          <div class="card-block pt-2">
+        <div class="card email-preview card-padded outer-cards">
+          <div class="card-block">
             <p class="preview-header">
               <span class="preview-divider">
                 <strong>Subject Line: </strong>Hilton NY invites you to create a Frontier Signal Profile</span>
@@ -85,11 +84,10 @@
               </a>
             </div>
             <div class="card mt-3">
-              <div class="card-block">
-                <div class="text-center">
+                <div class="text-center preview-inner-card">
                   <div class="card-padded">
                     <h3 class="pt-3 pb-3 preview-inner-heading">You're invited!</h3>
-                    <p>
+                    <p class="preview-inner-desc">
                       <strong>Hey there,</strong> you're invited to create a Signal Profile for opportunities at Hilton NY. Use the
                       credentials below to log in and get started</p>
                     <p class="pt-2 mb-0 user-info">
@@ -100,15 +98,14 @@
                       <strong>PASSWORD</strong>
                     </p>
                     <p>yoursecurepassword</p>
+                    </div>
                     <button class="btn btn-dark btn-rounded">build your profile</button>
-                  </div>
                 </div>
-              </div>
               <div class="card-footer text-center">
-                <h5>
+                <h6>
                   <strong>What's this all about?</strong>
-                </h5>
-                <p>Frontier Signal is a new way for perspective employees to get connected with hiring managers and new career
+                </h6>
+                <p class="card-footer-desc">Frontier Signal is a new way for perspective employees to get connected with hiring managers and new career
                   opportunities that fit them best. We use a cutting-edge system to map your strengths and experiences to
                   open positions Questions? Comments? Get in touch</p>
               </div>
@@ -116,7 +113,7 @@
 
 
           </div>
-          <p class="card-footer-message pt-4">You're recieving this email because you signed up for alerts about new opportunities from Hilton NY. If you no
+          <p class="card-footer-message pt-3">You're recieving this email because you signed up for alerts about new opportunities from Hilton NY. If you no
             longer wish to recieve these emails, click here to unsubscribe Frontier Signals| 1500 Broadway, 15th Floor, New
             York, NY 1111</p>
 
