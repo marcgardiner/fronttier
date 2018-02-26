@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="d-flex justify-content-end">
+    <p class="p-2">save and close</p>
+    <a class="p-2">
+      <img src="assets/img/cross.svg" alt="">
+    </a>
+  </div>
+  <div class=""></div>
+  <div class="d-flex flex-column recipient-list-heading">
+    <h2>All Recipients</h2>
+    <p>(applicants)</p>
+  </div>
+  <div class="recipient-list-content">
+    <input type="text" [(ngModel)]="user" placeholder="add new" (keyup.enter)="addnewUser()">
+    <div class="d-flex justify-content-between list-container" *ngFor="let user of usersList">
+      <p class="mb-2 mt-2 user-list-orange">{{user}}</p>
+      <div class="pt-2">
+          <a class="m-2">
+              <img src="assets/img/edit.svg" alt="">
+            </a>
+            <a class="m-2" (click)="removeUser(user)">
+              <img src="assets/img/cross.svg" alt="">
+            </a>
+      </div>
+    </div>
+  </div>
+
+    <button class="btn btn-dark btn-rounded mt-4 mb-2 add-users-btn" (click)="sendInvites()">Send invites</button>
+</div>

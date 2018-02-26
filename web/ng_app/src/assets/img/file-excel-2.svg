@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="12px" viewBox="0 0 20 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>file-excel-2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="invite-error" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-640.000000, -273.000000)">
+        <g id="Group-3" transform="translate(58.000000, 253.000000)">
+            <g id="add-opportunity-button-copy" transform="translate(467.000000, 0.000000)">
+                <g id="file-excel-2" transform="translate(115.000000, 16.000000)">
+                    <g>
+                        <g id="Outline_Icons" transform="translate(0.000000, 5.000000)" stroke="#8B8B8B" stroke-linecap="round" stroke-linejoin="round">
+                            <g id="Group">
+                                <rect id="Rectangle-path" x="0.416666667" y="0.416666667" width="19.1666667" height="10"></rect>
+                                <polyline id="Shape" points="11.6666667 7.91666667 9.6 7.91666667 9.6 2.91666667"></polyline>
+                                <g transform="translate(5.000000, 2.500000)" id="Shape">
+                                    <path d="M0,0.416666667 L2.5,5.41666667"></path>
+                                    <path d="M2.5,0.416666667 L0,5.41666667"></path>
+                                </g>
+                                <path d="M13.35,6.88166667 C13.3841667,7.45916667 13.8333333,7.91666667 14.3833333,7.91666667 C14.955,7.91666667 15.4166667,7.42166667 15.4166667,6.81083333 C15.4166667,5.0425 13.35,5.53583333 13.35,4.02 C13.35,3.41083333 13.8141667,2.91666667 14.385,2.91666667 C14.9333333,2.91666667 15.3825,3.37416667 15.4166667,3.95" id="Shape"></path>
+                            </g>
+                        </g>
+                        <g id="Invisible_Shape">
+                            <rect id="Rectangle-path" x="0" y="0" width="20" height="20"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

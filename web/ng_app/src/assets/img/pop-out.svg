@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>handlebars</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="invite-error" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1291.000000, -271.000000)">
+        <g id="Group-2" transform="translate(804.000000, 253.000000)" stroke="#3C8DED" stroke-width="2">
+            <g id="popout" transform="translate(486.000000, 17.000000)">
+                <path d="M7.41421356,5 L2,10.4142136 L2,15 C2,15.5522847 2.44771525,16 3,16 L12,16 C12.5522847,16 13,15.5522847 13,15 L13,6 C13,5.44771525 12.5522847,5 12,5 L7.41421356,5 Z" id="Rectangle-9-Copy" transform="translate(7.500000, 10.500000) rotate(90.000000) translate(-7.500000, -10.500000) "></path>
+                <path d="M7,11 L16,2" id="Path-5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <polyline id="Path" stroke-linecap="round" stroke-linejoin="round" points="16 7 16 2 11 2"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

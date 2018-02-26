@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AllRecipientsModalComponent } from '../modals/all-recipients-modal/all-recipients-modal.component';
+
 
 @Component({
   selector: 'app-add-applicants',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddApplicantsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
+  }
+
+  sendInvites() {
+    this.modalService.open(AllRecipientsModalComponent, {
+      size: 'lg'
+    });
   }
 
 }

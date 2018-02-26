@@ -1,18 +1,34 @@
 <section>
-  <p class="header">List uploaded with errors. Review and resolve them</p>
+  <div class="header d-flex justify-content-between">
+    <p class="m-0">List uploaded with errors. Review and resolve them</p>
+    <a class="pr-4">
+        <img src="assets/img/X-error.svg" alt="">
+      </a>
+  </div>
 
   <div class="container">
     <h2 class="invite-heading">
-      <strong>InviteApplicants</strong>
+      <p class="strong-font">Invite Applicants</p>
     </h2>
     <div class="row">
       <div class="col-lg-7">
         <div class="card-heading">
-          <h4><strong>Recipients</strong></h4>
-          <div>
-            <p>
+          <h4>
+            <p class="strong-font">Recipients</p>
+          </h4>
+          <div class="d-flex flex-row">
+            <p class="p-1">
               import a list
             </p>
+            <a class="p-1">
+              <img src="assets/img/file-excel-2.svg" alt="">
+            </a>
+            <a class="p-1">
+              <img src="assets/img/file-format-csv-2.svg" alt="">
+            </a>
+            <a class="pt-1 pl-3">
+              <img src="assets/img/handlebars.svg" alt="">
+            </a>
           </div>
         </div>
 
@@ -48,7 +64,7 @@
                 <p>+20 more entries</p>
               </div>
               <div class="col-lg-9 mt-1">
-                <strong>view all</strong>
+                <p class="strong-font">view all</p>
               </div>
             </div>
             <div>
@@ -56,25 +72,28 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-dark btn-rounded mt-4 send-invite-btn">Send invites</button>
+        <button class="btn btn-dark btn-rounded mt-4 send-invite-btn" (click)="sendInvites()">Send invites</button>
       </div>
       <div class="col-lg-5 mb-5">
 
         <div class="card-heading">
           <h5>
-            <strong>Email Preview</strong>
+            <p class="strong-font">Email Preview</p>
           </h5>
-          <div>
-            <p>
-              full preview
+          <div class="d-flex flex-row">
+            <p class="p-1">
+              import a list
             </p>
+            <a class="p-1">
+              <img src="assets/img/pop-out.svg" alt="">
+            </a>
           </div>
         </div>
         <div class="card email-preview card-padded outer-cards">
           <div class="card-block">
             <p class="preview-header">
               <span class="preview-divider">
-                <strong>Subject Line: </strong>Hilton NY invites you to create a Frontier Signal Profile</span>
+                <p class="strong-font">Subject Line: </p>Hilton NY invites you to create a Frontier Signal Profile</span>
             </p>
 
 
@@ -84,26 +103,26 @@
               </a>
             </div>
             <div class="card mt-3">
-                <div class="text-center preview-inner-card">
-                  <div class="card-padded">
-                    <h3 class="pt-3 pb-3 preview-inner-heading">You're invited!</h3>
-                    <p class="preview-inner-desc">
-                      <strong>Hey there,</strong> you're invited to create a Signal Profile for opportunities at Hilton NY. Use the
-                      credentials below to log in and get started</p>
-                    <p class="pt-2 mb-0 user-info">
-                      <strong>EMAIL ADDRESS</strong>
-                    </p>
-                    <p>name@email.com</p>
-                    <p class="pt-2 mb-0 user-info">
-                      <strong>PASSWORD</strong>
-                    </p>
-                    <p>yoursecurepassword</p>
-                    </div>
-                    <button class="btn btn-dark btn-rounded">build your profile</button>
+              <div class="text-center preview-inner-card">
+                <div class="card-padded">
+                  <h3 class="pt-3 pb-3 preview-inner-heading">You're invited!</h3>
+                  <p class="preview-inner-desc">
+                    <strong>Hey there,</strong> you're invited to create a Signal Profile for opportunities at Hilton NY. Use the
+                    credentials below to log in and get started</p>
+                  <p class="pt-2 mb-0 user-info strong-font">
+                    EMAIL ADDRESS
+                  </p>
+                  <p>name@email.com</p>
+                  <p class="pt-2 mb-0 user-info strong-font">
+                    PASSWORD
+                  </p>
+                  <p>yoursecurepassword</p>
                 </div>
+                <button class="btn btn-dark btn-rounded">build your profile</button>
+              </div>
               <div class="card-footer text-center">
-                <h6>
-                  <strong>What's this all about?</strong>
+                <h6 class="strong-font">
+                  What's this all about?
                 </h6>
                 <p class="card-footer-desc">Frontier Signal is a new way for perspective employees to get connected with hiring managers and new career
                   opportunities that fit them best. We use a cutting-edge system to map your strengths and experiences to
@@ -113,10 +132,11 @@
 
 
           </div>
-          <p class="card-footer-message pt-3">You're recieving this email because you signed up for alerts about new opportunities from Hilton NY. If you no
-            longer wish to recieve these emails, click here to unsubscribe Frontier Signals| 1500 Broadway, 15th Floor, New
-            York, NY 1111</p>
-
+          <div class="card-footer-message">
+            <p class="m-0">You're recieving this email because you signed up for alerts about new opportunities from Hilton NY. If you no
+              longer wish to recieve these emails, click here to unsubscribe Frontier Signals| 1500 Broadway, 15th Floor,
+              New York, NY 1111</p>
+          </div>
 
 
         </div>
