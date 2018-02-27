@@ -9,6 +9,7 @@ import { FooterComponent } from '../auth/layout/footer/footer.component';
 import { AllRecipientsModalComponent } from './modals/all-recipients-modal/all-recipients-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   entryComponents: [
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     AddApplicantsComponent,
     HeaderComponent,
     FooterComponent,
-    AllRecipientsModalComponent
+    AllRecipientsModalComponent,
+    DashboardComponent
   ]
 })
 export class InviteModule { }

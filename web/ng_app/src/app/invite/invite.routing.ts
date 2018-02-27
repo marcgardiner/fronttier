@@ -1,3 +1,4 @@
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { InviteComponent } from './invite.component';
 import { Routes } from '@angular/router';
 import { AddApplicantsComponent } from './add-applicants/add-applicants.component';
@@ -9,6 +10,7 @@ export const appRoutes: Routes = [
       children: [
         { path: '', redirectTo: 'add', pathMatch: 'full' },
         { path: 'add', component: AddApplicantsComponent },
+        { path: 'dashboard', component: DashboardComponent }
       ]
     }
   ];
