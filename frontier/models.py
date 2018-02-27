@@ -17,9 +17,7 @@ class BaseModel(models.Model):
             raise NotImplementedError('token_prefix missing for %s' % self.__class__.__name__)
 
         super(BaseModel, self).__init__(*args, **kwargs)
-
-        if not self.token.startswith(self.__class__.token_prefix):
-            self.token = '%s_%s' % (self.__class__.token_prefix, get_random_string(length=16))
+        self.set_token()
 
     token = models.CharField(max_length=32, unique=True, default=get_random_string)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -29,10 +27,12 @@ class BaseModel(models.Model):
     storytime = models.TextField(null=True, blank=True)
     metadata = JSONField(null=True, blank=True)
 
-    def save(self, *args, **kwargs):
-        if not self.token.startswith(self.__class__.token_prefix):
+    def set_token(self):
+        if not self.token or '_' not in self.token:
             self.token = '%s_%s' % (self.__class__.token_prefix, get_random_string(length=16))
-        
+
+    def save(self, *args, **kwargs):
+        self.set_token()
         super(BaseModel, self).save(*args, **kwargs)
 
     def serialize(self, fields=None):

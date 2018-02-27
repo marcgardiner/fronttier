@@ -8,3 +8,4 @@ class Environment(object):
 
 
 DEV = Environment('dev', 'localhost')
+TEST = Environment('test', 'localhost')

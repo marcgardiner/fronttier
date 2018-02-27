@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import auth
+from django.utils import timezone
 
 from business.models import User, LoginLink
 from frontier.decorators import json_view
@@ -32,11 +33,14 @@ def login(request, token=None):
     if not user.is_complete():
         return {'error': 'registration incomplete'}, 404
 
-    # Increment login count
+    # Increment login count + login timestamp
     login_link.num_logins += 1
+    login_link.last_login = timezone.now()
     login_link.save()
 
     auth.login(request, user)
+
+    login_link.user.refresh_from_db()
     return login_link.app_resource()
 
 

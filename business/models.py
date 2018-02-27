@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
@@ -33,6 +33,8 @@ class User(BaseModel, AbstractUser, AddressFields):
     username = models.CharField(max_length=64, unique=True, default=get_random_string)
     email = models.EmailField(unique=True)
     company = models.ForeignKey('business.Company', null=True, blank=True, on_delete=models.SET_NULL)
+    first_name = models.CharField(max_length=30, null=True, blank=True)
+    last_name = models.CharField(max_length=30, null=True, blank=True)
 
     def __repr__(self):
         return '<User: %s [%s]>' % (self.email, self.type)
@@ -74,7 +76,7 @@ class User(BaseModel, AbstractUser, AddressFields):
         }
 
 
-class AdministratorManager(models.Manager):
+class AdministratorManager(UserManager):
     def get_queryset(self):
         return super(AdministratorManager, self).get_queryset().filter(
             type=User.Type.ADMINISTRATOR
@@ -94,7 +96,7 @@ class Administrator(User):
         super(Administrator, self).save(*args, **kwargs)
 
 
-class ApplicantManager(models.Manager):
+class ApplicantManager(UserManager):
     def get_queryset(self):
         return super(ApplicantManager, self).get_queryset().filter(
             type=User.Type.APPLICANT
@@ -113,7 +115,7 @@ class Applicant(User):
         super(Applicant, self).save(*args, **kwargs)
 
 
-class HiringManagerManager(models.Manager):
+class HiringManagerManager(UserManager):
     def get_queryset(self):
         return super(HiringManagerManager, self).get_queryset().filter(
             type=User.Type.HIRING_MANAGER
@@ -155,7 +157,7 @@ class LoginLink(BaseModel):
     user = models.ForeignKey(User, related_name='login_links')
     survey_response = models.ForeignKey('survey.SurveyResponse', related_name='survey_responses', null=True, blank=True)
 
-    last_login = models.DateTimeField(auto_now=True)
+    last_login = models.DateTimeField(null=True, blank=True)
     num_logins = models.IntegerField(default=0)
 
     def app_resource(self):

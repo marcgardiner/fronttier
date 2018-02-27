@@ -18,3 +18,6 @@ console:
 
 images:
 	docker build docker/web/ -t frontier:web
+
+test:
+	python manage.py test --settings=frontier.settings.test
