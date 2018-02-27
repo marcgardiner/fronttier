@@ -18,16 +18,22 @@ class BaseModel(models.Model):
 
         super(BaseModel, self).__init__(*args, **kwargs)
 
-        if not self.token:
+        if not self.token.startswith(self.__class__.token_prefix):
             self.token = '%s_%s' % (self.__class__.token_prefix, get_random_string(length=16))
 
-    token = models.CharField(max_length=32, unique=True)
+    token = models.CharField(max_length=32, unique=True, default=get_random_string)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    disabled = models.BooleanField(default=True)
+    disabled = models.BooleanField(default=False, db_index=True)
 
-    storytime = models.TextField(null=True)
-    metadata = JSONField(null=True)
+    storytime = models.TextField(null=True, blank=True)
+    metadata = JSONField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.token.startswith(self.__class__.token_prefix):
+            self.token = '%s_%s' % (self.__class__.token_prefix, get_random_string(length=16))
+        
+        super(BaseModel, self).save(*args, **kwargs)
 
     def serialize(self, fields=None):
         return json.loads(serializers.serialize('json', [self], fields=fields))[0]

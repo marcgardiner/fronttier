@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from business.models import Administrator, Applicant, HiringManager, Company
+from business.models import Administrator, Applicant, HiringManager, Company, LoginLink
 
 
 class BaseUserAdmin(UserAdmin):
@@ -45,4 +45,7 @@ class HiringManagerAdmin(BaseUserAdmin):
 admin.site.register(Administrator, AdministratorAdmin)
 admin.site.register(Applicant, ApplicantAdmin)
 admin.site.register(HiringManager, HiringManagerAdmin)
-admin.site.register(Company)
+admin.site.register([
+    Company,
+    LoginLink,
+])
