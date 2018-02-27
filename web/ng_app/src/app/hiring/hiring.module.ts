@@ -10,6 +10,7 @@ import { AllRecipientsModalComponent } from './modals/all-recipients-modal/all-r
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { InviteComponent } from './invite/invite.component';
 
 @NgModule({
   entryComponents: [
@@ -26,7 +27,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HeaderComponent,
     FooterComponent,
     AllRecipientsModalComponent,
-    DashboardComponent
+    DashboardComponent,
+    InviteComponent
   ]
 })
 export class HiringModule { }
