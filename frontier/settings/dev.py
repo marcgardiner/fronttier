@@ -1,6 +1,9 @@
+import os
 from frontier.settings.env import DEV
 from frontier.settings.common import *
 
+
+INSIDE_DOCKER = os.environ.get('INSIDE_DOCKER')
 
 # Environment
 ENV = DEV
@@ -22,7 +25,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'HOST': 'localhost',
+        'HOST': 'postgres' if INSIDE_DOCKER else 'localhost',
         'PORT': '5432',
         'PASSWORD': '',
     }
@@ -34,7 +37,7 @@ DATABASES = {
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://localhost:6379/0',
+        'LOCATION': 'redis://redis:6379/0' if INSIDE_DOCKER else 'redis://localhost:6379/0',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'COMPRESSOR': 'django_redis.compressors.zlib.ZlibCompressor',

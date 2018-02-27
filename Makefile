@@ -21,3 +21,6 @@ images:
 
 test:
 	python manage.py test --settings=frontier.settings.test
+
+build:
+	docker-compose up -d --no-deps --build web
