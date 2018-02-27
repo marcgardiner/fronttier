@@ -1,5 +1,5 @@
-<section>
-  <div class="header d-flex flex-row">
+<section id="dashboard">
+  <!--<div class="header d-flex flex-row">
     <div class="p-5">
       <h3 class="text-nowrap title">Exemplar Signal Complete!</h3>
     </div>
@@ -9,8 +9,69 @@
         tight we’ll be back soon with top people just for you!
       </p>
     </div>
-    <div class="p-5">
-      <img src="assets/img/close-white-50.svg">
+    <div class="p-5 close-btn">
+      <img width="25" src="assets/img/close-white-50.svg">
+    </div>
+  </div>
+
+  <br>
+
+  <div class="header text-center">
+    <div class="pt-5">
+      <h3 class="text-nowrap title">Welcome to your Signal Dashboard</h3>
+    </div>
+    <div class="pb-5 pt-2">
+      <p class="description">
+        This is your high-level look at the status of all open Opportunities. Let us show you around! 
+      </p>
+    </div>
+    <div class="p-5 close-btn">
+      <img width="25" src="assets/img/close-white-50.svg">
+    </div>
+  </div>-->
+
+  <div class="header text-center">
+    <ngb-carousel>
+      <ng-template ngbSlide>
+        <div>
+          <div class="pt-5">
+            <h3 class="text-nowrap title">Get down to the nitty gritty</h3>
+          </div>
+          <div class="pb-5 pt-2">
+            <p class="description">
+              Clicking on the Opportunity name or View lets you dig deeper into the Signal Report so you can browse matches and take action.
+            </p>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <div>
+          <div class="pt-5">
+            <h3 class="text-nowrap title">Exemplar & applicant status</h3>
+          </div>
+          <div class="pb-5 pt-2">
+            <p class="description">
+              Exemplar status lets you know when we’ve collected enough signal data, and applicant status shows how many of your invited applicants have completed their profile.
+            </p>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <div>
+          <div class="pt-5">
+            <h3 class="text-nowrap title">So, what’re you waiting for?</h3>
+          </div>
+          <div class="pb-5 pt-2">
+            <p class="description">
+              Invite your exemplars and applicants and we’ll get to work collecting signal data!
+            </p>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+
+    <div class="p-5 close-btn">
+      <img width="25" src="assets/img/close-white-50.svg">
     </div>
   </div>
 
@@ -39,10 +100,21 @@
             <div class="w-40 d-flex text-center">
               <div class="w-20">
                 <div class="card-title text-grey-light">
-                  EXAMPLARS
+                  EXEMPLARS
                 </div>
                 <div class="card-body pb-0 mb-0">
-                  <img src="assets/img/check-green.svg">
+                  <ng-template #popContent>
+                    <div class="text-center">
+                      <h5 class="text-nowrap font-weight-bold px-2 pt-2">Gathering Exemplar Data</h5>
+                      <p class="px-2 pt-2">Not to worry, we’ll send an update when the data is complete</p>
+                    </div>
+                  </ng-template>
+                  <button type="button" class="btn-popover" [ngbPopover]="popContent" triggers="mouseenter:mouseleave">
+                    <div class="progress-bar-mini">
+                      <span class="progress" [style.width]="progress + '%'"></span>
+                    </div>
+                    <img src="assets/img/check-green.svg">
+                  </button>
                 </div>
               </div>
               <div class="w-20">

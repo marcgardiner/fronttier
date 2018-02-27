@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
+  public progress: number = 25;
 
-  constructor() { }
+  constructor(popoverConfig: NgbPopoverConfig) {
+    popoverConfig.container = 'section#dashboard';
+  }
 
   ngOnInit() {
   }
