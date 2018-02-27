@@ -1,6 +1,9 @@
 .PHONY: up
 
 up:
+	docker-compose up postgres redis
+
+upall:
 	docker-compose up
 
 runserver:
