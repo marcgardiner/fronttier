@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InviteComponent } from './invite.component';
+import { HiringComponent } from './hiring.component';
 import { AddApplicantsComponent } from './add-applicants/add-applicants.component';
 import { RouterModule } from '@angular/router';
-import { appRoutes } from './invite.routing';
+import { appRoutes } from './hiring.routing';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from '../auth/layout/footer/footer.component';
 import { AllRecipientsModalComponent } from './modals/all-recipients-modal/all-recipients-modal.component';
@@ -20,11 +20,11 @@ import { FormsModule } from '@angular/forms';
     NgbModule,
     FormsModule
   ],
-  declarations: [InviteComponent,
+  declarations: [HiringComponent,
     AddApplicantsComponent,
     HeaderComponent,
     FooterComponent,
     AllRecipientsModalComponent
   ]
 })
-export class InviteModule { }
+export class HiringModule { }

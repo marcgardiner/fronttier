@@ -1,11 +1,11 @@
-import { InviteComponent } from './invite.component';
+import { HiringComponent } from './hiring.component';
 import { Routes } from '@angular/router';
 import { AddApplicantsComponent } from './add-applicants/add-applicants.component';
 
 export const appRoutes: Routes = [
     {
       path: '',
-      component: InviteComponent,
+      component: HiringComponent,
       children: [
         { path: '', redirectTo: 'add', pathMatch: 'full' },
         { path: 'add', component: AddApplicantsComponent },

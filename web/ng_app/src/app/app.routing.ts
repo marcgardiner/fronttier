@@ -16,7 +16,7 @@ export const appRoutes: Routes = [
     loadChildren: './question/question.module#QuestionModule'
   },
   {
-    path: 'invite',
-    loadChildren: './invite/invite.module#InviteModule'
+    path: 'hiring',
+    loadChildren: './hiring/hiring.module#HiringModule'
   }
 ];
