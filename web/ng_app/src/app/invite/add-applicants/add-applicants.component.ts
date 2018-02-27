@@ -16,9 +16,11 @@ export class AddApplicantsComponent implements OnInit {
   }
 
   sendInvites() {
-    this.modalService.open(AllRecipientsModalComponent, {
+    const recipientsModal = this.modalService.open(AllRecipientsModalComponent, {
       size: 'lg'
     });
+    recipientsModal.componentInstance.usersType = 'applicants';
+    recipientsModal.componentInstance.usersList = ['chris@charmingbot.com', 'bhatti@charmingbot.com', 'moiz@charmingbot.com', 'hello'];
   }
 
 }
