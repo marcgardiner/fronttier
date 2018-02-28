@@ -16,13 +16,18 @@ Once the app image is built, we can lauch it and all its dependent services:
 make upall
 ```
 
-The first time you run the app, you'll have to migrate the DB to create the requisite schema:
+The first time you run the app, you'll have to migrate the DB to create the app schema and load up some test data:
 
 ```
 make migrate
+python scripts/bootstrap.py
 ```
 
 The app can now be accessed at http://localhost:8000. This is typically all you need to do in order to run the app.
+
+### Admin Panel
+
+The `bootstrap` script will create an admin user with email `admin@frontier.com` and password `frontier123`. You can login to the admin panel at http://localhost:8000/admin. 
 
 ### Caveats
 
