@@ -25,6 +25,9 @@ images:
 test:
 	python manage.py test --settings=frontier.settings.test
 
+testall: test
+	(cd web/ng_app && make test)
+
 build:
 	docker-compose up -d --no-deps --build web
 
