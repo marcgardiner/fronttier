@@ -71,6 +71,7 @@ export class AllRecipientsModalComponent implements OnInit {
 
   saveEditUser() {
     this.usersData[this.editUser.index].value = this.editUser.value;
+    this.usersData[this.editUser.index].valid = this.validateEmail(this.editUser.value);
     this.editUser.index = null;
   }
 

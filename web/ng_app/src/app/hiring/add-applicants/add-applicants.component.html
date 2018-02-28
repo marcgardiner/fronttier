@@ -23,9 +23,10 @@
             <a class="p-1">
               <img src="assets/img/file-excel-2.svg" alt="">
             </a>
-            <a class="p-1">
-              <img src="assets/img/file-format-csv-2.svg" alt="">
-            </a>
+            <label class="p-1">
+              <img class="csv-import-btn" src="assets/img/file-format-csv-2.svg" alt="">
+              <input type="file" (change)="csvUpload($event)" accept=".csv" style="display: none;">              
+            </label>
             <a class="pt-1 pl-3">
               <img src="assets/img/handlebars.svg" alt="">
             </a>
@@ -45,8 +46,8 @@
             </div>
             <div class="md-form-group row">
               <div class="md-form col-sm-6">
-                <label class="mt-2 ml-4">Added recipients</label>
-                <textarea type="text" rows="7" id="form1" class="form-control"></textarea>
+                <label class="mt-2 ml-4 active">Added recipients</label>
+                <textarea type="text" [(ngModel)]="recipients" rows="7" id="form1" class="form-control"></textarea>
               </div>
               <div class="col-sm-6">
                 <p class="mb-0">chris@gmail.com</p>

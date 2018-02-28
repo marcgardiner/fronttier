@@ -10,6 +10,8 @@ import { AllRecipientsModalComponent } from '../modals/all-recipients-modal/all-
 })
 export class AddApplicantsComponent implements OnInit {
 
+  recipients;
+  recipientsArray = ['chris@charmingbot.com', 'bhatti@charmingbot.com', 'moiz@charmingbot.com', 'hello'];
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -20,7 +22,16 @@ export class AddApplicantsComponent implements OnInit {
       size: 'lg'
     });
     recipientsModal.componentInstance.usersType = 'applicants';
-    recipientsModal.componentInstance.usersList = ['chris@charmingbot.com', 'bhatti@charmingbot.com', 'moiz@charmingbot.com', 'hello'];
+    recipientsModal.componentInstance.usersList = this.recipientsArray;
+  }
+
+  csvUpload(event) {
+    const reader = new FileReader();
+    reader.readAsText(event.target.files[0]);
+    reader.onload = (e: any) => {
+      this.recipients = e.target.result;
+      this.recipientsArray = e.target.result.split(/\r?\n/);
+    };
   }
 
 }
