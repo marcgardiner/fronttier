@@ -27,3 +27,6 @@ test:
 
 build:
 	docker-compose up -d --no-deps --build web
+
+ng_app:
+	(cd web/ng_app && make build)
