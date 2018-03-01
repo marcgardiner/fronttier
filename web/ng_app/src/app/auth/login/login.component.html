@@ -11,6 +11,7 @@
           <div class="row justify-content-center">
             <div class="col-md-10">
               <form action="#!" [formGroup]="loginForm">
+                <div class="d-flex justify-content-between">
                 <div class="md-form">
                   <label for="form1">First Name</label>
                   <input type="text" id="form1" class="form-control" [formControl]="loginForm.controls.name" name="name">
@@ -23,6 +24,11 @@
                       Please enter at least 2 characters.
                     </div>
                   </label>
+                </div>
+                <div class="md-form">
+                  <label for="form5">Last Name</label>
+                  <input type="text" id="form5" class="form-control" [formControl]="loginForm.controls.lastname" name="lastname">
+                </div>
                 </div>
                 <div class="md-form">
                   <label for="form2">Email address</label>
