@@ -1,5 +1,6 @@
 import { Component, Input, trigger, transition, animate, state, style, HostBinding } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs/Subject';
 
 
 @Component({

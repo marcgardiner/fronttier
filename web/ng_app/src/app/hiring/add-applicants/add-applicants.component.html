@@ -1,9 +1,9 @@
 <section>
-  <div class="header d-flex justify-content-between">
+  <div class="header d-flex justify-content-between" *ngIf="listInvalidEmail">
     <p class="m-0">List uploaded with errors. Review and resolve them</p>
     <a class="pr-4">
-        <img src="assets/img/X-error.svg" alt="">
-      </a>
+      <img src="assets/img/X-error.svg" alt="">
+    </a>
   </div>
 
   <div class="container">
@@ -25,7 +25,7 @@
             </a>
             <label class="p-1">
               <img class="csv-import-btn" src="assets/img/file-format-csv-2.svg" alt="">
-              <input type="file" (change)="csvUpload($event)" accept=".csv" style="display: none;">              
+              <input type="file" (change)="csvUpload($event)" accept=".csv" style="display: none;">
             </label>
             <a class="pt-1 pl-3">
               <img src="assets/img/handlebars.svg" alt="">
@@ -37,45 +37,43 @@
           <div class="card-block">
             <i class="card-text">seperate entries with a comma or line break</i>
 
-            <div class="md-form-group">
+            <div class="md-form-group" [formGroup]="recipientForm">
               <div class="md-form">
                 <div>
-                  <input type="text" placeholder="Type individual email address here" id="form1" class="form-control">
+                  <input type="text" [formControl]="recipientForm.controls.email" placeholder="Type individual email address here" id="form1"
+                    class="form-control" (keyup.enter)="saveRecipient()">
+                  <label class="error">
+                    <div *ngIf="!recipientForm.controls.email.errors?.required && recipientForm.controls.email.errors?.email && recipientForm.controls.email.touched">
+                      Please enter a valid email address.
+                    </div>
+                  </label>
                 </div>
               </div>
             </div>
-            <div class="md-form-group row">
-              <div class="md-form col-sm-6">
-                <label class="mt-2 ml-4 active">Added recipients</label>
-                <textarea type="text" [(ngModel)]="recipients" rows="7" id="form1" class="form-control"></textarea>
+            <div *ngIf="recipients.length">
+              <label class="mt-2 ml-4 active">Added recipients</label>
+              <div class="row">
+                <div class="col-sm-12 added-reciepients-col">
+                  <p class="m-0 pl-2 recipient-list" *ngFor="let recipient of recipients | slice:0:16; let i = index;">{{recipient}}</p>
+                </div>
               </div>
-              <div class="col-sm-6">
-                <p class="mb-0">chris@gmail.com</p>
-                <p class="mb-0">darmcharming@gmail.com</p>
-                <p class="mb-0">ellisnoir@gmail.com</p>
-                <p class="mb-0">chris@gmail.com</p>
-                <p class="mb-0">chris@gmail.com</p>
-                <p class="mb-0">chris@gmail.com</p>
-                <p class="mb-0">chris@gmail.com</p>
-                <p class="mb-0">chris@gmail.com</p>
+              <div class="row mt-2">
+                <div class="col-lg-3">
+                  <p *ngIf="remainingEntries() > 1">+{{remainingEntries()}} more entries</p>
+                </div>
+                <div class="col-lg-9 mt-1">
+                  <p class="strong-font">view all</p>
+                </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-3">
-                <p>+20 more entries</p>
+              <div *ngIf="listInvalidEmail">
+                <i class="recipients-errors-list">this list contain errors</i>
               </div>
-              <div class="col-lg-9 mt-1">
-                <p class="strong-font">view all</p>
-              </div>
-            </div>
-            <div>
-              <i class="recipients-errors-list">this list contain errors</i>
             </div>
           </div>
         </div>
         <button class="btn btn-dark btn-rounded mt-4 send-invite-btn" (click)="sendInvites()">Send invites</button>
       </div>
-      <div class="col-lg-5 mb-5">
+      <div class="col-lg-5 mb-3">
 
         <div class="card-heading">
           <h5>
@@ -94,8 +92,8 @@
           <div class="card-block">
             <p class="preview-header preview-divider">
               <!-- <p class="preview-divider"> -->
-                  <span class="strong-font">Subject Line: </span>
-                Hilton NY invites you to create a Frontier Signal Profile</p>
+              <span class="strong-font">Subject Line: </span>
+              Hilton NY invites you to create a Frontier Signal Profile</p>
             <!-- </p> -->
 
 

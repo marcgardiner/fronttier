@@ -23,7 +23,7 @@ export class QuestionViewverComponent implements OnInit {
 
 
   questionData;
-  questionIndex = 1;
+  questionIndex = 0;
   formGroup: FormGroup;
   flag = false;
 

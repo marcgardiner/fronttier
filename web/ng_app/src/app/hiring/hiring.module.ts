@@ -11,6 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InviteComponent } from './invite/invite.component';
+import { AngularDependenciesModule } from '../shared/angular-dependencies.module';
 
 @NgModule({
   entryComponents: [
@@ -18,6 +19,7 @@ import { InviteComponent } from './invite/invite.component';
   ],
   imports: [
     CommonModule,
+    AngularDependenciesModule,
     RouterModule.forChild(appRoutes),
     NgbModule,
     FormsModule

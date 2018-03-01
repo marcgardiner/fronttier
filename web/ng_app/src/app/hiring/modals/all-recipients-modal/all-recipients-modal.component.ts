@@ -1,6 +1,7 @@
-import { Component, OnInit, HostBinding, ViewChild } from '@angular/core';
+import { Component, OnInit, HostBinding, ViewChild, Output, EventEmitter } from '@angular/core';
 import { element } from 'protractor';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { validateEmail } from '../../shared/common/email-validator';
 
 @Component({
   selector: 'app-all-recipients-modal',
@@ -23,28 +24,23 @@ export class AllRecipientsModalComponent implements OnInit {
   @ViewChild('test') test;
   constructor(private activeModal: NgbActiveModal) {
   }
+  @Output() updatedRecipients = new EventEmitter();
 
   ngOnInit() {
     this.usersList.forEach((item, i) => {
-      const validEmail = this.validateEmail(item);
+      const validEmail = validateEmail(item);
       if (validEmail) {
         this.usersData.push({
           value: item,
-          valid: this.validateEmail(item)
+          valid: validateEmail(item)
         });
       } else {
         this.usersData.unshift({
           value: item,
-          valid: this.validateEmail(item)
+          valid: validateEmail(item)
         });
       }
     });
-  }
-
-  validateEmail(email) {
-    // tslint:disable-next-line:max-line-length
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
   }
 
   removeUser(user) {
@@ -71,8 +67,13 @@ export class AllRecipientsModalComponent implements OnInit {
 
   saveEditUser() {
     this.usersData[this.editUser.index].value = this.editUser.value;
-    this.usersData[this.editUser.index].valid = this.validateEmail(this.editUser.value);
+    this.usersData[this.editUser.index].valid = validateEmail(this.editUser.value);
     this.editUser.index = null;
+    this.updatedRecipients.emit(this.getRecipientsArr());
+  }
+
+  getRecipientsArr() {
+    return this.usersData.map(item => item.value);
   }
 
 

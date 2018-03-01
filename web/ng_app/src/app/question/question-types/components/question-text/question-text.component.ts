@@ -45,8 +45,4 @@ export class QuestionTextComponent extends QuestionBaseComponent<TextField> impl
       });
   }
 
-  setFormValue(data) {
-    this.QuestionForm.controls['answer'].setValue(data);
-  }
-
 }
