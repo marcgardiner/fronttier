@@ -17,17 +17,23 @@ class BaseModel(models.Model):
             raise NotImplementedError('token_prefix missing for %s' % self.__class__.__name__)
 
         super(BaseModel, self).__init__(*args, **kwargs)
+        self.set_token()
 
-        if not self.token:
-            self.token = '%s_%s' % (self.__class__.token_prefix, get_random_string(length=16))
-
-    token = models.CharField(max_length=32, unique=True)
+    token = models.CharField(max_length=32, unique=True, default=get_random_string)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    disabled = models.BooleanField(default=True)
+    disabled = models.BooleanField(default=False, db_index=True)
 
-    storytime = models.TextField(null=True)
-    metadata = JSONField(null=True)
+    storytime = models.TextField(null=True, blank=True)
+    metadata = JSONField(null=True, blank=True)
+
+    def set_token(self):
+        if not self.token or '_' not in self.token:
+            self.token = '%s_%s' % (self.__class__.token_prefix, get_random_string(length=16))
+
+    def save(self, *args, **kwargs):
+        self.set_token()
+        super(BaseModel, self).save(*args, **kwargs)
 
     def serialize(self, fields=None):
         return json.loads(serializers.serialize('json', [self], fields=fields))[0]

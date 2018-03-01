@@ -6,7 +6,6 @@ from django.db import models
 from jsonschema import validate
 
 from frontier.models import BaseModel, LocationFields
-from survey.schema import ANSWER_SCHEMA, QUESTION_SCHEMA
 
 
 class Job(BaseModel, LocationFields):
@@ -70,20 +69,33 @@ class Survey(BaseModel):
         )
 
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='surveys')
-    expiration_time = models.IntegerField()
+    expiration_time = models.IntegerField() # in seconds
     type = models.CharField(max_length=16, choices=Type.CHOICES)
 
 
 class SurveyResponse(BaseModel):
     token_prefix = 'survey_resp'
 
+    class Meta:
+        verbose_name = 'Survey Response'
+        verbose_name_plural = 'Survey Responses'
+
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='responses')
-    user = models.ForeignKey('business.User', null=True, on_delete=models.SET_NULL,
+    user = models.ForeignKey('business.User', null=True, blank=True, on_delete=models.SET_NULL,
                              related_name='survey_responses')
+
+    def app_resource(self):
+        return {
+            'token': self.token,
+        }
 
 
 class QuestionTemplate(BaseModel):
     token_prefix = 'question_tmpl'
+
+    class Meta:
+        verbose_name = 'Question Template'
+        verbose_name_plural = 'Question Templates'
 
     class Type(object):
         MULTI_CHOICE_MULTI_SELECT = 'multi_choice_multi_select'
@@ -112,10 +124,12 @@ class QuestionTemplate(BaseModel):
 
     type = models.CharField(max_length=16, choices=Type.CHOICES)
     prompt = models.TextField()
-    note = models.TextField()
+    note = models.TextField(null=True, blank=True)
     data = JSONField(default={})
 
     def save(self, *args, **kwargs):
+        from survey.schema import QUESTION_SCHEMA
+
         schema = QUESTION_SCHEMA[self.type]
         validate(self.data, schema)
 
@@ -138,9 +152,11 @@ class Answer(BaseModel):
 
     survey_response = models.ForeignKey(SurveyResponse, on_delete=models.CASCADE, related_name='answers')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
-    data = JSONField(default={})
+    data = JSONField()
 
     def save(self, *args, **kwargs):
+        from survey.schema import ANSWER_SCHEMA
+
         schema = ANSWER_SCHEMA[self.question.template.type]
         validate(self.data, schema)
 

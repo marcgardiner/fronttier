@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   postgres:
     container_name: frontier_pg
@@ -10,3 +10,17 @@ services:
     image: redis
     ports:
       - "6379:6379"
+  web:
+      container_name: frontier_web
+      build: .
+      command: ["./scripts/wait_for_pg.sh", "postgres", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+      volumes:
+        - .:/frontier
+      ports:
+        - "8000:8000"
+      environment:
+        - INSIDE_DOCKER=1
+        - DJANGO_SETTINGS_MODULE=frontier.settings.dev
+      depends_on:
+        - postgres
+        - redis

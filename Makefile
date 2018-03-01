@@ -1,20 +1,35 @@
-.PHONY: docker
+.PHONY: up
 
-dc:
+up:
+	docker-compose up postgres redis
+
+upall:
 	docker-compose up
 
-run:
+runserver:
 	python manage.py runserver --settings=frontier.settings.dev
 
-clean:
+reset:
 	docker-compose rm -f
 
 migrate:
 	python manage.py makemigrations --settings=frontier.settings.dev
 	python manage.py migrate --settings=frontier.settings.dev
 
-shell:
+console:
 	python manage.py shell --settings=frontier.settings.dev
 
-docker:
+images:
 	docker build docker/web/ -t frontier:web
+
+test:
+	python manage.py test --settings=frontier.settings.test
+
+testall: test
+	(cd web/ng_app && make test)
+
+build:
+	docker-compose up -d --no-deps --build web
+
+ng_app:
+	(cd web/ng_app && make build)

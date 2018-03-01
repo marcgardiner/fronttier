@@ -118,7 +118,3 @@ QUESTION_SCHEMA = {
         "required": ["items", "choices"]
     },
 }
-
-ANSWER_SCHEMA = {
-
-}
