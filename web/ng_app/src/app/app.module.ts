@@ -7,6 +7,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app.routing';
+import { UserAuthService } from './shared/user-auth.service';
+import { AuthService } from './shared/auth.service';
+import { AngularDependenciesModule } from './shared/angular-dependencies.module';
 
 
 @NgModule({
@@ -18,9 +21,13 @@ import { appRoutes } from './app.routing';
     RouterModule.forRoot(appRoutes),
     DragulaModule,
     BrowserAnimationsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    AngularDependenciesModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    UserAuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

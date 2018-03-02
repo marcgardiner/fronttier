@@ -8,6 +8,8 @@ import { AngularDependenciesModule } from '../shared/angular-dependencies.module
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { UserAuthService } from '../shared/user-auth.service';
+import { AuthService } from '../shared/auth.service';
 
 @NgModule({
   imports: [
@@ -19,6 +21,9 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
     LandingPageComponent,
     AuthComponent,
     HeaderComponent,
-    FooterComponent]
+    FooterComponent],
+    providers: [
+      AuthService
+    ]
 })
 export class AuthModule { }
