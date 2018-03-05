@@ -1,4 +1,4 @@
-input, textarea
+input, textarea, select
 	&.form-control
 		box-shadow: none !important
 		height: auto
@@ -12,6 +12,7 @@ input, textarea
 		margin-top: 0
 		margin-bottom: 0
 		font-weight: 300
+		height: auto !important
 		&:focus
 			border-color: $color-sky
 		&.error
@@ -78,6 +79,16 @@ textarea
 				background-image: url(../img/close.svg)
 				background-position: center
 				background-size: cover
+	select.form-control
+		padding: 22.5px 9px 1.5px
+		+ label:not(.error)
+			font-family: Poppins
+			font-weight: 500
+			letter-spacing: 1.7px
+			color: $color-gray
+			font-size: 0.625rem
+			text-transform: uppercase
+			transform: translateY(-30%)
 .md-form-group
 	overflow: hidden
 	margin-bottom: 1.5rem
@@ -106,3 +117,23 @@ textarea
 				+ hr
 					display: block
 					background-color: #e2e2e2
+
+.file-wrap
+	position: absolute
+	top: 0
+	right: 0
+	left: 0
+	bottom: 0
+	cursor: pointer
+	background: url(../img/admin/file.png) right center no-repeat
+	input[type=file]
+		position: absolute
+		top: 0
+		right: 0
+		left: 0
+		bottom: 0
+		width: 100%
+		margin: 0
+		padding: 0
+		cursor: pointer
+		opacity: 0
