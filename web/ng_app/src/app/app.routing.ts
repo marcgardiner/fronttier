@@ -18,5 +18,9 @@ export const appRoutes: Routes = [
   {
     path: 'hiring',
     loadChildren: './hiring/hiring.module#HiringModule'
+  },
+  {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminModule'
   }
 ];
