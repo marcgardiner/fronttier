@@ -19,7 +19,6 @@ import { QuestionMultipleTextComponent } from './question-types/components/quest
 import { QuestionDragdropComponent } from './question-types/components/question-dragdrop/question-dragdrop.component';
 import { QuestionRankorderComponent } from './question-types/components/question-rankorder/question-rankorder.component';
 import { QuestionTypeaheadComponent } from './question-types/components/question-typeahead/question-typeahead.component';
-import { ThinkingStateComponent } from './thinking-state/thinking-state.component';
 import { ThinkingStateService } from '../shared/thinking-state.service';
 import { SegmentCompleteComponent } from './segments/segment-complete/segment-complete.component';
 import { SegmentService } from './segments/segments.service';
@@ -45,7 +44,6 @@ import { SegmentService } from './segments/segments.service';
     QuestionDragdropComponent,
     QuestionRankorderComponent,
     QuestionTypeaheadComponent,
-    ThinkingStateComponent,
     SegmentCompleteComponent
   ],
   entryComponents: [

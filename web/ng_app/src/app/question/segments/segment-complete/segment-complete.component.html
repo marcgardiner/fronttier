@@ -9,18 +9,25 @@
         <div class="col-lg-8 col-xl-7 px-xl-4">
           <div class="oval waves-effect waves-light mb-4 animated bounceIn2"></div>
           <div class="animated fadeIn delay-0-5">
-            <p class="poppins fz-30 weight-500">{{completedSegments}} down, you’re doing great.</p>
-            <p class="fz-19 mb-2">Ready for more? Here’s what’s coming up.</p>
+            <div *ngIf="!surveyComplete">
+              <p class="poppins fz-30 weight-500">{{completedSegments}} down, you’re doing great.</p>
+              <p class="fz-19 mb-2">Ready for more? Here’s what’s coming up.</p>
+            </div>
+            <div *ngIf="surveyComplete">
+              <p class="poppins fz-30 weight-500" >You made it! 100% done.</p>
+              <p class="fz-19 mb-2" *ngFor="let message of userData.survey_complete.messages">{{message}}</p>
+            </div>
           </div>
-          <div class="py-5 weight-500">
+          <div class="py-5 weight-500" *ngIf="!surveyComplete">
             <p class="fz-18 mb-1 animated fadeInDown3 delay-2">Segment {{segment}}</p>
             <div class="poppins uppercase fz-12 color-blue ls-2 animated fadeInDown3 delay-2-2">
-              <div>{{questions}} Questions</div>
+              <!-- <div>{{questions}} Questions</div> -->
               <div>about {{time}} minutes</div>
             </div>
           </div>
           <div class="pt-3">
-            <button class="btn btn-dark btn-rounded mt-2 animated zoomIn delay-2-5">continue</button>
+            <button *ngIf="!surveyComplete" class="btn btn-dark btn-rounded mt-2 animated zoomIn delay-2-5">continue</button>
+            <button *ngIf="surveyComplete" class="btn btn-dark btn-rounded mt-2 animated zoomIn delay-2-5">close this window</button>
           </div>
 
         </div>
