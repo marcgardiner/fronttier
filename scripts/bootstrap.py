@@ -21,8 +21,17 @@ def main(args):
     site.save()
 
     from business.models import Administrator, Applicant, HiringManager, User, Company
+    from invite.models import InvitationTemplate
 
-    company, _ = Company.objects.get_or_create(name=args.company)
+    templates = list(InvitationTemplate.objects.all())
+    if len(templates) == 0:
+        template = InvitationTemplate.objects.create(
+            html='<p></p>',
+            subject='Hello world!'
+        )
+    else:
+        template = templates[0]
+    company, _ = Company.objects.get_or_create(name=args.company, invitation_template=template)
 
     users = []
 
