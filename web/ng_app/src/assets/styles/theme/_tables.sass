@@ -6,14 +6,18 @@ table.table
 			font-weight: 500
 			letter-spacing: 1.7px	
 			text-transform: uppercase
-			color: #2e2e2e
 			border-bottom: 0
+		&:not([class])
+			th
+				color: #2e2e2e
 	td, th
 		border-bottom: 1px solid #e2e2e2
 		border-top: 0
 		font-size: inherit
 		padding: 15px 30px
-		padding-left: 0 !important
+	&:not(.table-admin)
+		td, th
+			padding-left: 0 !important
 	.table-descr
 		font-weight: normal
 		text-align: left
@@ -33,6 +37,15 @@ table.table
 			white-space: nowrap
 			th
 				min-width: 165px
+	&.table-admin
+		td, th
+			vertical-align: middle
+			padding: 15px 10px
+		th
+			padding: 23px 10px
+		.logo-company
+			height: 35px
+			width: auto
 
 @media (max-width: 991px)
 	table.table 
