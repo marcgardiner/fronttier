@@ -49,7 +49,7 @@ class LoginLinkTestCase(TestCase):
             json.dumps({'password': 'pwd'}),
             content_type='application/json'
         )
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 403)
         self.assertEquals({'error': 'registration incomplete'}, json.loads(response.content))
 
         response = c.post(

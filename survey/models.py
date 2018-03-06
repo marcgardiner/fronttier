@@ -71,6 +71,7 @@ class Survey(BaseModel):
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='surveys')
     expiration_time = models.IntegerField() # in seconds
     type = models.CharField(max_length=16, choices=Type.CHOICES)
+    version = models.IntegerField(default=1)
 
 
 class SurveyResponse(BaseModel):
@@ -122,6 +123,7 @@ class QuestionTemplate(BaseModel):
             (RANK_ORDER_MATRIX, 'Rank Order Matrix')
         )
 
+    name = models.CharField(max_length=64, unique=True)
     type = models.CharField(max_length=16, choices=Type.CHOICES)
     prompt = models.TextField()
     note = models.TextField(null=True, blank=True)

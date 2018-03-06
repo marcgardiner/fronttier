@@ -31,7 +31,7 @@ def login(request, token=None):
     user.save()
 
     if not user.is_complete():
-        return {'error': 'registration incomplete'}, 404
+        return {'error': 'registration incomplete'}, 403
 
     # Increment login count + login timestamp
     login_link.num_logins += 1

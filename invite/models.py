@@ -4,9 +4,7 @@ from __future__ import unicode_literals
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
-from business.models import HiringManager
 from frontier.models import BaseModel
-from survey.models import Survey
 
 
 class InvitationTemplate(BaseModel):
@@ -33,7 +31,12 @@ class Invitation(BaseModel):
         )
     
     state = models.CharField(max_length=16, default=State.PENDING, choices=State.CHOICES)
-    hiring_manager = models.ForeignKey(HiringManager, related_name='invitations')
-    survey = models.ForeignKey(Survey, related_name='invitations')
+    hiring_manager = models.ForeignKey('business.HiringManager', related_name='invitations')
+    survey = models.ForeignKey('survey.Survey', related_name='invitations')
     emails = ArrayField(models.EmailField())
     template = models.ForeignKey(InvitationTemplate, related_name='invitations')
+
+    def app_resource(self):
+        return {
+            'token': self.token,
+        }

@@ -1,7 +1,8 @@
 from functools import wraps
 import json
 
-from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.decorators import user_passes_test
+from django.http import HttpResponse, JsonResponse, Http404
 from django.views.decorators.http import require_http_methods
 
 
@@ -26,8 +27,19 @@ def json_view(allowed_methods=['GET', 'POST']):
                 request.json = data
             else:
                 request.json = None
+
+            # Set hydrated user
+            if request.user.is_authenticated:
+                request.hd_user = request.user.hydrated_user()
+            else:
+                request.hd_user = None
             
-            r = view_fn(request, *args, **kwargs)
+            try:
+                r = view_fn(request, *args, **kwargs)
+            except Http404 as e:
+                r = ({'error': e.message}, 404)
+            except:
+                r = ({'error', 'server borked'}, 500)
 
             # If we don't return a tuple, assume status = OK
             if not isinstance(r, tuple):
@@ -40,3 +52,18 @@ def json_view(allowed_methods=['GET', 'POST']):
 
         return wrapper
     return decorator
+
+
+def restrict(*classes):
+    def test_fn(user):
+        if not user.is_authenticated:
+            return False
+        if not types:
+            return True
+        hd_user = user.hydrated_user()
+        for klass in classes:
+            if isinstance(hd_user, klass):
+                return True
+        return False
+
+    return user_passes_test(test_fn)

@@ -16,7 +16,7 @@ def get_or_404(klass, token):
     try:
         return klass.objects.get(token=token, disabled=False)
     except klass.DoesNotExist:
-        raise Http404
+        raise Http404('%s does not exist' % token)
 
 
 def serialize_datetime(o):
