@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from business.models import Administrator, Applicant, HiringManager, Company, LoginLink
+from frontier.admin import BaseAdmin
 
 
 class BaseUserAdmin(UserAdmin):
@@ -42,10 +43,18 @@ class HiringManagerAdmin(BaseUserAdmin):
     fieldsets = user_fieldsets
 
 
+class LoginLinkAdmin(BaseAdmin):
+    list_display = BaseAdmin.list_display + ('user', 'survey_response')
+    readonly_fields = BaseAdmin.readonly_fields + ('last_login', 'num_logins', 'user', 'survey_response')
+
+
+class CompanyAdmin(BaseAdmin):
+    list_display = BaseAdmin.list_display + ('name', )
+    readonly_fields = BaseAdmin.readonly_fields + ('name', )
+
+
 admin.site.register(Administrator, AdministratorAdmin)
 admin.site.register(Applicant, ApplicantAdmin)
 admin.site.register(HiringManager, HiringManagerAdmin)
-admin.site.register([
-    Company,
-    LoginLink,
-])
+admin.site.register(LoginLink, LoginLinkAdmin)
+admin.site.register(Company, CompanyAdmin)
