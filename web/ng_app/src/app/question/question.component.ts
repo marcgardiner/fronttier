@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ThinkingStateService } from '../shared/thinking-state.service';
 
 @Component({
   selector: 'app-question',
@@ -8,10 +7,9 @@ import { ThinkingStateService } from '../shared/thinking-state.service';
 })
 export class QuestionComponent implements OnInit {
 
-  constructor(private thinkingState: ThinkingStateService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.thinkingState.showThinkingState = false;
   }
 
 }

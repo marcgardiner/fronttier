@@ -1,0 +1,21 @@
+export const Quotes = [
+    'It does not matter how slowly you go as long as you do not stop- Confucius',
+    'I find the harder I work, the more luck I seem to have. – Thomas Jefferson',
+    'It is not that I\'m so smart. But I stay with the questions much longer.  - Albert Einstein',
+    'The future depends on what you do today – Mahatma Gandhi',
+    'The future depends on what you do today – Mahatma Gandhi',
+    'Be less curious about people and more curious about ideas. – Marie Curie',
+    'Intelligence is the ability to adapt to change. – Stephen Hawking',
+    'Wanting to be someone else is a waste of the person you are – Kurt Cobain',
+    'You only live once, but if you do it right, once is enough – Mae West',
+    'Opportunities don’t happen, you create them – Chris Grosser',
+    'Whether you think you can or you think you can’t you’re right. –Henry Ford',
+    'The future belongs to those who believe in the beauty of their dreams – Eleanor Roosevelt',
+    'It’s never too late to be what you might have been – George Eliot',
+    'Be yourself; everyone else is already taken – Oscar Wilde',
+    'Whatever you are, be a good one – Abraham Lincoln',
+    'Failure is the condiment that gives success its flavor. – Truman Capote',
+    'The most common way people give up their power is by thinking they don’t have any  - Alice Walker',
+    'If opportunity doesn’t knock, build a door- Milton Berle',
+    'There are no shortcuts to any place worth going. - Beverly Sills'
+];

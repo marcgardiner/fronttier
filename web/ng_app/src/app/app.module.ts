@@ -10,11 +10,14 @@ import { appRoutes } from './app.routing';
 import { UserAuthService } from './shared/user-auth.service';
 import { AuthService } from './shared/auth.service';
 import { AngularDependenciesModule } from './shared/angular-dependencies.module';
+import { ThinkingStateComponent } from './thinking-state/thinking-state.component';
+import { ThinkingStateService } from './shared/thinking-state.service';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ThinkingStateComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import { AngularDependenciesModule } from './shared/angular-dependencies.module'
   ],
   providers: [
     AuthService,
-    UserAuthService
+    UserAuthService,
+    ThinkingStateService
   ],
   bootstrap: [AppComponent]
 })
