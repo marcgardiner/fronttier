@@ -68,9 +68,9 @@ export class AuthService {
     let userType;
     if (userData.user.type === 'applicant') {
       userType = Applicant;
-    } else if (userData.user.type === 'exempler') {
+    } else if (userData.user.type === 'administrator') {
       userType = Exempler;
-    } else if (userData.user.type === 'hiring-manager') {
+    } else if (userData.user.type === 'hiring_manager') {
       userType = HiringManager;
     }
     return Object.assign({}, userData, userType);
