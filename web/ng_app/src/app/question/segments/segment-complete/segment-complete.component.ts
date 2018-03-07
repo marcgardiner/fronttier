@@ -21,7 +21,7 @@ export class SegmentCompleteComponent implements OnInit {
     // following is ther flag to check if survey is completed or segement is completed
     this.surveyComplete = true;
     this.completedSegments = this.segments[(this.segment - 1) - 1];
-    this.userData = this.authService.getUserType();
+    this.userData = this.authService.userData;
     console.log(this.userData);
   }
 

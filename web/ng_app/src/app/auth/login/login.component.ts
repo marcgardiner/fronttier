@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserAuthService } from '../../shared/user-auth.service';
 import { AuthService } from '../../shared/auth.service';
 
@@ -19,23 +19,28 @@ export class LoginComponent implements OnInit {
   });
 
   authTitle: string;
+  userData;
 
   constructor(private router: Router,
-  private authService: AuthService) { }
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private userAuthService: UserAuthService) { }
 
   ngOnInit() {
-    const userType = this.authService.getUserType().auth;
-    this.authTitle = userType.login_message;
+    this.userData = this.activatedRoute.snapshot.data.LoginResolver;
+    this.authTitle = this.userData.auth.login_message;
   }
 
   login() {
     const data = {
-      email: 'test@test.com',
-      password: '123456'
+      password: this.loginForm.controls.password.value,
+      first_name: this.loginForm.controls.name.value,
+      last_name: this.loginForm.controls.lastname.value,
+      token: this.authService.getToken()
     };
-    // this.authService.login(data).subscribe((res) => {
-    //   console.log(res);
-    // });
+    this.userAuthService.login(data).subscribe((res) => {
+      console.log(res);
+    });
     this.router.navigate(['auth/progress']);
   }
 

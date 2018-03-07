@@ -6,13 +6,12 @@ import { Observable } from 'rxjs/Observable';
 export class InterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = 'adcadc';
-    req = req.clone({
-      headers: req.headers.set('Content-Type', 'application/json')
-    });
-    if (token) {
-      req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });
-    }
-    console.log(req);
+    // req = req.clone({
+    //   headers: req.headers.set('Content-Type', 'application/json')
+    // });
+    // if (token) {
+    //   req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + token) });
+    // }
     return next.handle(req);
   }
 }

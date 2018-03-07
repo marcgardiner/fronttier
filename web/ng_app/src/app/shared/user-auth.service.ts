@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -19,14 +19,27 @@ export class UserAuthService {
     );
   }
 
-  login(data: Object = null): any {
-    console.log(data);
-    if (data && !data['email']) { throw new Error('Property `email` is required.'); }
-    if (data && !data['password']) { throw new Error('Property `password` is required.'); }
+  login(data): any {
+    // console.log(data);
+    // if (data && !data['email']) { throw new Error('Property `email` is required.'); }
+    // if (data && !data['password']) { throw new Error('Property `password` is required.'); }
 
+    const token = data.token;
+    delete data.token;
+    const options = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'})
+    };
     return this.http.post(
-      this.baseUrl + '/auth/login/',
-       data);
+      this.baseUrl + '/auth/login/' + token,
+       data, options);
+  }
+
+  getUser(token: string): any {
+    console.log(token);
+    if (!token) { throw new Error('Token is required.'); }
+
+    return this.http.get(
+      this.baseUrl + '/auth/login/' + token);
   }
 
 }

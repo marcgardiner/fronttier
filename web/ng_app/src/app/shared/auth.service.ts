@@ -5,7 +5,7 @@ import { Applicant } from './dictionary/applicant';
 import { Exempler } from './dictionary/exempler';
 import { HiringManager } from './dictionary/hiring-manager';
 import { decode } from 'jsonwebtoken';
-import { UserDictionaryInterface} from './dictionary/user-dictionary.interface';
+import { UserDictionaryInterface } from './dictionary/user-dictionary.interface';
 import * as moment from 'moment';
 
 
@@ -14,26 +14,17 @@ export class AuthService {
 
   isLoggedIn: boolean;
   redirectUrl = '';
-  mockedData = {
-    'last_login': null,
-    'num_logins': 0,
-    'survey': 'survey_repsonse_123',
-    'token': 'login_123',
-    'user': {
-        'company': null,
-        'email': 'bojack@horseman.com',
-        'first_name': 'Bojack',
-        'last_name': 'Horseman',
-        'token': 'applicant_123',
-        'type': 'applicant'
-    }
-};
+  loggedInUser = {};
+  userData: Object = null;
 
   private token: string = null;
 
   onAuthChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
   constructor(private userAuthService: UserAuthService) {
+    console.log('************** init auth service');
+    console.log('');
+    console.log('/************** init auth service');
   }
 
   checkIfLoggedIn() {
@@ -43,9 +34,12 @@ export class AuthService {
   getToken() {
     return this.token || window.localStorage.getItem('token') || null;
   }
+  getUserFromCache() {
+    return this.userData || JSON.parse(window.localStorage.getItem('user')) || null;
+  }
 
   parseToken(token: string) {
-    return decode(token) || this.mockedData;
+    return decode(token);
   }
 
   getTokenExpireDate(token: string): Object {
@@ -70,8 +64,7 @@ export class AuthService {
     return this.parseToken(this.getToken());
   }
 
-  getUserType(): UserDictionaryInterface {
-    const userData = this.parseToken(this.getToken());
+  getUserType(userData): UserDictionaryInterface {
     let userType;
     if (userData.user.type === 'applicant') {
       userType = Applicant;
@@ -86,6 +79,11 @@ export class AuthService {
   saveTokenToCache(accessToken: string) {
     this.token = accessToken || null;
     window.localStorage.setItem('token', this.token);
+  }
+
+  saveUserDataToCache(user) {
+    this.userData = user;
+    window.localStorage.setItem('user', JSON.stringify(this.userData));
   }
 
   clearCache() {
@@ -104,21 +102,35 @@ export class AuthService {
     return this.isLoggedIn;
   }
 
+  getUserFromToken(token) {
+    return Observable.create(observer => {
+      this.userAuthService.getUser(token)
+        .subscribe((response: any) => {
+          this.saveTokenToCache(token);
+          this.saveUserDataToCache(this.getUserType(response));
+          observer.next(this.userData);
+          observer.complete();
+        }, (err) => {
+          observer.error(Observable.throw(err));
+        });
+    });
+  }
+
   // login(data: { email: string, password: string, isRemember?: boolean } = null): Observable<boolean> {
 
-    // return Observable.create(observer => {
-    //   this.userAuthService.login(data)
-    //     .subscribe((response: any) => {
-    //       this.isLoggedIn = false;
-    //       if (!response['error']) {
-    //         this.authenticateViaToken(response.data.token);
-    //       }
-    //       observer.next(this.isLoggedIn);
-    //       observer.complete();
-    //     }, (err) => {
-    //       observer.error(Observable.throw(err));
-    //     });
-    // });
+  // return Observable.create(observer => {
+  //   this.userAuthService.login(data)
+  //     .subscribe((response: any) => {
+  //       this.isLoggedIn = false;
+  //       if (!response['error']) {
+  //         this.authenticateViaToken(response.data.token);
+  //       }
+  //       observer.next(this.isLoggedIn);
+  //       observer.complete();
+  //     }, (err) => {
+  //       observer.error(Observable.throw(err));
+  //     });
+  // });
   // }
 
   logout(): void {
@@ -134,4 +146,5 @@ export class AuthService {
     this.clearCache();
     this.onAuthChange.emit(this.isLoggedIn);
   }
+
 }
