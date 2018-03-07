@@ -1,20 +1,4 @@
 <section id="dashboard">
-  <div class="header d-flex flex-row">
-    <div class="p-5">
-      <h3 class="text-nowrap title">Exemplar Signal Complete!</h3>
-    </div>
-    <div class="p-5">
-      <p class="description">
-        You work with some great people! We just got to know your exemplars and are continuing to look for the best applicants. Hang
-        tight we’ll be back soon with top people just for you!
-      </p>
-    </div>
-    <div class="pt-3 pr-5 close-btn">
-      <img src="assets/img/close-white-50.svg">
-    </div>
-  </div>
-
-  <br/>
 
   <div class="header text-center">
     <div class="pt-5">
@@ -22,7 +6,7 @@
     </div>
     <div class="pb-5 pt-2">
       <p class="description">
-        This is your high-level look at the status of all open Opportunities. Let us show you around!
+        This is the first look at the status of all of your open Opportunities. Let us show you around!
       </p>
     </div>
     <div class="pt-3 pr-5 close-btn">
@@ -37,11 +21,11 @@
       <ng-template ngbSlide>
         <div>
           <div class="pt-5">
-            <h3 class="text-nowrap title">Get down to the nitty gritty</h3>
+            <h3 class="text-nowrap title">Your Opportunity listings</h3>
           </div>
           <div class="pb-5 pt-2">
             <p class="description">
-              Clicking on the Opportunity name or View lets you dig deeper into the Signal Report so you can browse matches and take action.
+              This is your pipeline of available opportunities
             </p>
           </div>
         </div>
@@ -49,11 +33,11 @@
       <ng-template ngbSlide>
         <div>
           <div class="pt-5">
-            <h3 class="text-nowrap title">Exemplar & applicant status</h3>
+            <h3 class="text-nowrap title">Exemplar + Applicant Status</h3>
           </div>
           <div class="pb-5 pt-2">
             <p class="description">
-              Exemplar status lets you know when we’ve collected enough signal data, and applicant status shows how many of your invited
+              Exemplar status let’s you know when we’ve collected their signal data and applicant status shows how many of your invited
               applicants have completed their profile.
             </p>
           </div>
@@ -62,11 +46,47 @@
       <ng-template ngbSlide>
         <div>
           <div class="pt-5">
-            <h3 class="text-nowrap title">So, what’re you waiting for?</h3>
+            <h3 class="text-nowrap title">Signal Matches</h3>
           </div>
           <div class="pb-5 pt-2">
             <p class="description">
-              Invite your exemplars and applicants and we’ll get to work collecting signal data!
+              Once we collect all your exemplar data we use those signals to map and recommend optimal applicant matches to you!
+            </p>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <div>
+          <div class="pt-5">
+            <h3 class="text-nowrap title">Get all the Details</h3>
+          </div>
+          <div class="pb-5 pt-2">
+            <p class="description">
+              Dig deeper into each Opportunity by clicking view to can see your personalized Signal Report and match list
+            </p>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <div>
+          <div class="pt-5">
+            <h3 class="text-nowrap title">Build your Signal Profile</h3>
+          </div>
+          <div class="pb-5 pt-2">
+            <p class="description">
+              Help us understand your organization at a deeper level by filling out your signal profile at any time
+            </p>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <div>
+          <div class="pt-5">
+            <h3 class="text-nowrap title">Let’s Get Started</h3>
+          </div>
+          <div class="pb-5 pt-2">
+            <p class="description">
+              Invite you exemplars and applicants and we’ll get to work collecting signal data!
             </p>
           </div>
         </div>
@@ -77,6 +97,26 @@
       <img src="assets/img/close-white-50.svg">
     </div>
   </div>
+
+  <br/>
+
+  
+
+  <div class="header d-flex flex-row">
+    <div class="p-5">
+      <h3 class="text-nowrap title">{{title}}</h3>
+    </div>
+    <div class="p-5">
+      <p class="description">
+          {{content}} 
+      </p>
+    </div>
+    <div class="pt-3 pr-5 close-btn">
+      <img src="assets/img/close-white-50.svg">
+    </div>
+  </div>
+
+
 
   <div class="body">
     <div class="d-flex">

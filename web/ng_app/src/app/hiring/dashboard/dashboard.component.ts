@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopoverConfig, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../../shared/auth.service';
+import { HiringDashboard } from './dashboard-dictionary';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,13 +9,20 @@ import { NgbPopoverConfig } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
-  public progress: number = 25;
+  public progress = 25;
 
-  constructor(popoverConfig: NgbPopoverConfig) {
+  constructor(popoverConfig: NgbPopoverConfig,
+    private authService: AuthService,
+    private ngbCarousel: NgbCarouselConfig) {
     popoverConfig.container = 'section#dashboard';
   }
 
+  title: string;
+  content: string;
+
   ngOnInit() {
+    this.title = HiringDashboard.signal.heading;
+    this.content = HiringDashboard.signal.content;
   }
 
 }
