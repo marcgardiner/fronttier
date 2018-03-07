@@ -5,6 +5,10 @@ from django.http import Http404
 from django.utils.timezone import is_aware
 
 
+def token_resource(obj):
+    return {'token': getattr(obj, 'token', None)}
+
+
 TOKEN_REGEX = r'(?P<token>[a-z]+_[0-9a-zA-Z_]+)/?'
 
 

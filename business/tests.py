@@ -22,7 +22,9 @@ class LoginLinkTestCase(TestCase):
         self.assertEquals({
             'last_login': None,
             'num_logins': 0,
-            'survey': None,
+            'survey': {
+                'token': None
+            },
             'token': self.login_link.token,
             'user': {
                 'company': None,
@@ -62,7 +64,9 @@ class LoginLinkTestCase(TestCase):
         self.assertEquals({
             'last_login': serialize_datetime(self.login_link.last_login),
             'num_logins': 1,
-            'survey': None,
+            'survey': {
+                'token': None
+            },
             'token': self.login_link.token,
             'user': {
                 'company': None,

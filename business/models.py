@@ -7,6 +7,7 @@ from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 
 from frontier.models import AddressFields, BaseModel
+from frontier.utils import token_resource
 
 
 class User(BaseModel, AbstractUser, AddressFields):
@@ -167,5 +168,5 @@ class LoginLink(BaseModel):
             'user': self.user.app_resource(),
             'num_logins': self.num_logins,
             'last_login': self.last_login,
-            'survey': getattr(self.survey_response, 'token', None)
+            'survey': token_resource(self.survey_response)
         }

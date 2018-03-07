@@ -33,3 +33,6 @@ build:
 
 ng_app:
 	(cd web/ng_app && make build)
+
+bootstrap:
+	python scripts/bootstrap.py

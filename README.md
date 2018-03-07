@@ -16,22 +16,24 @@ Once the app image is built, we can lauch it and all its dependent services:
 make upall
 ```
 
+*Note: The `make upall` command must be run in its own terminal.*
+
 The first time you run the app, you'll have to migrate the DB to create the app schema and load up some test data:
 
 ```
 make migrate
-python scripts/bootstrap.py
+make bootstrap
 ```
 
 The app can now be accessed at http://localhost:8000. This is typically all you need to do in order to run the app.
 
 ### Admin Panel
 
-The `bootstrap` script will create an admin user with email `admin@frontier.com` and password `frontier123`. You can login to the admin panel at http://localhost:8000/admin. 
+The `make bootstrap` command will create an admin user with email `admin@frontier.com` and password `frontier123`. You can login to the admin panel at http://localhost:8000/admin. 
 
 ### Caveats
 
-If changes have been made to the data model, you will have to run the migrate command again. You can usually see a log line when the Django server boots up informing you that there are unapplied migrations.
+If changes have been made to the data model, you will have to run the `make migrate` command again. You can usually see a log line in the `make up` output when the Django server boots up informing you that there are unapplied migrations.
 
 If the requirements of the Django app have been modified (`requirements.txt`), you'll have to rebuild the Docker image for it.
 
@@ -66,7 +68,9 @@ The `token` is unique for each login URL that we email out to a user to take the
 {
     "last_login": null,
     "num_logins": 0,
-    "survey": "survey_repsonse_123",
+    "survey": {
+        "token": "survey_repsonse_123"
+    },
     "token": "login_123",
     "user": {
         "company": null,
