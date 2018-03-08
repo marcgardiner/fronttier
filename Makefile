@@ -34,5 +34,8 @@ build:
 ng_app:
 	(cd web/ng_app && make build)
 
+ng_install:
+	(cd web/ng_app && make install)
+
 bootstrap:
 	python scripts/bootstrap.py
