@@ -38,6 +38,12 @@ class BaseModel(models.Model):
     def serialize(self, fields=None):
         return json.loads(serializers.serialize('json', [self], fields=fields))[0]
 
+    def __repr__(self):
+        return '<%s: %s>' % (self.__class__.__name__, self.token)
+
+    def __unicode__(self):
+        return repr(self)
+
     @classmethod
     def load(cls, token, safe=False):
         try:
