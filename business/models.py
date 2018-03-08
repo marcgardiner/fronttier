@@ -146,7 +146,6 @@ class Company(BaseModel, AddressFields):
 
     name = models.CharField(max_length=64)
     logo = models.ImageField()
-    invitation_template = models.ForeignKey('invite.InvitationTemplate', related_name='companies')
 
 
 class LoginLink(BaseModel):

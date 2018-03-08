@@ -7,13 +7,6 @@ from django.db import models
 from frontier.models import BaseModel
 
 
-class InvitationTemplate(BaseModel):
-    token_prefix = 'invitation_tmpl'
-
-    html = models.TextField()
-    subject = models.CharField(max_length=256)
-
-
 class Invitation(BaseModel):
     token_prefix = 'invitation'
 
@@ -34,7 +27,6 @@ class Invitation(BaseModel):
     hiring_manager = models.ForeignKey('business.HiringManager', related_name='invitations')
     survey = models.ForeignKey('survey.Survey', related_name='invitations')
     emails = ArrayField(models.EmailField())
-    template = models.ForeignKey(InvitationTemplate, related_name='invitations')
 
     def app_resource(self):
         return {
