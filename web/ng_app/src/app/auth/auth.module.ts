@@ -10,6 +10,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { UserAuthService } from '../shared/user-auth.service';
 import { AuthService } from '../shared/auth.service';
+import { LoginResolver } from './login/login.resolver';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { AuthService } from '../shared/auth.service';
     HeaderComponent,
     FooterComponent],
     providers: [
-      AuthService
+      // AuthService,
+      LoginResolver
     ]
 })
 export class AuthModule { }

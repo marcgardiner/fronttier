@@ -7,6 +7,8 @@ import { QuestionBaseComponent } from '../question-types/components/question-bas
 import { FormGroup } from '@angular/forms';
 import { ThinkingStateService } from '../../shared/thinking-state.service';
 import { SegmentService } from '../segments/segments.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../shared/auth.service';
 
 @Component({
   selector: 'app-question-viewver',
@@ -31,7 +33,9 @@ export class QuestionViewverComponent implements OnInit {
     private questionFieldService: QuestionFieldService,
     private factoryResolver: ComponentFactoryResolver,
     private thinkingState: ThinkingStateService,
-    private segmentService: SegmentService
+    private segmentService: SegmentService,
+    private router: Router,
+    private authService: AuthService
   ) {
   }
 
@@ -41,6 +45,10 @@ export class QuestionViewverComponent implements OnInit {
 
   getQuestionare(index) {
     this.questionIndex = index;
+    if (this.questionFieldService.questionsArr.length === this.questionIndex) {
+      this.router.navigate(['question/segment-complete']);
+      return;
+    }
     this.questionData = this.questionFieldService.getQuestion(this.questionIndex);
     this.renderComponent(this.questionData);
   }
