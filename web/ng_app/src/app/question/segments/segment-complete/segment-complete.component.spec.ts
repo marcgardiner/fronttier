@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SegmentCompleteComponent } from './segment-complete.component';
+import { AuthService } from '../../../shared/auth.service';
+import { UserAuthService } from '../../../shared/user-auth.service';
+import { AngularDependenciesModule } from '../../../shared/angular-dependencies.module';
 
 describe('SegmentCompleteComponent', () => {
   let component: SegmentCompleteComponent;
@@ -8,9 +11,16 @@ describe('SegmentCompleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SegmentCompleteComponent ]
+      imports: [
+        AngularDependenciesModule
+      ],
+      declarations: [SegmentCompleteComponent],
+      providers: [
+        AuthService,
+        UserAuthService
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

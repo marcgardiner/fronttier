@@ -15,7 +15,17 @@ export class AuthService {
   isLoggedIn: boolean;
   redirectUrl = '';
   loggedInUser = {};
-  userData: Object = null;
+  userData: Object = {
+    user: {
+      first_name: ''
+    },
+    landing_page: {
+      messages: []
+    },
+    survey_complete: {
+      messages: []
+    }
+  };
 
   private token: string = null;
 
@@ -35,7 +45,8 @@ export class AuthService {
     return this.token || window.localStorage.getItem('token') || null;
   }
   getUserFromCache() {
-    return this.userData || JSON.parse(window.localStorage.getItem('user')) || null;
+    console.log(JSON.parse(window.localStorage.getItem('user')));
+    return JSON.parse(window.localStorage.getItem('user')) || null;
   }
 
   parseToken(token: string) {
@@ -102,7 +113,7 @@ export class AuthService {
     return this.isLoggedIn;
   }
 
-  getUserFromToken(token) {
+  getUserFromToken(token): any {
     return Observable.create(observer => {
       this.userAuthService.getUser(token)
         .subscribe((response: any) => {

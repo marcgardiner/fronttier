@@ -23,6 +23,15 @@ import { NewJobComponent } from './modals/new-job/new-job.component';
   entryComponents: [
     NewCompanyModalComponent
   ],
-  declarations: [DashboardComponent, AdminComponent, HeaderComponent, NewCompanyModalComponent, HiringManagersComponent, NewHiringManagerModalComponent, EmployeesComponent, NewEmployeeComponent, JobsComponent, NewJobComponent]
+  declarations: [DashboardComponent,
+    AdminComponent,
+    HeaderComponent,
+    NewCompanyModalComponent,
+    HiringManagersComponent,
+    NewHiringManagerModalComponent,
+    EmployeesComponent,
+    NewEmployeeComponent,
+    JobsComponent,
+    NewJobComponent]
 })
 export class AdminModule { }

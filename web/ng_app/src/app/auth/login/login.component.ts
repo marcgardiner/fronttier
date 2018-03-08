@@ -28,6 +28,18 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.userData = this.activatedRoute.snapshot.data.LoginResolver;
+    if (this.userData.user.first_name) {
+      this.loginForm.controls.name.setValue(this.userData.user.first_name);
+      this.loginForm.controls.name.disable();
+      if (this.userData.user.last_name) {
+        this.loginForm.controls.lastname.setValue(this.userData.user.last_name);
+        this.loginForm.controls.lastname.disable();
+      }
+    }
+    if (this.userData.user.email) {
+      this.loginForm.controls.email.setValue(this.userData.user.email);
+      this.loginForm.controls.email.disable();
+    }
     this.authTitle = this.userData.auth.login_message;
   }
 
@@ -39,9 +51,15 @@ export class LoginComponent implements OnInit {
       token: this.authService.getToken()
     };
     this.userAuthService.login(data).subscribe((res) => {
-      console.log(res);
+      if (res.user.type === 'hiring_manager') {
+        this.router.navigate(['hiring']);
+        return;
+      } else if (res.user.type === 'administrator') {
+        this.router.navigate(['admin']);
+        return;
+      }
+      this.router.navigate(['auth/progress']);
     });
-    this.router.navigate(['auth/progress']);
   }
 
 }

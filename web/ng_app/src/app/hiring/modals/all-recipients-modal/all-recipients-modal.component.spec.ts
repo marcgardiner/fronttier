@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AllRecipientsModalComponent } from './all-recipients-modal.component';
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AngularDependenciesModule } from '../../../shared/angular-dependencies.module';
 
 describe('AllRecipientsModalComponent', () => {
   let component: AllRecipientsModalComponent;
@@ -8,7 +10,14 @@ describe('AllRecipientsModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AllRecipientsModalComponent ]
+      imports: [
+        NgbModule.forRoot(),
+        AngularDependenciesModule
+      ],
+      declarations: [ AllRecipientsModalComponent ],
+      providers: [
+        NgbActiveModal
+      ]
     })
     .compileComponents();
   }));

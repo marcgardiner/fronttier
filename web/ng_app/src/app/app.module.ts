@@ -12,7 +12,7 @@ import { AuthService } from './shared/auth.service';
 import { AngularDependenciesModule } from './shared/angular-dependencies.module';
 import { ThinkingStateComponent } from './thinking-state/thinking-state.component';
 import { ThinkingStateService } from './shared/thinking-state.service';
-
+import { AuthGuard } from './shared/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +29,7 @@ import { ThinkingStateService } from './shared/thinking-state.service';
   ],
   providers: [
     AuthService,
+    AuthGuard,
     UserAuthService,
     ThinkingStateService
   ],

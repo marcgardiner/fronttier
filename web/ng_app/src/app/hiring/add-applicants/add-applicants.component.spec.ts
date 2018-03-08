@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddApplicantsComponent } from './add-applicants.component';
+import { AngularDependenciesModule } from '../../shared/angular-dependencies.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('AddApplicantsComponent', () => {
   let component: AddApplicantsComponent;
@@ -8,6 +10,10 @@ describe('AddApplicantsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        AngularDependenciesModule,
+        NgbModule.forRoot()
+      ],
       declarations: [ AddApplicantsComponent ]
     })
     .compileComponents();

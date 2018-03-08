@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionMultiselectComponent } from './question-multiselect.component';
+import { AngularDependenciesModule } from '../../../../shared/angular-dependencies.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('QuestionMultiselectComponent', () => {
   let component: QuestionMultiselectComponent;
@@ -8,6 +10,10 @@ describe('QuestionMultiselectComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        AngularDependenciesModule,
+        BrowserAnimationsModule
+      ],
       declarations: [ QuestionMultiselectComponent ]
     })
     .compileComponents();
@@ -16,6 +22,16 @@ describe('QuestionMultiselectComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(QuestionMultiselectComponent);
     component = fixture.componentInstance;
+    spyOn(component, 'ngOnInit').and.callFake(() => {
+      component.question = {
+        options: [],
+        answers: [],
+        component: QuestionMultiselectComponent,
+        questionLabel: '',
+        answersFlag: false
+      };
+    });
+    component.ngOnInit();
     fixture.detectChanges();
   });
 

@@ -10,7 +10,7 @@ import { validateEmail } from '../../shared/common/email-validator';
 })
 export class AllRecipientsModalComponent implements OnInit {
 
-  usersList: string[];
+  usersList: string[] = [];
   usersType: string;
   user: string;
   editUserIndex: number = null;

@@ -9,7 +9,7 @@ export const appRoutes: Routes = [
       path: '',
       component: HiringComponent,
       children: [
-        { path: '', redirectTo: 'invite', pathMatch: 'full' },
+        { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         { path: 'invite', component: InviteComponent },
         { path: 'add', component: AddApplicantsComponent },
         { path: 'dashboard', component: DashboardComponent }
