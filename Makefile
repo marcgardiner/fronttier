@@ -39,3 +39,6 @@ ng_install:
 
 bootstrap:
 	python scripts/bootstrap.py
+
+deploy:
+	heroku container:push --recursive --app frontier-web

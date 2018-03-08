@@ -9,3 +9,4 @@ class Environment(object):
 
 DEV = Environment('dev', 'localhost')
 TEST = Environment('test', 'localhost')
+PROD = Environment('prod', 'frontier-web.herokuapp.com')
