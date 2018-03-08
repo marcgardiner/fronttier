@@ -45,7 +45,7 @@ class HiringManagerAdmin(BaseUserAdmin):
 
 class LoginLinkAdmin(BaseAdmin):
     list_display = BaseAdmin.list_display + ('user', 'survey_response')
-    readonly_fields = BaseAdmin.readonly_fields + ('last_login', 'num_logins', 'user', 'survey_response')
+    readonly_fields = BaseAdmin.readonly_fields + ('last_login', 'num_logins')
 
 
 class CompanyAdmin(BaseAdmin):
