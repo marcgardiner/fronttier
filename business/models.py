@@ -41,23 +41,23 @@ class User(BaseModel, AbstractUser, AddressFields):
         return '<User: %s [%s]>' % (self.email, self.type)
 
     def is_administrator(self):
-        return self.type == Type.ADMINISTRATOR
+        return self.type == User.Type.ADMINISTRATOR
 
     def is_hiring_manager(self):
-        return self.type == Type.HIRING_MANAGER
+        return self.type == User.Type.HIRING_MANAGER
 
     def is_applicant(self):
-        return self.type == Type.APPLICANT
+        return self.type == User.Type.APPLICANT
 
     def hydrated_user(self):
         if type(self) is not User:
             return self
 
-        if self.type == Type.ADMINISTRATOR:
+        if self.type == User.Type.ADMINISTRATOR:
             return Administrator.objects.get(token=self.token)
-        elif self.type == Type.APPLICANT:
+        elif self.type == User.Type.APPLICANT:
             return Applicant.objects.get(token=self.token)
-        elif self.type == Type.HIRING_MANAGER:
+        elif self.type == User.Type.HIRING_MANAGER:
             return HiringManager.objects.get(token=self.token)
 
     def is_complete(self):
