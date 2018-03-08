@@ -4,7 +4,7 @@
     </div>
   </div>
 
-<div class="row justify-content-cente">
+<div class="row justify-content-center">
     <div class="col-lg-8 col-xl-7 offset-xl-1 text-left">
       <ol class="main-container drag-list" drag [dragula]='"first-bag"' [dragulaModel]='question.options' id="left">
         <li *ngFor="let option of question.options"><strong>{{option.heading}}</strong> - {{option.description}}</li>

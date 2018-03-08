@@ -21,7 +21,7 @@ export class ReOrder extends Question {
     super(options);
     this.description = options['description'] || '';
     this.options = options['options'] || [];
-    this.answers = options['answers'] || [];
+    this.answers = options['answers'] || '';
     this.answerFlag = options['answerFlag'] || false;
   }
 }
@@ -47,6 +47,7 @@ export class QuestionReOrderComponent extends QuestionBaseComponent<ReOrder> imp
   ngOnInit() {
     if (!this.question.answerFlag) {
       this.question.answerFlag = true;
+      this.question.answers = [];
       this.question.options.forEach((element: any, index) => {
         element.index = index;
         this.question.answers.push(element);
@@ -63,7 +64,6 @@ export class QuestionReOrderComponent extends QuestionBaseComponent<ReOrder> imp
         this.question.answers.map((element: any, index) => {
           element.index = this.question.options.indexOf(element);
         });
-        console.log('answers', this.question.answers);
       });
 
     // If user clicked to drag a element but canceled without dragging so we have to remove the drag class

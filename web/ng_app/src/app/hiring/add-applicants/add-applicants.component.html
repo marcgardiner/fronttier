@@ -1,0 +1,146 @@
+<section>
+  <div class="header d-flex justify-content-between p-3" *ngIf="listInvalidEmail">
+    <p class="m-0 pl-5">List uploaded with errors. Review and resolve them</p>
+    <a class="pr-4">
+      <img src="assets/img/X-error.svg" alt="">
+    </a>
+  </div>
+
+  <div class="container">
+    <h2 class="invite-heading">
+      <p class="strong-font">Invite Applicants</p>
+    </h2>
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="card-heading">
+          <h4>
+            <p class="strong-font">Recipients</p>
+          </h4>
+          <div class="d-flex flex-row">
+            <p class="p-1">
+              import a list
+            </p>
+            <a class="p-1">
+              <img src="assets/img/file-excel-2.svg" alt="">
+            </a>
+            <label class="p-1">
+              <img class="csv-import-btn" src="assets/img/file-format-csv-2.svg" alt="">
+              <input type="file" (change)="csvUpload($event)" accept=".csv" style="display: none;">
+            </label>
+            <a class="pt-1 pl-3">
+              <img src="assets/img/handlebars.svg" alt="">
+            </a>
+          </div>
+        </div>
+
+        <div class="card card-padded outer-cards">
+          <div class="card-block">
+            <i class="card-text">seperate entries with a comma or line break</i>
+
+            <div class="md-form-group" [formGroup]="recipientForm">
+              <div class="md-form">
+                <div>
+                  <input type="text" [formControl]="recipientForm.controls.email" placeholder="Type individual email address here" id="form1"
+                    class="form-control" (keyup.enter)="saveRecipient()">
+                  <label class="error">
+                    <div *ngIf="!recipientForm.controls.email.errors?.required && recipientForm.controls.email.errors?.email && recipientForm.controls.email.touched">
+                      Please enter a valid email address.
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="recipients.length">
+              <label class="mt-2 ml-4 active">Added recipients</label>
+              <div class="row">
+                <div class="col-sm-12 added-reciepients-col">
+                  <p class="m-0 pl-2 recipient-list" *ngFor="let recipient of recipients | slice:0:16; let i = index;">{{recipient}}</p>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-lg-3">
+                  <p *ngIf="remainingEntries() > 1">+{{remainingEntries()}} more entries</p>
+                </div>
+                <div class="col-lg-9 mt-1">
+                  <p class="strong-font">view all</p>
+                </div>
+              </div>
+              <div *ngIf="listInvalidEmail">
+                <i class="recipients-errors-list">this list contain errors</i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-dark btn-rounded mt-4 send-invite-btn" (click)="sendInvites()">Send invites</button>
+      </div>
+      <div class="col-lg-5 mb-3">
+
+        <div class="card-heading">
+          <h5>
+            <p class="strong-font">Email Preview</p>
+          </h5>
+          <div class="d-flex flex-row">
+            <p class="p-1">
+              import a list
+            </p>
+            <a class="p-1">
+              <img src="assets/img/pop-out.svg" alt="">
+            </a>
+          </div>
+        </div>
+        <div class="card email-preview card-padded outer-cards">
+          <div class="card-block">
+            <p class="preview-header preview-divider">
+              <!-- <p class="preview-divider"> -->
+              <span class="strong-font">Subject Line: </span>
+              Hilton NY invites you to create a Frontier Signal Profile</p>
+            <!-- </p> -->
+
+
+            <div class="row justify-content-center">
+              <a href="#!" class="logo">
+                <img src="assets/img/logo-full.svg" alt="">
+              </a>
+            </div>
+            <div class="card mt-3">
+              <div class="text-center preview-inner-card">
+                <div class="card-padded">
+                  <h3 class="pt-3 pb-3 preview-inner-heading">You're invited!</h3>
+                  <p class="preview-inner-desc">
+                    <strong>Hey there,</strong> you're invited to create a Signal Profile for opportunities at Hilton NY. Use the
+                    credentials below to log in and get started</p>
+                  <p class="pt-2 mb-0 user-info strong-font">
+                    EMAIL ADDRESS
+                  </p>
+                  <p>name@email.com</p>
+                  <p class="pt-2 mb-0 user-info strong-font">
+                    PASSWORD
+                  </p>
+                  <p>yoursecurepassword</p>
+                </div>
+                <button class="btn btn-dark btn-rounded">build your profile</button>
+              </div>
+              <div class="card-footer text-center">
+                <h6 class="strong-font">
+                  What's this all about?
+                </h6>
+                <p class="card-footer-desc">Frontier Signal is a new way for perspective employees to get connected with hiring managers and new career
+                  opportunities that fit them best. We use a cutting-edge system to map your strengths and experiences to
+                  open positions Questions? Comments? Get in touch</p>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="card-footer-message">
+            <p class="m-0">You're recieving this email because you signed up for alerts about new opportunities from Hilton NY. If you no
+              longer wish to recieve these emails, click here to unsubscribe Frontier Signals| 1500 Broadway, 15th Floor,
+              New York, NY 1111</p>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

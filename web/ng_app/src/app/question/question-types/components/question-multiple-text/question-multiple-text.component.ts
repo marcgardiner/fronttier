@@ -12,13 +12,15 @@ export class MultipleTextField extends Question {
   description?: string;
   answers: MultipleTextAnswer[];
   options: Object[];
+  answersFlag: Boolean;
   component = QuestionMultipleTextComponent;
 
   constructor(options: {} = {}) {
     super(options);
-    this.answers = options['answers'] || [];
+    this.answers = options['answers'] || '';
     this.description = options['description'] || '';
     this.options = options['options'] || [];
+    this.answersFlag = options['answersFlag'] || false;
   }
 
 }
@@ -34,20 +36,16 @@ export class MultipleTextField extends Question {
 export class QuestionMultipleTextComponent extends QuestionBaseComponent<MultipleTextField> implements OnInit {
 
   QuestionForm: FormGroup = new FormGroup({
-    options: new FormArray([], (c: AbstractControl) => {
-      console.log(c);
-      return null;
-      // const selectedValues = c.value.filter(item => !(item === ''));
-      // if (selectedValues.length < 3) {
-      //   return { 'minCheck': false };
-      // }
-      // return null;
-    })
+    options: new FormArray([])
   });
   answers;
 
   ngOnInit() {
-  this.answers = this.question.answers ? this.question.answers : '';
+    if (!this.question.answersFlag) {
+      this.question.answersFlag = true;
+      this.question.answers = [];
+    }
+    this.answers = this.question.answers ? this.question.answers : '';
     const formArr = <FormArray>this.QuestionForm.get('options');
     this.question.options.forEach((key: any, i) => {
       formArr.push(new FormGroup({
@@ -55,7 +53,7 @@ export class QuestionMultipleTextComponent extends QuestionBaseComponent<Multipl
       }));
       const fieledArr = <FormArray>this.QuestionForm.get(['options', i]).get('fields');
       key.fields.forEach((field, j) => {
-        const fieldValue  = this.answers[i] ? this.answers[i].fields[j].value : '';
+        const fieldValue = this.answers[i] ? this.answers[i].fields[j].value : '';
         fieledArr.push(new FormGroup({
           label: new FormControl(field.label),
           value: new FormControl(fieldValue, Validators.required)

@@ -6,11 +6,12 @@
       <div class="row justify-content-center">
         <div class="col-md-10 col-lg-7 col-xl-6">
           <p class="poppins fz-38 weight-500">Hello!</p>
-          <p class="fz-19 pb-4">Welcome to Frontier Signal, please sign in using the password issued to you via email.</p>
+          <p class="fz-19 pb-4">{{authTitle}}</p>
 
           <div class="row justify-content-center">
             <div class="col-md-10">
               <form action="#!" [formGroup]="loginForm">
+                <div class="d-flex justify-content-between">
                 <div class="md-form">
                   <label for="form1">First Name</label>
                   <input type="text" id="form1" class="form-control" [formControl]="loginForm.controls.name" name="name">
@@ -23,6 +24,11 @@
                       Please enter at least 2 characters.
                     </div>
                   </label>
+                </div>
+                <div class="md-form">
+                  <label for="form5">Last Name</label>
+                  <input type="text" id="form5" class="form-control" [formControl]="loginForm.controls.lastname" name="lastname">
+                </div>
                 </div>
                 <div class="md-form">
                   <label for="form2">Email address</label>

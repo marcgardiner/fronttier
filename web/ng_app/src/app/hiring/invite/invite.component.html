@@ -1,0 +1,46 @@
+<div class="container py-5">
+    <button class="btn btn-outline-primary btn-rounded waves-effect mb-3" data-toggle="modal" data-target="#invite-modal">invite modal</button>
+    <button class="btn btn-outline-primary btn-rounded waves-effect mb-3 ml-3" data-toggle="modal" data-target="#import-email-list-modal">import email list</button>
+  </div>
+
+  <div class="modal fade show" id="invite-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content d-flex">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-container text-center">
+          <p class="poppins fz-30 weight-500">Who are you inviting?</p>
+          <div class="d-inline-block pt-5">
+            <label class="radio-wrap mx-auto">
+              <input type="radio" name="invite">
+              <span class="btn btn-outline-primary btn-rounded waves-effect">exemplars</span>
+            </label>
+            <label class="radio-wrap mx-auto">
+              <input type="radio" name="invite">
+              <span class="btn btn-outline-primary btn-rounded waves-effect" routerLink="../add" aria-label="Close" data-dismiss="modal">applicants</span>
+            </label>
+            <div class="pt-5">
+              <button class="btn btn-dark btn-rounded mt-5">continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="import-email-list-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content d-flex">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-container text-center">
+          <p class="poppins fz-30 weight-500">Import Email List</p>
+          <p class="fz-15 italic mb-4 pb-3">Acceptable file types are .csv or .xls and must conatin only email addresses</p>
+          <button class="btn btn-outline-primary btn-rounded waves-effect mb-3">browse files</button>
+          <ul class="list-unstyled file-list text-left weight-normal pt-3 mb-2">
+            <li>SalesManager-invite.csv <span class="close"></span></li>
+            <li>General.csv <span class="close"></span></li>
+          </ul>
+          <button class="btn btn-dark btn-rounded mt-5">import</button>
+        </div>
+      </div>
+    </div>
+  </div>

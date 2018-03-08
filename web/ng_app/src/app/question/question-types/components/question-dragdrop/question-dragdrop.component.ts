@@ -14,6 +14,7 @@ export class DragDrop extends Question {
   options: Object[];
   answers: DragDropAnswer[];
   answersLimit: number;
+  answersFlag: Boolean;
 
   component = QuestionDragdropComponent;
 
@@ -21,8 +22,9 @@ export class DragDrop extends Question {
     super(options);
     this.description = options['description'] || '';
     this.options = options['options'] || [];
-    this.answers = options['answers'] || [];
+    this.answers = options['answers'] || '';
     this.answersLimit = options['answersLimit'] || '';
+    this.answersFlag = options['answersFlag'] || false;
   }
 }
 
@@ -44,6 +46,10 @@ export class QuestionDragdropComponent extends QuestionBaseComponent<DragDrop> i
   }
 
   ngOnInit() {
+    if (!this.question.answersFlag) {
+      this.question.answersFlag = true;
+      this.question.answers = [];
+    }
     this.dragula
       .setOptions('first-bag', {
         moves: (el, container, handle) => {

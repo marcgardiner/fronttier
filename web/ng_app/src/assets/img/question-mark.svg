@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>question mark</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Walkthrough7-closed" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1250.000000, -649.000000)">
+        <g id="question-mark" transform="translate(1249.000000, 649.000000)">
+            <circle id="Oval-2" fill="#0036FD" cx="21" cy="20" r="20"></circle>
+            <text id="?" font-family="Poppins-Medium, Poppins" font-size="20" font-weight="400" fill="#FFFFFF">
+                <tspan x="14.67" y="28">?</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

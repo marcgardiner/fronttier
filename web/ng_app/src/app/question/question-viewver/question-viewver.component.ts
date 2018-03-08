@@ -6,6 +6,9 @@ import { QuestionMultiselectComponent } from '../question-types/components/quest
 import { QuestionBaseComponent } from '../question-types/components/question-base.component';
 import { FormGroup } from '@angular/forms';
 import { ThinkingStateService } from '../../shared/thinking-state.service';
+import { SegmentService } from '../segments/segments.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../shared/auth.service';
 
 @Component({
   selector: 'app-question-viewver',
@@ -22,15 +25,19 @@ export class QuestionViewverComponent implements OnInit {
 
 
   questionData;
-  questionIndex = 1;
+  questionIndex = 0;
   formGroup: FormGroup;
   flag = false;
 
   constructor(
     private questionFieldService: QuestionFieldService,
     private factoryResolver: ComponentFactoryResolver,
-    private thinkingState: ThinkingStateService
-  ) { }
+    private thinkingState: ThinkingStateService,
+    private segmentService: SegmentService,
+    private router: Router,
+    private authService: AuthService
+  ) {
+  }
 
   ngOnInit() {
     this.getQuestionare(0);
@@ -38,6 +45,10 @@ export class QuestionViewverComponent implements OnInit {
 
   getQuestionare(index) {
     this.questionIndex = index;
+    if (this.questionFieldService.questionsArr.length === this.questionIndex) {
+      this.router.navigate(['question/segment-complete']);
+      return;
+    }
     this.questionData = this.questionFieldService.getQuestion(this.questionIndex);
     this.renderComponent(this.questionData);
   }
@@ -59,6 +70,10 @@ export class QuestionViewverComponent implements OnInit {
     const component = factory.create(this.containerRef.parentInjector);
     const componentInstance = (<QuestionBaseComponent<Question>>component.instance);
     componentInstance.question = question;
+    // if (componentInstance.question['answers']) {
+    //   this.getQuestionare(this.questionIndex + 1);
+    //   return;
+    // }
     this.formGroup = componentInstance.QuestionForm;
     this.containerRef.insert(component.hostView);
   }

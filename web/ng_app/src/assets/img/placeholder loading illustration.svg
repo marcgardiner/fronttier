@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="235px" height="133px" viewBox="0 0 235 133" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>img</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Thinking" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-566.000000, -297.000000)">
+        <g id="img" transform="translate(567.000000, 298.000000)">
+            <path d="M16,57 L221,12" id="Path-2" stroke="#E2E2E2"></path>
+            <path d="M139.5,80.5 L221,12" id="Path-2" stroke="#E2E2E2"></path>
+            <g id="Group-3">
+                <g id="Group" transform="translate(0.000000, 40.000000)">
+                    <circle id="Oval-2" stroke="#0036FD" stroke-dasharray="4" cx="16.5" cy="16.5" r="16.5"></circle>
+                    <circle id="Oval-4" fill="#0036FD" cx="16.5" cy="16.5" r="5.5"></circle>
+                </g>
+                <g id="Group-Copy" transform="translate(209.000000, 0.000000)">
+                    <circle id="Oval-2" stroke="#0036FD" stroke-dasharray="4" cx="12" cy="12" r="12"></circle>
+                    <circle id="Oval-4" fill="#0036FD" cx="12" cy="12" r="4"></circle>
+                </g>
+                <g id="Group-Copy-2" transform="translate(85.000000, 92.000000)">
+                    <circle id="Oval-2" stroke="#0036FD" stroke-dasharray="4" cx="19.5" cy="19.5" r="19.5"></circle>
+                    <circle id="Oval-4" fill="#0036FD" cx="19.5" cy="19.5" r="6.5"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

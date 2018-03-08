@@ -14,7 +14,7 @@ import { TypeAhead } from '../question/question-types/components/question-typeah
 
 @Injectable()
 export class QuestionFieldService {
-    private questionsArr: Question[] = [
+    public questionsArr: Question[] = [
         new TypeAhead({
             questionLabel: `As of right now, for your career in the United States,
             please enter the top two cities in which you would like to have a job.`,

@@ -11,6 +11,7 @@ export class MultiSelect extends Question {
   description?: string;
   options: Object[];
   answers: MultiSelectAnswer[];
+  answersFlag: Boolean;
 
   component = QuestionMultiselectComponent;
 
@@ -18,7 +19,8 @@ export class MultiSelect extends Question {
       super(options);
       this.description = options['description'] || '';
       this.options = options['options'] || [];
-      this.answers = options['answers'] || [];
+      this.answers = options['answers'] || '';
+      this.answersFlag = options['answersFlag'] || false;
   }
 }
 
@@ -46,6 +48,10 @@ export class QuestionMultiselectComponent extends QuestionBaseComponent<MultiSel
 
 
   ngOnInit() {
+    if (!this.question.answersFlag) {
+      this.question.answersFlag = true;
+      this.question.answers = [];
+    }
     const formArr = <FormArray>this.QuestionForm.get('options');
     this.question.options.forEach((key, i) => {
       formArr.push(new FormControl(this.question.answers[i]));

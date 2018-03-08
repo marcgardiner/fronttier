@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="d-flex justify-content-end exit-modal-btn" (click)="activeModal.close()">
+    <p class="p-2">save and close</p>
+    <a class="p-2">
+      <img src="assets/img/cross.svg" alt="">
+    </a>
+  </div>
+  <div class=""></div>
+  <div class="d-flex flex-column recipient-list-heading">
+    <h2>All Recipients</h2>
+    <p>({{usersType}})</p>
+  </div>
+  <div class="recipient-list-content">
+    <div class="d-flex justify-content-between">
+      <input type="text" [(ngModel)]="user" (focus)="showUserLabel=true" (blur)="showUserLabel=false" placeholder="add new" (keyup.enter)="addnewUser()">
+      <label class="input-label" *ngIf="showUserLabel" for="">enter to save</label>    
+    </div>
+    <div *ngFor="let user of usersData;let i = index" (mouseleave)="hoveredIndex=null" (mouseenter)="hoveredIndex=i">
+      <div class="d-flex justify-content-between" *ngIf="((editUser.index || editUser.index === 0) && editUser.index==i)">
+      <input type="text" #test (focus)="showEditUserLabel=true;" (blur)="editUser.index=null;showEditUserLabel=false;"  [(ngModel)]="editUser.value" (keyup.enter)="saveEditUser()"> 
+      <label class="input-label" *ngIf="showEditUserLabel" for="">enter to save</label>      
+      </div>
+      <div class="d-flex justify-content-between list-container" [class.border-line-color]="hoveredIndex==i" *ngIf="!((editUser.index || editUser.index === 0) && editUser.index==i)">
+          <p class="mb-2 mt-2" [class.user-list-orange]="!user.valid">{{user.value}}</p>
+          <div class="pt-2">
+              <a class="m-2" *ngIf="hoveredIndex==i" (click)="getEditUserIndex(user, i)">
+                  <img src="assets/img/edit.svg" alt="">
+                </a>
+                <a class="m-2" (click)="removeUser(user)">
+                  <img src="assets/img/cross.svg" alt="">
+                </a>
+          </div>
+      </div>
+    </div>
+  </div>
+
+    <button class="btn btn-dark btn-rounded mt-4 mb-2 add-users-btn" (click)="sendInvites()">Send invites</button>
+</div>

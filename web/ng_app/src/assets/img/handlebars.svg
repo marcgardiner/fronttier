@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="17px" viewBox="0 0 14 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>handlebars</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="invite-error" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-710.000000, -269.000000)">
+        <g id="Group-3" transform="translate(58.000000, 253.000000)" stroke="#3C8DED">
+            <g id="add-opportunity-button-copy" transform="translate(467.000000, 0.000000)">
+                <g id="upload" transform="translate(183.000000, 16.000000)">
+                    <g id="Group-2" transform="translate(2.000000, 1.000000)">
+                        <path d="M5.03145466,7.03145466 L5.03145466,19.0314547 L7.96854534,19.0314547 C8.52083009,19.0314547 8.96854534,18.5837394 8.96854534,18.0314547 L8.96854534,8.03145466 C8.96854534,7.47916991 8.52083009,7.03145466 7.96854534,7.03145466 L5.03145466,7.03145466 Z" id="Rectangle-9-Copy" stroke-width="2" transform="translate(7.000000, 13.031455) rotate(90.000000) translate(-7.000000, -13.031455) "></path>
+                        <g id="Group" transform="translate(7.215786, 5.759905) rotate(-45.000000) translate(-7.215786, -5.759905) translate(3.215786, 1.759905)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                            <path d="M0.142109463,7.55272354 L6.50607049,1.18876251" id="Path-5"></path>
+                            <polyline id="Path" points="7.70710678 5.70710678 7.70710678 0 2 0"></polyline>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

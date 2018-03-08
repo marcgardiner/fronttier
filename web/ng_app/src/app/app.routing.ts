@@ -14,5 +14,13 @@ export const appRoutes: Routes = [
   {
     path: 'question',
     loadChildren: './question/question.module#QuestionModule'
+  },
+  {
+    path: 'hiring',
+    loadChildren: './hiring/hiring.module#HiringModule'
+  },
+  {
+    path: 'admin',
+    loadChildren: './admin/admin.module#AdminModule'
   }
 ];

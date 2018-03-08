@@ -3,8 +3,14 @@
 
       <div class="row justify-content-center">
         <div class="col-lg-8 col-xl-7 px-xl-4">
-          <p class="poppins fz-38 weight-500">Welcome Erik!</p>
-          <p class="fz-19 mb-2">The Signal Profile is the core of the Frontier Signal matching process; it’s where we get to know you, your strengths, experience, and personality so we can best match you with available opportunities. Genius does take time though (about 1 hour and 30 minutes for most people), so we recommend you clear away any distractions, get hydrated, and click below when you’re ready to start.</p>
+          <div *ngIf="!returnedUser">
+            <p class="poppins fz-38 weight-500">Welcome {{userData.user.first_name}}! {{userData.landing_page.title}}</p>
+            <p class="fz-19 mb-2" *ngFor="let message of userData.landing_page.messages">{{message}}</p>
+          </div>
+          <div *ngIf="returnedUser">
+            <p class="poppins fz-38 weight-500">Welcome back, {{userData.user.first_name}}!</p>
+            <p class="fz-19 mb-2">Click below when you are ready to continue creating your Signal Profile. You can get started from where your left off.</p>
+          </div>
           <p class="fz-15 italic">Don’t worry – if you don’t finish it all in one go you can save your place and come back later</p>
 
           <div class="form-row justify-content-center pt-5 pb-3 text-left">
@@ -50,7 +56,7 @@
           </div>
           
           <div class="pt-3">
-            <button class="btn btn-dark btn-rounded mt-3" routerLink="../../question">keep it going</button>
+            <button class="btn btn-dark btn-rounded mt-3" [routerLink]="['/question/view']">{{returnedUser? 'continue' : 'get started'}}</button>
           </div>
 
         </div>
