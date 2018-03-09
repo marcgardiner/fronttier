@@ -13,6 +13,8 @@ import { EmployeesComponent } from './employees/employees.component';
 import { NewEmployeeComponent } from './modals/new-employee/new-employee.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { NewJobComponent } from './modals/new-job/new-job.component';
+import { StatsComponent } from './stats/stats.component';
+import { TrackResponsesComponent } from './track-responses/track-responses.component';
 
 @NgModule({
   imports: [
@@ -32,6 +34,8 @@ import { NewJobComponent } from './modals/new-job/new-job.component';
     EmployeesComponent,
     NewEmployeeComponent,
     JobsComponent,
-    NewJobComponent]
+    NewJobComponent,
+    StatsComponent,
+    TrackResponsesComponent]
 })
 export class AdminModule { }
