@@ -59,10 +59,10 @@
               </div>
               <div class="row mt-2">
                 <div class="col-lg-3">
-                  <p *ngIf="remainingEntries() > 1">+{{remainingEntries()}} more entries</p>
+                  <p *ngIf="remainingEntries() >= 1">+{{remainingEntries()}} more entries</p>
                 </div>
-                <div class="col-lg-9 mt-1">
-                  <p class="strong-font">view all</p>
+                <div class="col-lg-9 mt-1 view-all-recipients">
+                  <p class="strong-font" (click)="viewRecipients()">view all</p>
                 </div>
               </div>
               <div *ngIf="listInvalidEmail">
@@ -71,7 +71,7 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-dark btn-rounded mt-4 send-invite-btn" (click)="sendInvites()">Send invites</button>
+        <button class="btn btn-dark btn-rounded mt-4 send-invite-btn" [disabled]="listInvalidEmail || !recipients.length">Send invites</button>
       </div>
       <div class="col-lg-5 mb-3">
 

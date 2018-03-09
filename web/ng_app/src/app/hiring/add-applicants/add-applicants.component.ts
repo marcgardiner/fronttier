@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AllRecipientsModalComponent } from '../modals/all-recipients-modal/all-recipients-modal.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { validateEmail } from '../shared/common/email-validator';
+import { RecipientsService } from '../shared/recipients.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,25 +17,24 @@ export class AddApplicantsComponent implements OnInit {
   listUploaded = false;
   listInvalidEmail = false;
   recipientsArray = ['chris@charmingbot.com', 'bhatti@charmingbot.com', 'moiz@charmingbot.com', 'hello'];
-  constructor(private modalService: NgbModal) { }
+  constructor(private recipientService: RecipientsService,
+    private router: Router) { }
 
   recipientForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
   ngOnInit() {
+    this.recipients = this.recipientService.usersList;
+    if (this.recipients) {
+      this.listInvalidEmail = this.checkForInvalidEmail(this.recipients);
+    }
   }
 
-  sendInvites() {
-    const recipientsModal = this.modalService.open(AllRecipientsModalComponent, {
-      size: 'lg'
-    });
-    recipientsModal.componentInstance.usersType = 'applicants';
-    recipientsModal.componentInstance.usersList = this.recipients;
-    recipientsModal.componentInstance.updatedRecipients.subscribe((recipients) => {
-      this.recipients = recipients;
-      this.listInvalidEmail = this.checkForInvalidEmail(this.recipients);
-    });
+  viewRecipients() {
+    this.recipientService.usersType = 'applicants';
+    this.recipientService.usersList = this.recipients;
+    this.router.navigate(['hiring/edit']);
   }
 
   csvUpload(event) {
@@ -63,6 +62,7 @@ export class AddApplicantsComponent implements OnInit {
       return;
     }
     this.recipients.push(this.recipientForm.value.email);
+    this.recipientForm.reset();
   }
 
   remainingEntries() {

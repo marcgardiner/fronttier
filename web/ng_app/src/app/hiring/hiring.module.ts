@@ -12,6 +12,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { InviteComponent } from './invite/invite.component';
 import { AngularDependenciesModule } from '../shared/angular-dependencies.module';
 import { FooterComponent } from './layout/footer/footer.component';
+import { RecipientsService } from './shared/recipients.service';
+import { EditRecipientGuard } from './shared/edit-recipient.guard';
 
 @NgModule({
   entryComponents: [
@@ -32,6 +34,10 @@ import { FooterComponent } from './layout/footer/footer.component';
     DashboardComponent,
     InviteComponent,
     FooterComponent
+  ],
+  providers: [
+    RecipientsService,
+    EditRecipientGuard
   ]
 })
 export class HiringModule { }
