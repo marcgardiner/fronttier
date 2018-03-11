@@ -87,6 +87,8 @@ class SurveyResponse(BaseModel):
         verbose_name = 'Survey Response'
         verbose_name_plural = 'Survey Responses'
 
+        unique_together = ('user', 'survey')
+
     survey = models.ForeignKey(
         Survey, on_delete=models.CASCADE, related_name='responses')
     user = models.ForeignKey('business.User', null=True, blank=True, on_delete=models.SET_NULL,
@@ -182,13 +184,13 @@ class SurveyInvitation(BaseModel):
     class State(object):
         PENDING = 'pending'
         IN_PROGRESS = 'in_progress'
-        COMPLETE = 'complete'
+        SUCCESS = 'success'
         FAILED = 'failed'
 
         CHOICES = (
             (PENDING, 'Pending'),
             (IN_PROGRESS, 'In-progress'),
-            (COMPLETE, 'Complete'),
+            (SUCCESS, 'success'),
             (FAILED, 'Failed'),
         )
 

@@ -12,8 +12,7 @@ from survey.models import Job, Survey, SurveyResponse, SurveyInvitation
 @restrict(HiringManager, Applicant)
 @json_view(allowed_methods=['GET'])
 def survey(request, token):
-    survey_response = get_or_404(SurveyResponse, token)
-    return survey_response.app_resource()
+    return get_or_404(SurveyResponse, token).app_resource()
 
 
 @restrict(HiringManager)
@@ -49,7 +48,5 @@ def invite(request):
         emails=emails
     )
     invitation.save()
-
-    process_survey_invitation(invitation.token)
 
     return invitation.app_resource()

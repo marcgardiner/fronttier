@@ -5,6 +5,8 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils import timezone
 
+from business.models import LoginLink
+
 
 @shared_task(bind=True)
 def process_email(self, token):
@@ -16,7 +18,9 @@ def process_email(self, token):
 
     context = email.context.copy()
     context['user'] = email.user
-    if 'login_link' not in context:
+    if 'login_link' in context:
+        context['login_link'] = LoginLink.load(context['login_link'])
+    else:
         context['login_link'] = email.user.login_link
 
     html = render_to_string(email.template, context)
