@@ -9,6 +9,9 @@ upall:
 runserver:
 	python manage.py runserver --settings=frontier.settings.dev
 
+runworker:
+	celery -A frontier worker -l info
+
 reset:
 	docker-compose rm -f
 
@@ -29,7 +32,7 @@ testall: test
 	(cd web/ng_app && make test)
 
 build:
-	docker-compose up -d --no-deps --build web
+	docker-compose up -d --no-deps --build web worker
 
 ng_app:
 	(cd web/ng_app && make build)

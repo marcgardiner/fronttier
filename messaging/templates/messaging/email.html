@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i");
+    </style>
+</head>
+
+<body>
+
+    <div class="email-center" style="font-family: &quot;Roboto&quot;, sans-serif;font-size: 16px;font-weight: 300;color: #000;margin: auto;max-width: 670px;padding-left: 15px;padding-right: 15px;text-align: center;box-sizing: border-box;">
+
+        <div class="email-header" style="box-sizing: border-box;padding-bottom: 12px;">
+            <a href="#!" style="color: inherit;box-sizing: border-box;">
+                <img src="img/logo-full.svg" alt="Logo" style="box-sizing: border-box;">
+            </a>
+        </div>
+
+        <div class="email-content" style="box-sizing: border-box;border-radius: 17px;background-color: #fff;background-blend-mode: multiply;background-position: center;background-image: linear-gradient(rgba(0, 54, 253, 0), rgba(0, 54, 253, 0.05)), url(img/bg.svg);">
+            <div class="email-content-block" style="box-sizing: border-box;padding: 16px 12% 0;">
+                <div class="poppins fz-32 weight-500" style="font-family: &quot;Poppins&quot;, sans-serif;font-size: 32px;font-weight: 500;box-sizing: border-box;">
+                    {% block heading %} {% endblock %}
+                </div>
+                {% block content %} {% endblock %}
+            </div>
+            <hr style="border: 0;border-top: 1px solid #e2e2e2;margin-top: 7px;margin-bottom: 0;box-sizing: border-box;">
+            <div class="email-content-block" style="box-sizing: border-box;padding: 16px 10% 38px;">
+                <p class="poppins fz-18 weight-500" style="margin-top: 0;margin-bottom: 15px;font-family: &quot;Poppins&quot;, sans-serif;font-size: 18px;font-weight: 500;box-sizing: border-box;">The Power of Frontier Signal</p>
+                <p class="fz-13" style="margin-top: 0;margin-bottom: 15px;font-size: 13px;line-height: 1.54;letter-spacing: 0.2px;box-sizing: border-box;">Frontier Signal is pioneering a human-powered and artificial intelligence sourcing solution to assist employers
+                    and individuals in securing authentic job fit through validated psychometrics that define job success.
+                    <a href="mailto:friends@frontiersignal.com" style="color: inherit;box-sizing: border-box;">Get in touch.</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="email-footer" style="box-sizing: border-box;color: #575757;">
+            <p class="fz-11" style="margin-top: 0;margin-bottom: 15px;font-size: 11px;line-height: 1.82;box-sizing: border-box;">You’re receiving this email because you signed up for alerts about new opportunities from Hilton NY.
+                <br style="box-sizing: border-box;"> If you no longer wish to receive these emails,
+                <a href="#!" style="color: inherit;box-sizing: border-box;">click here to unsubscribe</a>
+                <br style="box-sizing: border-box;">
+                <span class="weight-normal" style="font-weight: normal;box-sizing: border-box;">Frontier Signals</span> | 1500 Broadway, 15th Floor, New York, NY 11111
+            </p>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

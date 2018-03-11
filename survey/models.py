@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import ArrayField, JSONField
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from jsonschema import validate
 
 from frontier.models import BaseModel, LocationFields
@@ -44,11 +46,14 @@ class Job(BaseModel, LocationFields):
             (CLOSED, 'Closed')
         )
 
-    company = models.ForeignKey('business.Company', on_delete=models.CASCADE, related_name='jobs')
-    hiring_managers = models.ManyToManyField('business.HiringManager', related_name='jobs')
+    company = models.ForeignKey(
+        'business.Company', on_delete=models.CASCADE, related_name='jobs')
+    hiring_managers = models.ManyToManyField(
+        'business.HiringManager', related_name='jobs')
     type = models.CharField(max_length=16, choices=Type.CHOICES)
     level = models.CharField(max_length=16, choices=Level.CHOICES)
-    status = models.CharField(max_length=16, default=Status.OPEN, choices=Status.CHOICES)
+    status = models.CharField(
+        max_length=16, default=Status.OPEN, choices=Status.CHOICES)
 
     title = models.CharField(max_length=128)
     description = models.TextField(null=True, blank=True)
@@ -68,8 +73,9 @@ class Survey(BaseModel):
             (CANDIDATE, 'Candidate')
         )
 
-    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='surveys')
-    expiration_time = models.IntegerField() # in seconds
+    job = models.ForeignKey(
+        Job, on_delete=models.CASCADE, related_name='surveys')
+    expiration_time = models.IntegerField()  # in seconds
     type = models.CharField(max_length=16, choices=Type.CHOICES)
     version = models.IntegerField(default=1)
 
@@ -81,7 +87,8 @@ class SurveyResponse(BaseModel):
         verbose_name = 'Survey Response'
         verbose_name_plural = 'Survey Responses'
 
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='responses')
+    survey = models.ForeignKey(
+        Survey, on_delete=models.CASCADE, related_name='responses')
     user = models.ForeignKey('business.User', null=True, blank=True, on_delete=models.SET_NULL,
                              related_name='survey_responses')
 
@@ -141,19 +148,23 @@ class QuestionTemplate(BaseModel):
 class Question(BaseModel):
     token_prefix = 'question'
 
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='questions')
+    survey = models.ForeignKey(
+        Survey, on_delete=models.CASCADE, related_name='questions')
     segment = models.IntegerField()
     index = models.IntegerField()
 
-    template = models.ForeignKey(QuestionTemplate, on_delete=models.CASCADE, related_name='questions')
+    template = models.ForeignKey(
+        QuestionTemplate, on_delete=models.CASCADE, related_name='questions')
     context = JSONField(default={})
 
 
 class Answer(BaseModel):
     token_prefix = 'answer'
 
-    survey_response = models.ForeignKey(SurveyResponse, on_delete=models.CASCADE, related_name='answers')
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
+    survey_response = models.ForeignKey(
+        SurveyResponse, on_delete=models.CASCADE, related_name='answers')
+    question = models.ForeignKey(
+        Question, on_delete=models.CASCADE, related_name='answers')
     data = JSONField()
 
     def save(self, *args, **kwargs):
@@ -163,3 +174,36 @@ class Answer(BaseModel):
         validate(self.data, schema)
 
         super(QuestionTemplate, self).save(*args, **kwargs)
+
+
+class SurveyInvitation(BaseModel):
+    token_prefix = 'survey_invite'
+
+    class State(object):
+        PENDING = 'pending'
+        IN_PROGRESS = 'in_progress'
+        COMPLETE = 'complete'
+        FAILED = 'failed'
+
+        CHOICES = (
+            (PENDING, 'Pending'),
+            (IN_PROGRESS, 'In-progress'),
+            (COMPLETE, 'Complete'),
+            (FAILED, 'Failed'),
+        )
+
+    state = models.CharField(max_length=16, default=State.PENDING,
+                             choices=State.CHOICES)
+    hiring_manager = models.ForeignKey(
+        'business.HiringManager', related_name='invitations')
+    survey = models.ForeignKey('survey.Survey', related_name='invitations')
+    type = models.CharField(max_length=16, choices=(
+        (Survey.Type.EXEMPLAR, 'Exemplar'),
+        (Survey.Type.CANDIDATE, 'Candidate'))
+    )
+    emails = ArrayField(models.EmailField())
+
+
+@receiver(post_save, sender=SurveyInvitation)
+def process_survey_invitation(sender, instance=None, created=False, **kw):
+    tasks.process_survey_invitation(instance.token)

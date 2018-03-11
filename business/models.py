@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 
@@ -31,11 +33,16 @@ class User(BaseModel, AbstractUser, AddressFields):
     REGISTRATION_FIELDS = ['first_name', 'last_name']
 
     type = models.CharField(choices=Type.CHOICES, max_length=16)
-    username = models.CharField(max_length=64, unique=True, default=get_random_string)
+    username = models.CharField(max_length=64, unique=True,
+                                default=get_random_string)
     email = models.EmailField(unique=True)
-    company = models.ForeignKey('business.Company', null=True, blank=True, on_delete=models.SET_NULL)
+    company = models.ForeignKey(
+        'business.Company', null=True, blank=True, on_delete=models.SET_NULL)
     first_name = models.CharField(max_length=30, null=True, blank=True)
     last_name = models.CharField(max_length=30, null=True, blank=True)
+
+    login_link = models.ForeignKey(
+        'business.LoginLink', related_name='og_users', null=True)
 
     def __repr__(self):
         return '<User: %s [%s]>' % (self.email, self.type)
@@ -75,6 +82,17 @@ class User(BaseModel, AbstractUser, AddressFields):
             'email': self.email,
             'company': getattr(self.company, 'token', None),
         }
+
+
+@receiver(post_save, sender=User)
+def create_login_link(sender, instance=None, created=False, **kw):
+    if instance.login_link_id:
+        return
+    l = LoginLink(user=instance)
+    l.save()
+
+    instance.login_link = l
+    instance.save()
 
 
 class AdministratorManager(UserManager):
@@ -156,10 +174,18 @@ class LoginLink(BaseModel):
         verbose_name_plural = 'Login Links'
 
     user = models.ForeignKey(User, related_name='login_links')
-    survey_response = models.ForeignKey('survey.SurveyResponse', related_name='survey_responses', null=True, blank=True)
+    survey_response = models.ForeignKey(
+        'survey.SurveyResponse', related_name='survey_responses',
+        null=True, blank=True)
 
+    password = models.CharField(max_length=16)
     last_login = models.DateTimeField(null=True, blank=True)
     num_logins = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        if not self.password:
+            self.password = get_random_string(12)
+        super(LoginLink, self).save(*args, **kwargs)
 
     def app_resource(self):
         return {
