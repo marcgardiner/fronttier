@@ -3,6 +3,7 @@ from survey.models import QuestionTemplate
 
 Type = QuestionTemplate.Type
 
+
 SIMPLE_ITEMS_ONLY = {
     'type': 'object',
     'properties': {
@@ -145,4 +146,9 @@ QUESTION_SCHEMA = {
         },
         'required': ['items', 'choices']
     },
+}
+
+
+ANSWER_SCHEMA = {
+
 }
