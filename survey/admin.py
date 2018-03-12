@@ -3,14 +3,44 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from survey.models import Job, Survey, SurveyResponse, QuestionTemplate, Question, Answer
+from frontier.admin import BaseAdmin
+from survey.models import Job, Survey, SurveyResponse, QuestionTemplate, Question, Answer, SurveyInvitation
 
 
-admin.site.register([
-    Job,
-    Survey,
-    SurveyResponse,
-    QuestionTemplate,
-    Question,
-    Answer
-])
+class JobAdmin(BaseAdmin):
+    list_display = BaseAdmin.list_display + \
+        ('company', 'type', 'level', 'status')
+
+
+class SurveyAdmin(BaseAdmin):
+    list_display = BaseAdmin.list_display + ('job', 'type', 'version')
+
+
+class SurveyResponseAdmin(BaseAdmin):
+    list_display = BaseAdmin.list_display + ('survey', 'user')
+
+
+class QuestionTemplateAdmin(BaseAdmin):
+    list_display = BaseAdmin.list_display + ('name', 'type')
+
+
+class QuestionAdmin(BaseAdmin):
+    list_display = BaseAdmin.list_display + ('survey', 'template')
+
+
+class AnswerAdmin(BaseAdmin):
+    list_display = BaseAdmin.list_display + ('survey_response', 'question')
+
+
+class SurveyInvitationAdmin(BaseAdmin):
+    list_display = BaseAdmin.list_display + \
+        ('survey', 'type', 'hiring_manager')
+
+
+admin.site.register(Job, JobAdmin)
+admin.site.register(Survey, SurveyAdmin)
+admin.site.register(SurveyResponse, SurveyResponseAdmin)
+admin.site.register(QuestionTemplate, QuestionTemplateAdmin)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Answer, AnswerAdmin)
+admin.site.register(SurveyInvitation, SurveyInvitationAdmin)

@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from jsonschema import validate
 
 from frontier.models import BaseModel, LocationFields
+from frontier.utils import token_resource
 
 
 class Job(BaseModel, LocationFields):
@@ -97,6 +98,8 @@ class SurveyResponse(BaseModel):
     def app_resource(self):
         return {
             'token': self.token,
+            'type': self.survey.type,
+            'user': token_resource(self.user)
         }
 
 
@@ -133,10 +136,10 @@ class QuestionTemplate(BaseModel):
         )
 
     name = models.CharField(max_length=64, unique=True)
-    type = models.CharField(max_length=16, choices=Type.CHOICES)
+    type = models.CharField(max_length=32, choices=Type.CHOICES)
     prompt = models.TextField()
     note = models.TextField(null=True, blank=True)
-    data = JSONField(default={})
+    data = JSONField(default={}, blank=True)
 
     def save(self, *args, **kwargs):
         from survey.schema import QUESTION_SCHEMA
@@ -157,11 +160,14 @@ class Question(BaseModel):
 
     template = models.ForeignKey(
         QuestionTemplate, on_delete=models.CASCADE, related_name='questions')
-    context = JSONField(default={})
+    context = JSONField(default={}, blank=True)
 
 
 class Answer(BaseModel):
     token_prefix = 'answer'
+
+    class Meta:
+        unique_together = ('survey_response', 'question')
 
     survey_response = models.ForeignKey(
         SurveyResponse, on_delete=models.CASCADE, related_name='answers')
@@ -180,6 +186,10 @@ class Answer(BaseModel):
 
 class SurveyInvitation(BaseModel):
     token_prefix = 'survey_invite'
+
+    class Meta:
+        verbose_name = 'Survey Invitation'
+        verbose_name_plural = 'Survey Invitations'
 
     class State(object):
         PENDING = 'pending'

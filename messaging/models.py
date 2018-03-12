@@ -30,7 +30,7 @@ class Email(BaseModel):
     user = models.ForeignKey(User, related_name='emails')
     processed_at = models.DateTimeField(null=True)
     template = models.CharField(max_length=128)
-    context = JSONField(default={})
+    context = JSONField(default={}, blank=True)
 
 
 @receiver(post_save, sender=Email)

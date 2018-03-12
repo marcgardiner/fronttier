@@ -65,7 +65,6 @@ class LoginLinkAdmin(BaseAdmin):
 
 class CompanyAdmin(BaseAdmin):
     list_display = BaseAdmin.list_display + ('name', )
-    readonly_fields = BaseAdmin.readonly_fields + ('name', )
 
 
 admin.site.register(Administrator, AdministratorAdmin)
