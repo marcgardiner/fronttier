@@ -24,6 +24,7 @@ urlpatterns = [
 
     url(r'^auth/', include('business.urls')),
     url(r'^messaging/', include('messaging.urls')),
+    url(r'^survey/', include('survey.urls')),
     url(r'^web/', include('web.urls')),
 
     url(r'^$', index, name='index'),
