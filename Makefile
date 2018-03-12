@@ -34,7 +34,7 @@ testall: test
 build:
 	docker-compose up -d --no-deps --build web worker
 
-ng_app:
+ng_build:
 	(cd web/ng_app && make build)
 
 ng_install:
