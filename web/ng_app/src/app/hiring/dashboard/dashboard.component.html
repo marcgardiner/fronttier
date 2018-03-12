@@ -1,20 +1,4 @@
 <section id="dashboard">
-  <div class="header d-flex flex-row">
-    <div class="p-5">
-      <h3 class="text-nowrap title">Exemplar Signal Complete!</h3>
-    </div>
-    <div class="p-5">
-      <p class="description">
-        You work with some great people! We just got to know your exemplars and are continuing to look for the best applicants. Hang
-        tight we’ll be back soon with top people just for you!
-      </p>
-    </div>
-    <div class="pt-3 pr-5 close-btn">
-      <img src="assets/img/close-white-50.svg">
-    </div>
-  </div>
-
-  <br/>
 
   <div class="header text-center">
     <div class="pt-5">
@@ -22,7 +6,7 @@
     </div>
     <div class="pb-5 pt-2">
       <p class="description">
-        This is your high-level look at the status of all open Opportunities. Let us show you around!
+        This is the first look at the status of all of your open Opportunities. Let us show you around!
       </p>
     </div>
     <div class="pt-3 pr-5 close-btn">
@@ -33,40 +17,15 @@
   <br/>
 
   <div class="header text-center">
-    <ngb-carousel>
-      <ng-template ngbSlide>
+    <ngb-carousel #carousel>
+      <ng-template ngbSlide *ngFor="let slide of dashboardData.slides">
         <div>
           <div class="pt-5">
-            <h3 class="text-nowrap title">Get down to the nitty gritty</h3>
+            <h3 class="text-nowrap title">{{slide.heading}}</h3>
           </div>
           <div class="pb-5 pt-2">
             <p class="description">
-              Clicking on the Opportunity name or View lets you dig deeper into the Signal Report so you can browse matches and take action.
-            </p>
-          </div>
-        </div>
-      </ng-template>
-      <ng-template ngbSlide>
-        <div>
-          <div class="pt-5">
-            <h3 class="text-nowrap title">Exemplar & applicant status</h3>
-          </div>
-          <div class="pb-5 pt-2">
-            <p class="description">
-              Exemplar status lets you know when we’ve collected enough signal data, and applicant status shows how many of your invited
-              applicants have completed their profile.
-            </p>
-          </div>
-        </div>
-      </ng-template>
-      <ng-template ngbSlide>
-        <div>
-          <div class="pt-5">
-            <h3 class="text-nowrap title">So, what’re you waiting for?</h3>
-          </div>
-          <div class="pb-5 pt-2">
-            <p class="description">
-              Invite your exemplars and applicants and we’ll get to work collecting signal data!
+              {{slide.content}}
             </p>
           </div>
         </div>
@@ -78,10 +37,30 @@
     </div>
   </div>
 
+  <br/>
+
+  
+
+  <div class="header d-flex flex-row">
+    <div class="p-5">
+      <h3 class="text-nowrap title">{{title}}</h3>
+    </div>
+    <div class="p-5">
+      <p class="description">
+          {{content}} 
+      </p>
+    </div>
+    <div class="pt-3 pr-5 close-btn">
+      <img src="assets/img/close-white-50.svg">
+    </div>
+  </div>
+
+
+
   <div class="body">
     <div class="d-flex">
       <h1 class="signal-opportunities pt-5 pl-5 pr-5 pb-3 w-75">Signal Opportunities</h1>
-      <h5 class="font-weight-bold pt-5 pl-5 pr-5 pb-3 w-25 mb-0 text-right text-grey-dark align-self-center build-signal-profile">
+      <h5 [ngClass]="{'container': currentSlide=='ngb-slide-4'}" class="font-weight-bold pt-5 pl-5 pr-5 pb-3 w-25 mb-0 text-right text-grey-dark align-self-center build-signal-profile">
         build a signal profile
         <img src="assets/img/chevron-right.svg">
       </h5>
@@ -89,7 +68,7 @@
     <div class="">
       <div class="mx-5 pb-5">
         <div class="card p-3">
-          <div class="card-body d-flex flex-row pt-2 px-3 pb-1 data-row">
+          <div [ngClass]="{'container': currentSlide=='ngb-slide-0'}" class="card-body d-flex flex-row pt-2 px-3 pb-1 data-row">
             <div class="w-60">
               <div class="column-header card-title text-grey-light">
                 OPPORTUNITY
@@ -101,7 +80,8 @@
               </div>
             </div>
             <div class="w-40 d-flex text-center">
-              <div class="w-20 p-3 container">
+              <div class="w-40 d-flex" [ngClass]="{'container': currentSlide=='ngb-slide-1'}">
+              <div class="w-50 p-3">
                 <div class="column-header card-title text-grey-light">
                   EXEMPLARS
                 </div>
@@ -117,7 +97,7 @@
                   </button>
                 </div>
               </div>
-              <div class="w-20 p-3">
+              <div class="w-50 p-3">
                 <div class="column-header card-title text-grey-light">
                   APPLICANTS
                 </div>
@@ -125,8 +105,9 @@
                   5/12
                 </div>
               </div>
-              <div class="w-40 container p-0 m-0 d-flex">
-                <div class="w-50 p-3">
+              </div>
+              <div class="w-40 p-0 m-0 d-flex">
+                <div class="w-50 p-3" [ngClass]="{'container': currentSlide=='ngb-slide-2'}">
                   <div class="column-header card-title text-grey-light">
                     MATCHES
                   </div>
@@ -134,7 +115,7 @@
                     0
                   </div>
                 </div>
-                <div class="w-50 p-3">
+                <div class="w-50 p-3" [ngClass]="{'container': currentSlide=='ngb-slide-5'}">
                   <div class="column-header card-title text-grey-light">
                     INVITE
                   </div>
@@ -143,7 +124,7 @@
                   </div>
                 </div>
               </div>
-              <div class="w-20 p-3">
+              <div class="w-20 p-3" [ngClass]="{'container': currentSlide=='ngb-slide-3'}">
                 <div class="column-header card-title text-grey-light">
                   VIEW
                 </div>
