@@ -1,6 +1,7 @@
 import os
 
 import dj_database_url
+import django_heroku
 
 from frontier.settings.env import PROD
 from frontier.settings.common import *
@@ -59,3 +60,8 @@ EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
 
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+# Heroku
+
+django_heroku.settings(locals())
