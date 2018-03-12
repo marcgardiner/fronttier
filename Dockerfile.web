@@ -6,6 +6,7 @@ RUN mkdir /frontier
 WORKDIR /frontier
 COPY ./ /frontier
 RUN pip install -r requirements.txt
-RUN (make ng_install && ng_build)
+# TODO(usmanm): Fix this
+# RUN (make ng_install && ng_build)
 RUN python manage.py collectstatic --noinput --settings=frontier.settings.dev
 CMD gunicorn frontier:app --preload --log-file -
