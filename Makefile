@@ -32,7 +32,7 @@ testall: test
 	(cd web/ng_app && make test)
 
 build:
-	docker-compose up -d --no-deps --build web worker
+	docker-compose up -d --no-deps --build web
 
 ng_build:
 	(cd web/ng_app && make build)
@@ -40,8 +40,13 @@ ng_build:
 ng_install:
 	(cd web/ng_app && make install)
 
-bootstrap:
-	python scripts/bootstrap.py
-
 deploy:
 	heroku container:push --recursive --app frontier-web
+
+dumpdata:
+	python manage.py dumpdata --settings=frontier.settings.dev --indent=2 > scripts/db.json
+
+loaddata:
+	python manage.py loaddata --settings=frontier.settings.dev scripts/db.json
+
+bootstrap: loaddata

@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import json
 
 from django.contrib.postgres.fields import ArrayField, JSONField
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.template import Template, Context
 from jsonschema import validate
 
 from frontier.models import BaseModel, LocationFields
@@ -96,10 +98,22 @@ class SurveyResponse(BaseModel):
                              related_name='survey_responses')
 
     def app_resource(self):
+        questions = []
+        for question in sorted(Question.objects.filter(
+                survey=self.survey), key=lambda q: (q.segment, q.index)):
+            resource = question.app_resource()
+            answers = list(Answer.objects.filter(
+                survey_response=self, question=question))
+            if answers:
+                resource['answer'] = answers[0].app_resource()
+
+            questions.append(resource)
+
         return {
             'token': self.token,
             'type': self.survey.type,
-            'user': token_resource(self.user)
+            'user': token_resource(self.user),
+            'questions': questions
         }
 
 
@@ -153,6 +167,9 @@ class QuestionTemplate(BaseModel):
 class Question(BaseModel):
     token_prefix = 'question'
 
+    class Meta:
+        unique_together = ('survey', 'segment', 'index')
+
     survey = models.ForeignKey(
         Survey, on_delete=models.CASCADE, related_name='questions')
     segment = models.IntegerField()
@@ -161,6 +178,19 @@ class Question(BaseModel):
     template = models.ForeignKey(
         QuestionTemplate, on_delete=models.CASCADE, related_name='questions')
     context = JSONField(default={}, blank=True)
+
+    def app_resource(self):
+        t = Template(json.dumps(self.template.data))
+        c = Context(self.context)
+
+        return {
+            'token': self.token,
+            'segment': self.segment,
+            'index': self.index,
+            'prompt': self.template.prompt,
+            'note': self.template.note,
+            'data': json.loads(t.render(c)),
+        }
 
 
 class Answer(BaseModel):
@@ -182,6 +212,12 @@ class Answer(BaseModel):
         validate(self.data, schema)
 
         super(QuestionTemplate, self).save(*args, **kwargs)
+
+    def app_resource(self):
+        return {
+            'token': self.token,
+            'data': self.data
+        }
 
 
 class SurveyInvitation(BaseModel):

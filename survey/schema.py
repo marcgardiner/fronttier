@@ -149,6 +149,83 @@ QUESTION_SCHEMA = {
 }
 
 
-ANSWER_SCHEMA = {
+SINGLE_ANSWER = {
+    'type': 'object',
+    'properties': {
+        'response': {
+            'type': 'object',
+            'properties': {
+                'key': {
+                    'type': 'string',
+                }
+            },
+            'required': ['key']
+        }
+    },
+    'required': ['response']
+}
 
+
+MULTIPLE_ANSWER = {
+    'type': 'object',
+    'properties': {
+        'response': {
+            'type': 'array',
+            'items': {
+                'type': 'object',
+                'properties': {
+                    'key': {
+                        'type': 'string',
+                    }
+                },
+                'required': ['key']
+            }
+        }
+    },
+    'required': ['response']
+}
+
+
+MULTIPLE_ANSWER_FREE_FORM = {
+    'type': 'object',
+    'properties': {
+        'response': {
+            'type': 'array',
+            'items': {
+                'type': 'object',
+                'properties': {
+                    'key': {
+                        'type': 'string',
+                    },
+                    'value': {
+                        'type': 'string'
+                    }
+                },
+                'required': ['key', 'value']
+            }
+        }
+    },
+    'required': ['response']
+},
+
+
+ANSWER_SCHEMA = {
+    Type.MULTI_CHOICE_MULTI_SELECT: MULTIPLE_ANSWER,
+    Type.MULTI_CHOICE_SINGLE_SELECT: SINGLE_ANSWER,
+    Type.OPEN_ENDED_PARAGRAPH: {
+        'type': 'object',
+        'properties': {
+            'response': {
+                'type': 'string'
+            }
+        },
+        'required': ['response']
+    },
+    Type.OPEN_ENDED_MULTI_FIELDS: MULTIPLE_ANSWER_FREE_FORM,
+    Type.REORDER: MULTIPLE_ANSWER,
+    Type.DRAG_DROP: MULTIPLE_ANSWER,
+    Type.TYPE_AHEAD: MULTIPLE_ANSWER_FREE_FORM,
+    Type.DROPDOWN: SINGLE_ANSWER,
+    Type.RANK_ORDER_TABLE: MULTIPLE_ANSWER,
+    Type.RANK_ORDER_MATRIX: MULTIPLE_ANSWER,
 }

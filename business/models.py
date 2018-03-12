@@ -84,10 +84,10 @@ class User(BaseModel, AbstractUser, AddressFields):
         }
 
 
-@receiver(post_save, sender=User)
-def create_login_link(sender, instance=None, created=False, **kw):
+def create_login_link(sender, instance=None, created=False, **kwargs):
     if instance.login_link_id:
         return
+
     l = LoginLink(user=instance)
     l.save()
 
@@ -115,6 +115,9 @@ class Administrator(User):
         super(Administrator, self).save(*args, **kwargs)
 
 
+receiver(post_save, sender=Administrator)(create_login_link)
+
+
 class ApplicantManager(UserManager):
     def get_queryset(self):
         return super(ApplicantManager, self).get_queryset().filter(
@@ -132,6 +135,9 @@ class Applicant(User):
     def save(self, *args, **kwargs):
         self.type = User.Type.APPLICANT
         super(Applicant, self).save(*args, **kwargs)
+
+
+receiver(post_save, sender=Applicant)(create_login_link)
 
 
 class HiringManagerManager(UserManager):
@@ -153,6 +159,9 @@ class HiringManager(User):
     def save(self, *args, **kwargs):
         self.type = User.Type.HIRING_MANAGER
         super(HiringManager, self).save(*args, **kwargs)
+
+
+receiver(post_save, sender=HiringManager)(create_login_link)
 
 
 class Company(BaseModel, AddressFields):

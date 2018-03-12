@@ -1,8 +1,9 @@
-FROM python:2.7-jessie
-RUN apt-get update && apt-get install -y postgresql
+FROM phusion/baseimage
+RUN apt-get update && apt-get install -y \
+    build-essential postgresql nodejs npm python-pip
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /frontier
 WORKDIR /frontier
 COPY ./ /frontier
 RUN pip install -r requirements.txt
-CMD celery -A frontier worker -l info
+CMD gunicorn frontier:app --preload --log-file -

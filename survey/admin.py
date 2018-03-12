@@ -21,7 +21,7 @@ class SurveyResponseAdmin(BaseAdmin):
 
 
 class QuestionTemplateAdmin(BaseAdmin):
-    list_display = BaseAdmin.list_display + ('name', 'type')
+    list_display = BaseAdmin.list_display + ('name', 'type', 'prompt')
 
 
 class QuestionAdmin(BaseAdmin):
