@@ -11,7 +11,7 @@ from survey.models import Job, Survey, SurveyResponse, SurveyInvitation
 
 @restrict(HiringManager, Applicant)
 @json_view(allowed_methods=['GET'])
-def survey(request, token):
+def response(request, token):
     return get_or_404(SurveyResponse, token).app_resource()
 
 

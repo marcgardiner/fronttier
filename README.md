@@ -16,7 +16,7 @@ Once the app image is built, we can lauch it and all its dependent services:
 make upall
 ```
 
-*Note: The `make upall` command must be run in its own terminal.*
+_Note: The `make upall` command must be run in its own terminal._
 
 The first time you run the app, you'll have to migrate the DB to create the app schema and load up some test data:
 
@@ -29,7 +29,7 @@ The app can now be accessed at http://localhost:8000. This is typically all you 
 
 ### Admin Panel
 
-The `make bootstrap` command will create an admin user with email `admin@frontier.com` and password `frontier123`. You can login to the admin panel at http://localhost:8000/admin. 
+The `make bootstrap` command will create an admin user with email `admin@frontier.com` and password `frontier123`. You can login to the admin panel at http://localhost:8000/admin.
 
 ### Caveats
 
@@ -68,7 +68,7 @@ The `token` is unique for each login URL that we email out to a user to take the
 {
     "last_login": null,
     "num_logins": 0,
-    "survey": {
+    "survey_response": {
         "token": "survey_repsonse_123"
     },
     "token": "login_123",
@@ -83,7 +83,7 @@ The `token` is unique for each login URL that we email out to a user to take the
 }
 ```
 
-`survey` will be `null` if the token is not linked to a survey, e.g. if it's a link for the Hiring Manager to login to their dashboard. `first_name` and `last_name` can be `null` as well, if the user's registration is incomplete.
+`survey_response` will be `null` if the token is not linked to a survey, e.g. if it's a link for the Hiring Manager to login to their dashboard. `first_name` and `last_name` can be `null` as well, if the user's registration is incomplete.
 
 #### `POST`
 
@@ -101,3 +101,44 @@ Same as GET
 ```
 
 `password` is self-explanatory. `first_name` and `last_name` must be provided if the user's registration is incomplete. If the provided password is correct, the server will update the user's profile and log them in (by setting auth cookies etc).
+
+### `survey/invite`
+
+#### `POST`
+
+```
+# Request
+{
+    "type": "exemplar",
+    "emails": [
+        "bojack@frontier.com"
+    ],
+    "job": "job_xyz"
+}
+
+# Response
+{
+    "token": "survey_invite_abc"
+}
+```
+
+### `survey/response/<token>`
+
+```
+# Response
+{
+    "token": "survey_response_xyz",
+    "type": "exemplar",
+    "user": {
+        "company": null,
+        "email": "bojack@horseman.com",
+        "first_name": "Bojack",
+        "last_name": "Horseman",
+        "token": "applicant_123",
+        "type": "applicant"
+    },
+    "questions": [
+        ...
+    ]
+}
+```

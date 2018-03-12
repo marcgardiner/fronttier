@@ -202,5 +202,5 @@ class LoginLink(BaseModel):
             'user': self.user.app_resource(),
             'num_logins': self.num_logins,
             'last_login': self.last_login,
-            'survey': token_resource(self.survey_response)
+            'survey_response': token_resource(self.survey_response)
         }
