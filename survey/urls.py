@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+from frontier.utils import append_token
 from survey.views import invite, response
 
 
