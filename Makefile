@@ -31,7 +31,7 @@ test:
 testall: test
 	(cd web/ng_app && make test)
 
-build:
+build: ng_build
 	docker-compose up -d --no-deps --build web
 
 ng_build:
