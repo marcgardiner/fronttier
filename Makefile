@@ -7,7 +7,7 @@ upall:
 	docker-compose up
 
 runserver:
-	python manage.py runserver --settings=frontier.settings.dev
+	python manage.py runserver 0.0.0.0:8000 --settings=frontier.settings.dev
 
 runworker:
 	celery -A frontier worker -l info
