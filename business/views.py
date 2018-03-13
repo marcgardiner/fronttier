@@ -17,9 +17,7 @@ def login(request, token=None):
         return login_link.app_resource()
 
     password = request.json.get('password')
-    user = auth.authenticate(username=login_link.user.email, password=password)
-
-    if user is None:
+    if login_link.password != password:
         return {'error': 'invalid password'}, 401
 
     # Update the user profile with any fields that may be provided

@@ -3,12 +3,14 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django_object_actions import DjangoObjectActions
 
 from business.models import Administrator, Applicant, HiringManager, Company, LoginLink
 from frontier.admin import BaseAdmin
+from messaging.models import Email
 
 
-class BaseUserAdmin(UserAdmin):
+class BaseUserAdmin(DjangoObjectActions, UserAdmin):
     list_display = ('email', 'first_name', 'last_name', 'is_active')
     search_fields = ('email', 'first_name', 'last_name')
 
@@ -41,6 +43,19 @@ class ApplicantAdmin(BaseUserAdmin):
 
 class HiringManagerAdmin(BaseUserAdmin):
     fieldsets = user_fieldsets
+    change_actions = ('send_invite', )
+
+    def send_invite(self, request, obj):
+        email = Email(
+            user=obj,
+            template='messaging/hm_invite.html',
+            context={
+                'subject': 'Welcome to Frontier Signal',
+            }
+        )
+        email.save()
+
+    send_invite.label = 'Send Invitation Email'
 
 
 class LoginLinkAdmin(BaseAdmin):
@@ -50,7 +65,6 @@ class LoginLinkAdmin(BaseAdmin):
 
 class CompanyAdmin(BaseAdmin):
     list_display = BaseAdmin.list_display + ('name', )
-    readonly_fields = BaseAdmin.readonly_fields + ('name', )
 
 
 admin.site.register(Administrator, AdministratorAdmin)

@@ -23,7 +23,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^auth/', include('business.urls')),
-    url(r'^invite/', include('invite.urls')),
+    url(r'^messaging/', include('messaging.urls')),
+    url(r'^survey/', include('survey.urls')),
     url(r'^web/', include('web.urls')),
 
     url(r'^$', index, name='index'),

@@ -33,7 +33,7 @@ def json_view(allowed_methods=['GET', 'POST']):
                 request.hd_user = request.user.hydrated_user()
             else:
                 request.hd_user = None
-            
+
             try:
                 r = view_fn(request, *args, **kwargs)
             except Http404 as e:
@@ -58,7 +58,7 @@ def restrict(*classes):
     def test_fn(user):
         if not user.is_authenticated:
             return False
-        if not types:
+        if not classes:
             return True
         hd_user = user.hydrated_user()
         for klass in classes:

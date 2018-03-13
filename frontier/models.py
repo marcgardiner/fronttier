@@ -14,12 +14,14 @@ class BaseModel(models.Model):
 
     def __init__(self, *args, **kwargs):
         if not hasattr(self.__class__, 'token_prefix'):
-            raise NotImplementedError('token_prefix missing for %s' % self.__class__.__name__)
+            raise NotImplementedError('token_prefix missing for %s' %
+                                      self.__class__.__name__)
 
         super(BaseModel, self).__init__(*args, **kwargs)
         self.set_token()
 
-    token = models.CharField(max_length=32, unique=True, default=get_random_string)
+    token = models.CharField(max_length=64, unique=True,
+                             default=get_random_string)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     disabled = models.BooleanField(default=False, db_index=True)
@@ -29,7 +31,8 @@ class BaseModel(models.Model):
 
     def set_token(self):
         if not self.token or '_' not in self.token:
-            self.token = '%s_%s' % (self.__class__.token_prefix, get_random_string(length=16))
+            self.token = '%s_%s' % (
+                self.__class__.token_prefix, get_random_string(length=16))
 
     def save(self, *args, **kwargs):
         self.set_token()
@@ -43,6 +46,11 @@ class BaseModel(models.Model):
 
     def __unicode__(self):
         return repr(self)
+
+    def app_resource(self):
+        return {
+            'token': self.token,
+        }
 
     @classmethod
     def load(cls, token, safe=False):

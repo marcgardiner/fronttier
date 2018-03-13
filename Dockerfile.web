@@ -1,0 +1,12 @@
+FROM phusion/baseimage
+RUN apt-get update && apt-get install -y \
+    build-essential postgresql nodejs npm python-pip
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /frontier
+WORKDIR /frontier
+COPY ./ /frontier
+RUN pip install -r requirements.txt
+# TODO(usmanm): Fix this
+# RUN (make ng_install && ng_build)
+RUN python manage.py collectstatic --noinput --settings=frontier.settings.dev
+CMD gunicorn frontier:app --preload --log-file -

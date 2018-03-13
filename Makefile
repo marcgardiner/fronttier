@@ -9,6 +9,9 @@ upall:
 runserver:
 	python manage.py runserver --settings=frontier.settings.dev
 
+runworker:
+	celery -A frontier worker -l info
+
 reset:
 	docker-compose rm -f
 
@@ -28,14 +31,22 @@ test:
 testall: test
 	(cd web/ng_app && make test)
 
-build:
+build: ng_build
 	docker-compose up -d --no-deps --build web
 
-ng_app:
+ng_build:
 	(cd web/ng_app && make build)
 
 ng_install:
 	(cd web/ng_app && make install)
 
-bootstrap:
-	python scripts/bootstrap.py
+deploy:
+	heroku container:push --recursive --app frontier-web
+
+dumpdata:
+	python manage.py dumpdata --settings=frontier.settings.dev --indent=2 > scripts/db.json
+
+loaddata:
+	python manage.py loaddata --settings=frontier.settings.dev scripts/db.json
+
+bootstrap: loaddata

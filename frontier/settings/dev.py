@@ -16,6 +16,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+REDIS_URL = 'redis://redis:6379/0' if INSIDE_DOCKER else 'redis://localhost:6379/0'
+
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -37,10 +39,24 @@ DATABASES = {
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://redis:6379/0' if INSIDE_DOCKER else 'redis://localhost:6379/0',
+        'LOCATION': REDIS_URL,
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             'COMPRESSOR': 'django_redis.compressors.zlib.ZlibCompressor',
         },
     }
 }
+
+
+# Celery
+
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+
+# Email
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
