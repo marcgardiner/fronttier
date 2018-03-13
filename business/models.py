@@ -187,14 +187,9 @@ class LoginLink(BaseModel):
         'survey.SurveyResponse', related_name='survey_responses',
         null=True, blank=True)
 
-    password = models.CharField(max_length=16)
+    password = models.CharField(max_length=16, default=get_random_string)
     last_login = models.DateTimeField(null=True, blank=True)
     num_logins = models.IntegerField(default=0)
-
-    def save(self, *args, **kwargs):
-        if not self.password:
-            self.password = get_random_string(12)
-        super(LoginLink, self).save(*args, **kwargs)
 
     def app_resource(self):
         return {
