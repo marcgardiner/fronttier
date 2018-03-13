@@ -4,7 +4,7 @@ class Environment(object):
         self.domain = domain
 
     def is_dev(self):
-        return self.name == 'dev'
+        return self.name in ('dev', 'test')
 
 
 DEV = Environment('dev', 'localhost')

@@ -21,19 +21,19 @@ _Note: The `make upall` command must be run in its own terminal._
 The first time you run the app, you'll have to migrate the DB to create the app schema and load up some test data:
 
 ```
-make migrate
-make bootstrap
+docker-compose exec web python manage.py migrate
+docker-compose exec web python manage.py loaddata scripts/db.json
 ```
 
 The app can now be accessed at http://localhost:8000. This is typically all you need to do in order to run the app.
 
 ### Admin Panel
 
-The `make bootstrap` command will create an admin user with email `admin@frontier.com` and password `frontier123`. You can login to the admin panel at http://localhost:8000/admin.
+The `loaddata` command will create an admin user with email `admin@frontier.com` and password `frontier123`. You can login to the admin panel at http://localhost:8000/admin.
 
 ### Caveats
 
-If changes have been made to the data model, you will have to run the `make migrate` command again. You can usually see a log line in the `make up` output when the Django server boots up informing you that there are unapplied migrations.
+If changes have been made to the data model, you will have to run the `migrate` command again. You can usually see a log line in the `make upall` output when the Django server boots up informing you that there are unapplied migrations.
 
 If the requirements of the Django app have been modified (`requirements.txt`), you'll have to rebuild the Docker image for it.
 

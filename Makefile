@@ -7,7 +7,7 @@ upall:
 	docker-compose up
 
 runserver:
-	python manage.py runserver --settings=frontier.settings.dev
+	python manage.py runserver 0.0.0.0:8000 --settings=frontier.settings.dev
 
 runworker:
 	celery -A frontier worker -l info
@@ -21,9 +21,6 @@ migrate:
 
 console:
 	python manage.py shell --settings=frontier.settings.dev
-
-images:
-	docker build docker/web/ -t frontier:web
 
 test:
 	python manage.py test --settings=frontier.settings.test

@@ -20,6 +20,8 @@ def login(request, token=None):
     if login_link.password != password:
         return {'error': 'invalid password'}, 401
 
+    user = login_link.user
+
     # Update the user profile with any fields that may be provided
     for attr in User.REGISTRATION_FIELDS:
         if not attr in request.json:
