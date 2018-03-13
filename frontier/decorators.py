@@ -1,6 +1,7 @@
 from functools import wraps
 import json
 
+from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse, JsonResponse, Http404
 from django.views.decorators.http import require_http_methods
@@ -39,7 +40,9 @@ def json_view(allowed_methods=['GET', 'POST']):
             except Http404 as e:
                 r = ({'error': e.message}, 404)
             except:
-                r = ({'error', 'server borked'}, 500)
+                if settings.ENV.is_dev():
+                    raise
+                r = ({'error': 'server borked'}, 500)
 
             # If we don't return a tuple, assume status = OK
             if not isinstance(r, tuple):

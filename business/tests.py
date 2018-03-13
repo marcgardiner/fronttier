@@ -11,7 +11,8 @@ from frontier.utils import serialize_datetime
 
 class LoginLinkTestCase(TestCase):
     def setUp(self):
-        app = Applicant.objects.create_user('user', email='app@test.com', password='pwd')
+        app = Applicant.objects.create_user(
+            'user', email='app@test.com', password='pwd')
         self.login_link = LoginLink(user=app)
         self.login_link.save()
 
@@ -22,7 +23,7 @@ class LoginLinkTestCase(TestCase):
         self.assertEquals({
             'last_login': None,
             'num_logins': 0,
-            'survey': {
+            'survey_response': {
                 'token': None
             },
             'token': self.login_link.token,
@@ -44,19 +45,22 @@ class LoginLinkTestCase(TestCase):
             content_type='application/json'
         )
         self.assertEqual(response.status_code, 401)
-        self.assertEquals({'error': 'invalid password'}, json.loads(response.content))
+        self.assertEquals({'error': 'invalid password'},
+                          json.loads(response.content))
 
         response = c.post(
             os.path.join('/auth/login/', self.login_link.token),
-            json.dumps({'password': 'pwd'}),
+            json.dumps({'password': self.login_link.password}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, 403)
-        self.assertEquals({'error': 'registration incomplete'}, json.loads(response.content))
+        self.assertEquals({'error': 'registration incomplete'},
+                          json.loads(response.content))
 
         response = c.post(
             os.path.join('/auth/login/', self.login_link.token),
-            json.dumps({'password': 'pwd', 'first_name': 'A', 'last_name': 'Z'}),
+            json.dumps(
+                {'password': self.login_link.password, 'first_name': 'A', 'last_name': 'Z'}),
             content_type='application/json'
         )
         self.assertEqual(response.status_code, 200)
@@ -64,7 +68,7 @@ class LoginLinkTestCase(TestCase):
         self.assertEquals({
             'last_login': serialize_datetime(self.login_link.last_login),
             'num_logins': 1,
-            'survey': {
+            'survey_response': {
                 'token': None
             },
             'token': self.login_link.token,
