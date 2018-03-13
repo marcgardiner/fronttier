@@ -22,9 +22,6 @@ migrate:
 console:
 	python manage.py shell --settings=frontier.settings.dev
 
-images:
-	docker build docker/web/ -t frontier:web
-
 test:
 	python manage.py test --settings=frontier.settings.test
 
