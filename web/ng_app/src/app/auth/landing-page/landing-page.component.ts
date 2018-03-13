@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
+import { SurveyService } from '../../shared/survey.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -8,12 +10,14 @@ import { AuthService } from '../../shared/auth.service';
 })
 export class LandingPageComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+  private router: Router,
+  private activatedRoute: ActivatedRoute) { }
   userData: Object;
   returnedUser = false;
 
   ngOnInit() {
-    this.userData = this.authService.userData;
+    this.userData = this.activatedRoute.snapshot.data.LandingPageResolver;
     this.returnedUser = this.userData['last_login'] ? true : false;
   }
 

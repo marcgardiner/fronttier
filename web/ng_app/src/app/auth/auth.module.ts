@@ -11,6 +11,8 @@ import { UserAuthService } from '../shared/user-auth.service';
 import { LoginResolver } from './login/login.resolver';
 import { FooterComponent } from './layout/footer/footer.component';
 import { WithoutTokenLoginComponent } from './without-token-login/without-token-login.component';
+import { LandingPageResolver } from './landing-page/landing-page.resolver';
+import { SurveyService } from '../shared/survey.service';
 
 @NgModule({
   imports: [
@@ -25,10 +27,12 @@ import { WithoutTokenLoginComponent } from './without-token-login/without-token-
     HeaderComponent,
     FooterComponent,
     WithoutTokenLoginComponent,
-    ],
-    providers: [
-      LoginResolver,
-    ],
-    exports: [FooterComponent]
+  ],
+  providers: [
+    SurveyService,
+    LoginResolver,
+    LandingPageResolver
+  ],
+  exports: [FooterComponent]
 })
 export class AuthModule { }

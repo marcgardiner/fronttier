@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit {
 
   authTitle: string;
   userData;
+  errorMsg = '';
+  errorFlag = false;
 
   constructor(private router: Router,
     private authService: AuthService,
@@ -59,7 +61,11 @@ export class LoginComponent implements OnInit {
         return;
       }
       this.router.navigate(['auth/progress']);
-    });
+    }, ((err) => {
+      this.errorFlag = true;
+      this.errorMsg = err.error.error;
+      console.log('login error', err);
+    }));
   }
 
 }

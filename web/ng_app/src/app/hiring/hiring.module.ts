@@ -14,6 +14,8 @@ import { AngularDependenciesModule } from '../shared/angular-dependencies.module
 import { FooterComponent } from './layout/footer/footer.component';
 import { RecipientsService } from './shared/recipients.service';
 import { EditRecipientGuard } from './shared/edit-recipient.guard';
+import { FullPreviewComponent } from './add-applicants/full-preview/full-preview.component';
+import { InvitationsService } from '../shared/invitations.service';
 
 @NgModule({
   entryComponents: [
@@ -33,11 +35,13 @@ import { EditRecipientGuard } from './shared/edit-recipient.guard';
     AllRecipientsModalComponent,
     DashboardComponent,
     InviteComponent,
-    FooterComponent
+    FooterComponent,
+    FullPreviewComponent
   ],
   providers: [
     RecipientsService,
-    EditRecipientGuard
+    EditRecipientGuard,
+    InvitationsService
   ]
 })
 export class HiringModule { }

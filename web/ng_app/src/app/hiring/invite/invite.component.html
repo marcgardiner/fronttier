@@ -1,22 +1,18 @@
-<div class="container py-5">
-    <button class="btn btn-outline-primary btn-rounded waves-effect mb-3" data-toggle="modal" data-target="#invite-modal">invite modal</button>
-    <button class="btn btn-outline-primary btn-rounded waves-effect mb-3 ml-3" data-toggle="modal" data-target="#import-email-list-modal">import email list</button>
-  </div>
 
-  <div class="modal fade show" id="invite-modal" tabindex="-1" role="dialog" aria-hidden="true">
+
     <div class="modal-dialog" role="document">
       <div class="modal-content d-flex">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" routerLink="../dashboard"></button>
         <div class="modal-container text-center">
           <p class="poppins fz-30 weight-500">Who are you inviting?</p>
           <div class="d-inline-block pt-5">
             <label class="radio-wrap mx-auto">
               <input type="radio" name="invite">
-              <span class="btn btn-outline-primary btn-rounded waves-effect">exemplars</span>
+              <span class="btn btn-outline-primary btn-rounded waves-effect" (click)="addInvitations('Exemplars')">exemplars</span>
             </label>
             <label class="radio-wrap mx-auto">
               <input type="radio" name="invite">
-              <span class="btn btn-outline-primary btn-rounded waves-effect" routerLink="../add" aria-label="Close" data-dismiss="modal">applicants</span>
+              <span class="btn btn-outline-primary btn-rounded waves-effect" (click)="addInvitations('Applicants')" aria-label="Close" data-dismiss="modal">applicants</span>
             </label>
             <div class="pt-5">
               <button class="btn btn-dark btn-rounded mt-5">continue</button>
@@ -25,9 +21,8 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal fade" id="import-email-list-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- <div class="modal fade" id="import-email-list-modal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content d-flex">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
@@ -43,4 +38,4 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->

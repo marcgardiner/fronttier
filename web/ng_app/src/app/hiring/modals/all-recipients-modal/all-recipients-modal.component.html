@@ -34,5 +34,5 @@
     </div>
   </div>
 
-    <button class="btn btn-dark btn-rounded mt-4 mb-2 add-users-btn" (click)="sendInvites()">Send invites</button>
+    <button class="btn btn-dark btn-rounded mt-4 mb-2 add-users-btn" [disabled]="invalidEmail" (click)="sendInvitations()">Send invites</button>
 </div>

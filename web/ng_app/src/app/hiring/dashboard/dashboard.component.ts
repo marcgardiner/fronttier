@@ -46,9 +46,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.carousel.interval = 9999999;
     this.carousel.slide.subscribe((slide) => {
-      console.log(slide);
       this.currentSlide = slide.current;
       if (this.currentSlide === 'ngb-slide-0' && slide.direction === 'left') {
         this.sliderComplete = true;

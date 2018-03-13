@@ -40,8 +40,7 @@ export class QuestionViewverComponent implements OnInit {
   }
 
   ngOnInit() {
-    const index = parseInt(window.localStorage.getItem('index'), 0) || 0;
-    this.getQuestionare(index);
+    this.getQuestionare(this.questionIndex);
   }
 
   getQuestionare(index) {

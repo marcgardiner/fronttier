@@ -25,7 +25,7 @@ export class AuthGuard {
             }
             return true;
         } else if (next.routeConfig.path === 'question') {
-            if (loggedInUser.user.type !== 'applicant') {
+            if (loggedInUser.user.type !== 'applicant' && loggedInUser.user.type !== 'hiring_manager') {
                 this.router.navigate(['auth/login/' + token]);
                 return false;
             }

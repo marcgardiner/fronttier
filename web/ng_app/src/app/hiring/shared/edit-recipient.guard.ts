@@ -14,8 +14,8 @@ export class EditRecipientGuard {
     constructor(private recipientService: RecipientsService, private router: Router) { }
 
     canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        if (!this.recipientService.usersList.length || !this.recipientService.usersType) {
-            this.router.navigate(['hiring/add']);
+        if (!this.recipientService.usersType) {
+            this.router.navigate(['hiring/invite']);
             return false;
         }
         return true;

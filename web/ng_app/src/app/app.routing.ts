@@ -15,16 +15,16 @@ export const appRoutes: Routes = [
   {
     path: 'question',
     loadChildren: './question/question.module#QuestionModule',
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'hiring',
     loadChildren: './hiring/hiring.module#HiringModule',
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin',
     loadChildren: './admin/admin.module#AdminModule',
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   }
 ];

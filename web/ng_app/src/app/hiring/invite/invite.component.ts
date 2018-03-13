@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RecipientsService } from '../shared/recipients.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invite',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InviteComponent implements OnInit {
 
-  constructor() { }
+  constructor(private recipientSerivce: RecipientsService,
+  private router: Router) { }
 
   ngOnInit() {
+  }
+
+  addInvitations(type: string) {
+    this.recipientSerivce.usersType = type;
+    this.router.navigate(['hiring/add']);
   }
 
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit, HostBinding, ViewChild, Output, EventEmitter } from '@angular/core';
 import { element } from 'protractor';
-import { validateEmail } from '../../shared/common/email-validator';
+import { validateEmail, duplicateEmail } from '../../shared/common/email-validator';
 import { RecipientsService } from '../../shared/recipients.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { InvitationsService } from '../../../shared/invitations.service';
 
 @Component({
   selector: 'app-all-recipients-modal',
@@ -20,10 +21,12 @@ export class AllRecipientsModalComponent implements OnInit {
   showUserLabel = false;
   showEditUserLabel = false;
   usersData = [];
+  invalidEmail = false;
 
 
   @ViewChild('test') test;
-  constructor(private recipientService: RecipientsService) {
+  constructor(private recipientService: RecipientsService,
+    private invitationsService: InvitationsService) {
   }
   @Output() updatedRecipients = new EventEmitter();
 
@@ -41,6 +44,7 @@ export class AllRecipientsModalComponent implements OnInit {
           valid: validateEmail(item)
         });
       } else {
+        this.invalidEmail = true;
         this.usersData.unshift({
           value: item,
           valid: validateEmail(item)
@@ -52,10 +56,11 @@ export class AllRecipientsModalComponent implements OnInit {
   removeUser(user) {
     this.usersData.splice(this.usersData.indexOf(user), 1);
     this.recipientService.usersList = this.getRecipientsArr();
+    this.invalidEmail  = this.invalidEmails();
   }
 
   addnewUser() {
-    if (!this.recipientForm.valid) {
+    if (!this.recipientForm.valid || duplicateEmail(this.recipientForm.value.email, this.recipientService.usersList)) {
       return;
     }
     const data = {
@@ -85,11 +90,34 @@ export class AllRecipientsModalComponent implements OnInit {
     this.usersData[this.editUser.index].valid = validateEmail(this.editUser.value);
     this.editUser.index = null;
     this.recipientService.usersList = this.getRecipientsArr();
-    // this.updatedRecipients.emit(this.getRecipientsArr());
+    this.invalidEmail  = this.invalidEmails();
   }
 
   getRecipientsArr() {
     return this.usersData.map(item => item.value);
+  }
+
+  sendInvitations() {
+    const data = {
+      type: this.recipientService.usersType.toLowerCase(),
+      emails: this.recipientService.usersList,
+      job: 'job_xyz'
+    };
+    this.invitationsService.sendInvitations(data)
+      .subscribe((res) => {
+        console.log('res', res);
+      });
+  }
+
+  invalidEmails() {
+    let invalidEmail = false;
+    this.recipientService.usersList.forEach((elem) => {
+      if (!validateEmail(elem)) {
+        invalidEmail = true;
+        return;
+      }
+    });
+    return invalidEmail;
   }
 
 
