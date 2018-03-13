@@ -1,12 +1,12 @@
 <section id="dashboard">
 
-  <div class="header text-center">
+  <div class="header text-center" *ngIf="sliderComplete === true">
     <div class="pt-5">
       <h3 class="text-nowrap title">Welcome to your Signal Dashboard</h3>
     </div>
     <div class="pb-5 pt-2">
       <p class="description">
-        This is the first look at the status of all of your open Opportunities. Let us show you around!
+          A look at the status of your open Opportunities!
       </p>
     </div>
     <div class="pt-3 pr-5 close-btn">
@@ -16,7 +16,7 @@
 
   <br/>
 
-  <div class="header text-center">
+  <div class="header text-center" *ngIf="sliderComplete === false">
     <ngb-carousel #carousel>
       <ng-template ngbSlide *ngFor="let slide of dashboardData.slides">
         <div>
@@ -41,7 +41,7 @@
 
   
 
-  <div class="header d-flex flex-row">
+  <div class="header d-flex flex-row" *ngIf="sliderComplete === true">
     <div class="p-5">
       <h3 class="text-nowrap title">{{title}}</h3>
     </div>
@@ -67,6 +67,51 @@
     </div>
     <div class="">
       <div class="mx-5 pb-5">
+        <!-- <div class="table-responsive">
+          <table class="table"
+            [class.slide-1]="currentSlide === 'ngb-slide-1'"
+            [class.slide-2]="currentSlide === 'ngb-slide-2'"
+            [class.slide-3]="currentSlide === 'ngb-slide-3'">
+            <thead>
+              <tr>
+                <th>opporunity</th>
+                <th>examplars</th>
+                <th>applicants</th>
+                <th>matches</th>
+                <th>invite</th>
+                <th>view</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of data; let i = index;">
+                <td><h4>{{row.title}}</h4></td>
+                <td>
+                    <ng-template #popContent>
+                        <div class="text-center">
+                          <h5 class="text-nowrap font-weight-bold px-2 pt-2">Gathering Exemplar Data</h5>
+                          <p class="px-2 pt-2">Not to worry, we’ll send an update when the data is complete</p>
+                        </div>
+                      </ng-template>
+                      <button type="button" class="btn-popover" [ngbPopover]="popContent" triggers="mouseenter:mouseleave">
+                        <div class="progress-bar-mini">
+                          <span class="progress" [style.width]="progress + '%'"></span>
+                        </div>
+                      </button>
+                </td>
+                <td>{{row.applicants}}</td>
+                <td>{{row.matches}}</td>
+                <td><div>
+                    <img [src]="row.invite? 'assets/img/envelope-light.svg':'assets/img/envelope.svg'">
+                  </div></td>
+                <td>
+                    <div>
+                        <img [src]="row.view?'assets/img/eye.svg':'assets/img/eye-light.svg'">
+                      </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
         <div class="card p-3">
           <div [ngClass]="{'container': currentSlide=='ngb-slide-0'}" class="card-body d-flex flex-row pt-2 px-3 pb-1 data-row">
             <div class="">

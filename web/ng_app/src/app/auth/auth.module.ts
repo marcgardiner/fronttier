@@ -10,6 +10,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { UserAuthService } from '../shared/user-auth.service';
 import { LoginResolver } from './login/login.resolver';
 import { FooterComponent } from './layout/footer/footer.component';
+import { WithoutTokenLoginComponent } from './without-token-login/without-token-login.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { FooterComponent } from './layout/footer/footer.component';
     AuthComponent,
     HeaderComponent,
     FooterComponent,
+    WithoutTokenLoginComponent,
     ],
     providers: [
       LoginResolver,

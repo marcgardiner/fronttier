@@ -12,6 +12,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public progress = 25;
   @ViewChild('carousel') carousel: NgbCarousel;
 
+  data = [{
+    title: 'Sales Manager - Hiltown Midtown',
+    examplars: 0,
+    applicants: '5/12',
+    matches: 0,
+    invite: true,
+    view: true
+  }, {
+    title: 'Sales & Marketing Analyst - Hiltown Midtown',
+    examplars: 0,
+    applicants: '5/12',
+    matches: 0,
+    invite: false,
+    view: true
+  }];
+
   constructor(popoverConfig: NgbPopoverConfig,
     private authService: AuthService) {
     popoverConfig.container = 'section#dashboard';
@@ -20,18 +36,24 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   title: string;
   content: string;
   currentSlide = 'ngb-slide-0';
+  sliderComplete = false;
   dashboardData;
 
   ngOnInit() {
-    this.carousel.interval = 0;
     this.dashboardData = HiringDashboard;
     this.title = this.dashboardData.signal.heading;
     this.content = this.dashboardData.signal.content;
   }
 
   ngAfterViewInit() {
+    this.carousel.interval = 9999999;
     this.carousel.slide.subscribe((slide) => {
+      console.log(slide);
       this.currentSlide = slide.current;
+      if (this.currentSlide === 'ngb-slide-0' && slide.direction === 'left') {
+        this.sliderComplete = true;
+        this.currentSlide = '';
+      }
     });
   }
 

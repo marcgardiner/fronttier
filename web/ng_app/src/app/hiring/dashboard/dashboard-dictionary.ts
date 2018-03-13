@@ -3,20 +3,20 @@ import { DashboardDictionaryInterface } from './dashboard-dictionary.interface';
 export const HiringDashboard: DashboardDictionaryInterface = {
     signal: {
         heading: 'Signal Collection In progress',
-        content: `We are hard at work collecting signals from your exemplars and will notify you
-        when all signals are complete and ready for action. Invite applicants to build a
-        signal profile.`
+        content: `We are hard at work collecting signals from your exemplar employees and will
+        notify you when all signals are complete and ready for action. Invite
+        applicants to build a signal profile.`
     },
     exempler: {
         heading: 'Exemplar Signals Collected',
-        content: `You work with some great people! We just got to know your exemplars and
-        we are hard at work in search of the top applicants. Check back soon
-        and we’ll have some matches just for you!`
+        content: `You work with some great people! We just got to know the exemplar
+        employees you connected us with and we are hard at work in search of the
+        top applicants for you. Check back soon, we’ll have some matches just for you!`
     },
     success: {
         heading: 'Signal Match Success',
         content: `Hooray! We are happy to help you find your next colleague. You’ve got
-        applicant matches waiting, click below to see them.`
+        applicants that are sourced to fit your requirements, click below to see them.`
     },
     slides: [
         {
@@ -25,24 +25,25 @@ export const HiringDashboard: DashboardDictionaryInterface = {
         },
         {
             heading: 'Exemplar + Applicant Status',
-            content: `Exemplar status let’s you know when we’ve collected their signal data and applicant
-            status shows how many of your invited applicants have completed their profile.`
+            content: `Exemplar status let’s you know when we’ve collected enough signal data to make a sourcing fit.
+            Applicant status shows how many of your invited applicants have completed their profile.`
         },
         {
             heading: 'Signal Matches',
-            content: 'Once we collect all your exemplar data we use those signals to map and recommend optimal applicant matches to you!'
+            content: 'Once exemplar signal data is collected  we use those signals to map and recommend optimal applicant matches to you!'
         },
         {
             heading: 'Get all the Details',
-            content: 'Dig deeper into each Opportunity by clicking view to can see your personalized Signal Report and match list'
+            content: 'Click on the view icon to browse your recommended matches'
         },
         {
             heading: 'Build your Signal Profile',
-            content: 'Help us understand your organization at a deeper level by filling out your signal profile at any time'
+            content: `Help us understand your requirements and organization at a deeper
+            level by filling out your signal profile at any time`
         },
         {
             heading: 'Let’s Get Started',
-            content: 'Invite you exemplars and applicants and we’ll get to work collecting signal data!'
+            content: 'Invite your exemplar employees and job applicants and we’ll get to work collecting signal data!'
         },
     ]
 };
