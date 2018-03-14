@@ -1,12 +1,26 @@
 FROM phusion/baseimage
-RUN apt-get update && apt-get install -y \
-    build-essential postgresql nodejs npm python-pip
-ENV PYTHONUNBUFFERED 1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y build-essential postgresql python-pip
+
+# Install Node.js
+RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
+RUN apt-get install -y nodejs
+
 RUN mkdir /frontier
 WORKDIR /frontier
 COPY ./ /frontier
+
+# Install Python requirements
 RUN pip install -r requirements.txt
-# TODO(usmanm): Fix this
-# RUN (make ng_install && ng_build)
+
+# Build Angular app
+RUN rm -rf /frontier/web/ng_app/node_modules
+RUN rm -rf /frontier/web/ng_app/dist
+RUN (make ng_install && make ng_build)
+
+# Collect static files
 RUN python manage.py collectstatic --noinput --settings=frontier.settings.dev
+
+ENV PYTHONUNBUFFERED 1
 CMD gunicorn --bind 0.0.0.0:$PORT --preload --log-file - frontier:app
