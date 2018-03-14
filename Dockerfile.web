@@ -23,4 +23,4 @@ RUN (make ng_install && make ng_build)
 RUN python manage.py collectstatic --noinput --settings=frontier.settings.dev
 
 ENV PYTHONUNBUFFERED 1
-CMD gunicorn --bind 0.0.0.0:$PORT --preload --log-file - frontier:app
+CMD gunicorn --bind 0.0.0.0:$PORT --preload --log-file - frontier.wsgi
