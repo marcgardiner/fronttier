@@ -12,6 +12,10 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from '../hiring.routing';
 import { HiringComponent } from '../hiring.component';
 import { APP_BASE_HREF } from '@angular/common';
+import { FullPreviewComponent } from '../add-applicants/full-preview/full-preview.component';
+import { AuthService } from '../../shared/auth.service';
+import { UserAuthService } from '../../shared/user-auth.service';
+import { RecipientsService } from '../shared/recipients.service';
 
 describe('InviteComponent', () => {
   let component: InviteComponent;
@@ -20,20 +24,23 @@ describe('InviteComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        NgbModule.forRoot(),
         RouterModule.forRoot(appRoutes),
-        AngularDependenciesModule
+        AngularDependenciesModule,
+        NgbModule.forRoot()
       ],
       declarations: [
-        HiringComponent,
-        AddApplicantsComponent,
         HeaderComponent,
         FooterComponent,
+        AddApplicantsComponent,
+        HiringComponent,
+        InviteComponent,
         AllRecipientsModalComponent,
-        DashboardComponent,
-        InviteComponent
-      ],
+        FullPreviewComponent,
+        DashboardComponent],
       providers: [
+        AuthService,
+        UserAuthService,
+        RecipientsService,
         { provide: APP_BASE_HREF, useValue: '/' }
       ]
     })

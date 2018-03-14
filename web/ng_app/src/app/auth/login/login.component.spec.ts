@@ -11,6 +11,7 @@ import { FooterComponent } from '../layout/footer/footer.component';
 import { APP_BASE_HREF } from '@angular/common';
 import { AuthService } from '../../shared/auth.service';
 import { UserAuthService } from '../../shared/user-auth.service';
+import { WithoutTokenLoginComponent } from '../without-token-login/without-token-login.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -26,7 +27,8 @@ describe('LoginComponent', () => {
         AuthComponent,
         LandingPageComponent,
         HeaderComponent,
-        FooterComponent ],
+        FooterComponent,
+        WithoutTokenLoginComponent ],
         providers: [
           { provide: APP_BASE_HREF, useValue: '/' },
           AuthService,

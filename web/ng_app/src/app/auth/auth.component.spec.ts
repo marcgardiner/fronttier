@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { AngularDependenciesModule } from '../shared/angular-dependencies.module';
+import { WithoutTokenLoginComponent } from './without-token-login/without-token-login.component';
 
 describe('AuthComponent', () => {
   let component: AuthComponent;
@@ -25,7 +26,8 @@ describe('AuthComponent', () => {
         LandingPageComponent,
         AuthComponent,
         HeaderComponent,
-        FooterComponent
+        FooterComponent,
+        WithoutTokenLoginComponent
       ],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' }
