@@ -88,10 +88,7 @@ def create_login_link(sender, instance=None, created=False, **kwargs):
     if instance.login_link_id:
         return
 
-    l = LoginLink(user=instance)
-    l.save()
-
-    instance.login_link = l
+    instance.login_link = LoginLink.objects.create(user=instance)
     instance.save()
 
 

@@ -13,8 +13,7 @@ class LoginLinkTestCase(TestCase):
     def setUp(self):
         app = Applicant.objects.create_user(
             'user', email='app@test.com', password='pwd')
-        self.login_link = LoginLink(user=app)
-        self.login_link.save()
+        self.login_link = LoginLink.objects.create(user=app)
 
     def test_get(self):
         c = Client()

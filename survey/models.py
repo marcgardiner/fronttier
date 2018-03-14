@@ -155,13 +155,11 @@ class QuestionTemplate(BaseModel):
     note = models.TextField(null=True, blank=True)
     data = JSONField(default={}, blank=True)
 
-    def save(self, *args, **kwargs):
+    def clean(self):
         from survey.schema import QUESTION_SCHEMA
 
         schema = QUESTION_SCHEMA[self.type]
         validate(self.data, schema)
-
-        super(QuestionTemplate, self).save(*args, **kwargs)
 
 
 class Question(BaseModel):
@@ -205,13 +203,11 @@ class Answer(BaseModel):
         Question, on_delete=models.CASCADE, related_name='answers')
     data = JSONField()
 
-    def save(self, *args, **kwargs):
+    def clean(self):
         from survey.schema import ANSWER_SCHEMA
 
         schema = ANSWER_SCHEMA[self.question.template.type]
         validate(self.data, schema)
-
-        super(QuestionTemplate, self).save(*args, **kwargs)
 
     def app_resource(self):
         return {
@@ -254,4 +250,7 @@ class SurveyInvitation(BaseModel):
 
 @receiver(post_save, sender=SurveyInvitation)
 def process_survey_invitation(sender, instance=None, created=False, **kw):
-    tasks.process_survey_invitation(instance.token)
+    from survey import tasks
+
+    if instance.state == SurveyInvitation.State.PENDING:
+        tasks.process_survey_invitation(instance.token)

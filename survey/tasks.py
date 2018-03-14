@@ -1,8 +1,9 @@
 from celery import shared_task
 from django.utils.crypto import get_random_string
 
-from business.models import LoginLink
-from survey.models import SurveyInvitation, SurveyResponse
+from business.models import Applicant, LoginLink
+from messaging.models import Email
+from survey.models import Survey, SurveyInvitation, SurveyResponse
 
 
 @shared_task
@@ -22,26 +23,29 @@ def process_survey_invitation(token):
         if Applicant.objects.filter(email=email).exists():
             continue
 
-        applicant = Applicant(email=email)
-        applicant.set_password(get_random_string(16))
-        applicant.save()
+        applicant = Applicant.objects.create_user(
+            get_random_string(), email=email, password=get_random_string())
+        sr = SurveyResponse.objects.create(
+            user=applicant, survey=invitation.survey)
+        ll = LoginLink.objects.create(user=applicant, survey_response=sr)
 
-        sr = SurveyResponse(user=applicant, survey=invitation.survey)
-        sr.save()
+        company_name = invitation.hiring_manager.company.name
 
-        ll = LoginLink(user=applicant, survey_response=sr)
-        ll.save()
+        if sr.survey.type == Survey.Type.EXEMPLAR:
+            subject = 'Invitation to Participate in Frontier Signal'
+        else:
+            subject = 'Great News from %s and Frontier Signal' % company_name
 
-        email = Email(
+        email = Email.objects.create(
             user=applicant,
             template='messaging/%s_invite.html' % invitation.type,
             context={
+                'subject': subject,
                 'login_link': ll.token,
-                'company': invitation.hiring_manager.company.name,
+                'company': company_name,
                 'hiring_manager': invitation.hiring_manager.first_name,
             }
         )
-        email.save()
 
     invitation.state = SurveyInvitation.State.SUCCESS
     invitation.save()

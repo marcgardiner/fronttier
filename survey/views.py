@@ -41,12 +41,11 @@ def invite(request):
     # Pick the latest version
     survey = surveys[0]
 
-    invitation = Invitation(
+    invitation = SurveyInvitation.objects.create(
         hiring_manager=request.hd_user,
         type=_type,
         survey=survey,
         emails=emails
     )
-    invitation.save()
 
     return invitation.app_resource()

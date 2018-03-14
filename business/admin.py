@@ -46,14 +46,13 @@ class HiringManagerAdmin(BaseUserAdmin):
     change_actions = ('send_invite', )
 
     def send_invite(self, request, obj):
-        email = Email(
+        email = Email.objects.create(
             user=obj,
             template='messaging/hm_invite.html',
             context={
                 'subject': 'Welcome to Frontier Signal',
             }
         )
-        email.save()
 
     send_invite.label = 'Send Invitation Email'
 

@@ -35,4 +35,5 @@ class Email(BaseModel):
 
 @receiver(post_save, sender=Email)
 def process_email(sender, instance=None, created=False, **kw):
-    tasks.process_email(instance.token)
+    if instance.state == Email.State.PENDING:
+        tasks.process_email(instance.token)

@@ -89,6 +89,6 @@ def restrict(*classes):
                 else:
                     return redirect
 
-            return view_func(request, *args, **kwargs)
+            return view_fn(request, *args, **kwargs)
         return wrapper
     return decorator
