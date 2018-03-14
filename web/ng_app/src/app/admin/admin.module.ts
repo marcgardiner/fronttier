@@ -13,6 +13,8 @@ import { EmployeesComponent } from './employees/employees.component';
 import { NewEmployeeComponent } from './modals/new-employee/new-employee.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { NewJobComponent } from './modals/new-job/new-job.component';
+import { StatsComponent } from './stats/stats.component';
+import { TrackResponsesComponent } from './track-responses/track-responses.component';
 
 @NgModule({
   imports: [
@@ -23,6 +25,17 @@ import { NewJobComponent } from './modals/new-job/new-job.component';
   entryComponents: [
     NewCompanyModalComponent
   ],
-  declarations: [DashboardComponent, AdminComponent, HeaderComponent, NewCompanyModalComponent, HiringManagersComponent, NewHiringManagerModalComponent, EmployeesComponent, NewEmployeeComponent, JobsComponent, NewJobComponent]
+  declarations: [DashboardComponent,
+    AdminComponent,
+    HeaderComponent,
+    NewCompanyModalComponent,
+    HiringManagersComponent,
+    NewHiringManagerModalComponent,
+    EmployeesComponent,
+    NewEmployeeComponent,
+    JobsComponent,
+    NewJobComponent,
+    StatsComponent,
+    TrackResponsesComponent]
 })
 export class AdminModule { }

@@ -322,6 +322,7 @@ export class QuestionFieldService {
         if (this.questionsArr.length < index) {
             return null;
         }
+        // window.localStorage.setItem('index', index.toString());
         return this.questionsArr[index];
     }
 }

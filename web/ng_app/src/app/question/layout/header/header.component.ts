@@ -9,7 +9,6 @@ import { SegmentService } from '../../segments/segments.service';
 export class HeaderComponent implements OnInit {
 
   constructor(
-    private segmentService: SegmentService
   ) { }
 
   ngOnInit() {

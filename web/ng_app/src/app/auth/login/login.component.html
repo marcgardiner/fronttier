@@ -13,7 +13,7 @@
               <form action="#!" [formGroup]="loginForm">
                 <div class="d-flex justify-content-between">
                 <div class="md-form">
-                  <label for="form1">First Name</label>
+                  <label for="form1" [class.active]="loginForm.controls.name.value">First Name</label>
                   <input type="text" id="form1" class="form-control" [formControl]="loginForm.controls.name" name="name">
                   <label class="error">
                     <div *ngIf="loginForm.controls.name.errors?.required && loginForm.controls.name.touched">
@@ -26,12 +26,12 @@
                   </label>
                 </div>
                 <div class="md-form">
-                  <label for="form5">Last Name</label>
+                  <label for="form5" [class.active]="loginForm.controls.lastname.value">Last Name</label>
                   <input type="text" id="form5" class="form-control" [formControl]="loginForm.controls.lastname" name="lastname">
                 </div>
                 </div>
                 <div class="md-form">
-                  <label for="form2">Email address</label>
+                  <label for="form2" [class.active]="loginForm.controls.email.value">Email address</label>
                   <input type="email" id="form2" class="form-control" [formControl]="loginForm.controls.email" name="email">
                   <label class="error">
                     <div *ngIf="loginForm.controls.email.errors?.required && loginForm.controls.email.touched">
@@ -60,10 +60,15 @@
                       <a href="#!"> reset your password.</a>
                     </div>
                     <div *ngIf="!loginForm.controls.password.errors?.required && loginForm.controls.password.errors?.minlength && loginForm.controls.password.touched">
-                      Please enter at least 8 characters.
+                      Please enter at least 5 characters.
                     </div>
+                    <div class="login-error" *ngIf="errorFlag">
+                        <p>{{errorMsg}}</p>
+                      </div>
                   </label>
+                  
                 </div>
+                
                 <button class="btn btn-dark btn-rounded mt-3" (click)="login()">log in</button>
               </form>
             </div>
@@ -76,46 +81,3 @@
   </section>
 
 </div>
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-<script src="libs/MDB-Free/js/mdb.min.js"></script>
-<script src="libs/jquery.validate.min.js"></script>
-<script>
-  $(document).ready(function () {
-
-    $('form').validate({
-      rules: {
-        name: {
-          required: true,
-          minlength: 2,
-        },
-        email: {
-          required: true,
-          minlength: 6,
-        },
-        password: {
-          required: true,
-          minlength: 8,
-        },
-      },
-      messages: {
-        name: {
-          required: "<div><a href='#!' class='close-link'></a> does not compute</div>",
-        },
-        email: {
-          required: "<div><a href='#!' class='close-link'></a> does not compute</div> We don’t recognize that email address. Try again or <a href='#!'>request an invite.</a>",
-        },
-        password: {
-          required: "<div><a href='#!' class='close-link'></a> that’s a no-go</div> That password is incorrect. Try again or <a href='#!'>reset your password.</a>",
-        },
-      }
-    });
-
-    $("form").on("click", ".close-link", function () {
-      $(this).closest("label.error").hide();
-    });
-
-  });
-</script> -->

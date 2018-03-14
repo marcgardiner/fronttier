@@ -1,0 +1,59 @@
+<div class="body-grad d-flex flex-column">
+
+  <section class="main-content text-center pb-5">
+    <div class="container">
+
+      <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-7 col-xl-6">
+          <p class="poppins fz-38 weight-500">Hello!</p>
+          <p class="fz-19 pb-4">{{authTitle}}</p>
+
+          <div class="row justify-content-center">
+            <div class="col-md-10">
+              <form action="#!" [formGroup]="loginForm">
+                <div class="md-form">
+                  <label for="form2" [class.active]="loginForm.controls.email.value">Email address</label>
+                  <input type="email" id="form2" class="form-control" [formControl]="loginForm.controls.email" name="email">
+                  <label class="error">
+                    <div *ngIf="loginForm.controls.email.errors?.required && loginForm.controls.email.touched">
+                      <div>
+                        <a href="#!" class="close-link"></a>
+                        DOES NOT COMPUTE
+                      </div>
+                      We don’t recognize that email address. Try again or
+                      <a href="#!">request an invite.</a>
+                    </div>
+                    <div *ngIf="!loginForm.controls.email.errors?.required && loginForm.controls.email.errors?.email && loginForm.controls.email.touched">
+                      Please enter a valid email address.
+                    </div>
+                  </label>
+                </div>
+                <div class="md-form">
+                  <label for="form3">Password</label>
+                  <input type="password" id="form3" class="form-control" [formControl]="loginForm.controls.password" name="password">
+                  <label class="error">
+                    <div *ngIf="loginForm.controls.password.errors?.required && loginForm.controls.password.touched">
+                      <div>
+                        <a href="#!" class="close-link"></a>
+                        THAT’S A NO-GO
+                      </div>
+                      That password is incorrect. Try again or
+                      <a href="#!"> reset your password.</a>
+                    </div>
+                    <div *ngIf="!loginForm.controls.password.errors?.required && loginForm.controls.password.errors?.minlength && loginForm.controls.password.touched">
+                      Please enter at least 8 characters.
+                    </div>
+                  </label>
+                </div>
+                <button class="btn btn-dark btn-rounded mt-3" (click)="login()">log in</button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>

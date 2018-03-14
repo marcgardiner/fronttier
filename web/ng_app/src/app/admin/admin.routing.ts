@@ -8,6 +8,8 @@ import { NewJobComponent } from './modals/new-job/new-job.component';
 import { HiringManagersComponent } from './hiring-managers/hiring-managers.component';
 import { EmployeesComponent } from './employees/employees.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { StatsComponent } from './stats/stats.component';
+import { TrackResponsesComponent } from './track-responses/track-responses.component';
 
 export const appRoutes: Routes = [
     {
@@ -22,7 +24,9 @@ export const appRoutes: Routes = [
         { path: 'employees', component: EmployeesComponent },
         { path: 'new-employee', component: NewEmployeeComponent },
         { path: 'jobs', component: JobsComponent },
-        { path: 'new-job', component: NewJobComponent }
+        { path: 'new-job', component: NewJobComponent },
+        { path: 'stats', component: StatsComponent },
+        { path: 'track-responses', component: TrackResponsesComponent }
       ]
     }
   ];

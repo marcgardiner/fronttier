@@ -40,15 +40,17 @@ export class QuestionViewverComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getQuestionare(0);
+    this.getQuestionare(this.questionIndex);
   }
 
   getQuestionare(index) {
-    this.questionIndex = index;
-    if (this.questionFieldService.questionsArr.length === this.questionIndex) {
+    if (index < 0) {
+      return;
+    } else if (this.questionFieldService.questionsArr.length === index) {
       this.router.navigate(['question/segment-complete']);
       return;
     }
+    this.questionIndex = index;
     this.questionData = this.questionFieldService.getQuestion(this.questionIndex);
     this.renderComponent(this.questionData);
   }

@@ -8,7 +8,7 @@
 
   <div class="container">
     <h2 class="invite-heading">
-      <p class="strong-font">Invite Applicants</p>
+      <p class="strong-font">Invite {{recipientService.usersType}}</p>
     </h2>
     <div class="row">
       <div class="col-lg-7">
@@ -20,16 +20,16 @@
             <p class="p-1">
               import a list
             </p>
-            <a class="p-1">
-              <img src="assets/img/file-excel-2.svg" alt="">
-            </a>
             <label class="p-1">
-              <img class="csv-import-btn" src="assets/img/file-format-csv-2.svg" alt="">
-              <input type="file" (change)="csvUpload($event)" accept=".csv" style="display: none;">
+              <img src="assets/img/file-excel-2.svg" alt="">
             </label>
-            <a class="pt-1 pl-3">
-              <img src="assets/img/handlebars.svg" alt="">
-            </a>
+            <label class="p-1">
+              <img src="assets/img/file-format-csv-2.svg" alt="">
+            </label>
+            <label class="pt-1 pl-3">
+              <img class="csv-import-btn" src="assets/img/handlebars.svg" alt="">
+              <input type="file" (change)="csvUpload($event)" accept=".csv" style="display: none;">              
+            </label>
           </div>
         </div>
 
@@ -46,6 +46,9 @@
                     <div *ngIf="!recipientForm.controls.email.errors?.required && recipientForm.controls.email.errors?.email && recipientForm.controls.email.touched">
                       Please enter a valid email address.
                     </div>
+                    <div *ngIf="duplicateEmailFlag">
+                      Email already exists
+                    </div>
                   </label>
                 </div>
               </div>
@@ -59,10 +62,10 @@
               </div>
               <div class="row mt-2">
                 <div class="col-lg-3">
-                  <p *ngIf="remainingEntries() > 1">+{{remainingEntries()}} more entries</p>
+                  <p *ngIf="remainingEntries() >= 1">+{{remainingEntries()}} more entries</p>
                 </div>
-                <div class="col-lg-9 mt-1">
-                  <p class="strong-font">view all</p>
+                <div class="col-lg-9 mt-1 view-all-recipients">
+                  <p class="strong-font" (click)="viewRecipients()">view all</p>
                 </div>
               </div>
               <div *ngIf="listInvalidEmail">
@@ -71,7 +74,7 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-dark btn-rounded mt-4 send-invite-btn" (click)="sendInvites()">Send invites</button>
+        <button class="btn btn-dark btn-rounded mt-4 send-invite-btn" [disabled]="listInvalidEmail || !recipients.length" (click)="sendInvitions()">Send invites</button>
       </div>
       <div class="col-lg-5 mb-3">
 
@@ -81,9 +84,9 @@
           </h5>
           <div class="d-flex flex-row">
             <p class="p-1">
-              import a list
+              full preview
             </p>
-            <a class="p-1">
+            <a class="p-1" routerLink="../full-preview">
               <img src="assets/img/pop-out.svg" alt="">
             </a>
           </div>
@@ -134,7 +137,7 @@
           </div>
           <div class="card-footer-message">
             <p class="m-0">You're recieving this email because you signed up for alerts about new opportunities from Hilton NY. If you no
-              longer wish to recieve these emails, click here to unsubscribe Frontier Signals| 1500 Broadway, 15th Floor,
+              longer wish to recieve these emails, click here to unsubscribe Frontier Signal| 1500 Broadway, 15th Floor,
               New York, NY 1111</p>
           </div>
 

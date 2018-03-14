@@ -5,7 +5,7 @@
     <section>
       <div class="container">
         
-        <div class="text-left">
+        <div class="text-left" *ngIf="!questionIndex < 1">
           <a class="prev" (click)="getQuestionare(questionIndex - 1)"></a>
         </div>
     <div #questionComponent ></div>

@@ -1,5 +1,6 @@
 
 import { Routes } from '@angular/router';
+import { AuthGuard } from './shared/auth-guard.service';
 
 export const appRoutes: Routes = [
   {
@@ -13,14 +14,17 @@ export const appRoutes: Routes = [
   },
   {
     path: 'question',
-    loadChildren: './question/question.module#QuestionModule'
+    loadChildren: './question/question.module#QuestionModule',
+    canActivate: [AuthGuard]
   },
   {
     path: 'hiring',
-    loadChildren: './hiring/hiring.module#HiringModule'
+    loadChildren: './hiring/hiring.module#HiringModule',
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin',
-    loadChildren: './admin/admin.module#AdminModule'
+    loadChildren: './admin/admin.module#AdminModule',
+    canActivate: [AuthGuard]
   }
 ];

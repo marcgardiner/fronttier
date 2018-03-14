@@ -22,7 +22,6 @@ export class SegmentCompleteComponent implements OnInit {
     this.surveyComplete = true;
     this.completedSegments = this.segments[(this.segment - 1) - 1];
     this.userData = this.authService.userData;
-    console.log(this.userData);
   }
 
 }

@@ -6,11 +6,13 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './auth.routing';
 import { AngularDependenciesModule } from '../shared/angular-dependencies.module';
 import { HeaderComponent } from './layout/header/header.component';
-import { FooterComponent } from './layout/footer/footer.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { UserAuthService } from '../shared/user-auth.service';
-import { AuthService } from '../shared/auth.service';
 import { LoginResolver } from './login/login.resolver';
+import { FooterComponent } from './layout/footer/footer.component';
+import { WithoutTokenLoginComponent } from './without-token-login/without-token-login.component';
+import { LandingPageResolver } from './landing-page/landing-page.resolver';
+import { SurveyService } from '../shared/survey.service';
 
 @NgModule({
   imports: [
@@ -18,14 +20,19 @@ import { LoginResolver } from './login/login.resolver';
     RouterModule.forChild(appRoutes),
     AngularDependenciesModule
   ],
-  declarations: [LoginComponent,
+  declarations: [
+    LoginComponent,
     LandingPageComponent,
     AuthComponent,
     HeaderComponent,
-    FooterComponent],
-    providers: [
-      // AuthService,
-      LoginResolver
-    ]
+    FooterComponent,
+    WithoutTokenLoginComponent,
+  ],
+  providers: [
+    SurveyService,
+    LoginResolver,
+    LandingPageResolver
+  ],
+  exports: [FooterComponent]
 })
 export class AuthModule { }
