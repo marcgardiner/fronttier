@@ -1,7 +1,7 @@
 .PHONY: build
 
 build:
-	PATH=$$(npm bin):$$PATH ng build --base-href /web/ --deploy-url /static/
+	PATH=$$(npm bin):$$PATH ng build --base-href /web/ --deploy-url /static/web/
 
 install:
 	npm install
