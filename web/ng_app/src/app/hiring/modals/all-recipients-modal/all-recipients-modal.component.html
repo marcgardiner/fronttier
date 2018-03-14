@@ -12,8 +12,9 @@
   </div>
   <div class="recipient-list-content">
     <div class="d-flex justify-content-between" [formGroup]="recipientForm">
-      <input type="text" [formControl]="recipientForm.controls.email" (focus)="showUserLabel=true" (blur)="showUserLabel=false" placeholder="add new" (keyup.enter)="addnewUser()">
-      <label class="input-label" *ngIf="showUserLabel" for="">enter to save</label>    
+      <input type="text" [formControl]="recipientForm.controls.email" (focus)="showUserLabel=true" (blur)="showUserLabel=false;duplicateEmailFlag=false" placeholder="add new" (keyup.enter)="addnewUser()">
+      <label class="input-label" *ngIf="showUserLabel && !duplicateEmailFlag" for="">enter to save</label>    
+      <label class="email-error-label" *ngIf="duplicateEmailFlag" for="">Email already exists</label>    
     </div>
     <div *ngFor="let user of usersData;let i = index" (mouseleave)="hoveredIndex=null" (mouseenter)="hoveredIndex=i">
       <div class="d-flex justify-content-between" *ngIf="((editUser.index || editUser.index === 0) && editUser.index==i)">

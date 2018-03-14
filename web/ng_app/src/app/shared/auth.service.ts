@@ -7,6 +7,7 @@ import { HiringManager } from './dictionary/hiring-manager';
 import { decode } from 'jsonwebtoken';
 import { UserDictionaryInterface } from './dictionary/user-dictionary.interface';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 
 @Injectable()
@@ -15,7 +16,7 @@ export class AuthService {
   isLoggedIn: boolean;
   redirectUrl = '';
   loggedInUser = {};
-  userData: Object = {
+  userData: any = {
     user: {
       first_name: ''
     },
@@ -29,12 +30,13 @@ export class AuthService {
 
   private token: string = null;
 
-  onAuthChange: EventEmitter<Boolean> = new EventEmitter<Boolean>();
 
-  constructor(private userAuthService: UserAuthService) {
+  constructor(private userAuthService: UserAuthService,
+  private router: Router) {
     console.log('************** init auth service');
     console.log('');
     console.log('/************** init auth service');
+    this.userData = this.getUserFromCache();
   }
 
   checkIfLoggedIn() {
@@ -45,8 +47,8 @@ export class AuthService {
     return this.token || window.localStorage.getItem('token') || null;
   }
   getUserFromCache() {
-    console.log(JSON.parse(window.localStorage.getItem('user')));
-    return JSON.parse(window.localStorage.getItem('user')) || null;
+    // console.log(JSON.parse(window.localStorage.getItem('user')));
+    return JSON.parse(window.localStorage.getItem('user')) || this.userData;
   }
 
   parseToken(token: string) {
@@ -79,7 +81,7 @@ export class AuthService {
     let userType;
     if (userData.user.type === 'applicant') {
       userType = Applicant;
-    } else if (userData.user.type === 'administrator') {
+    } else if (userData.user.type === 'exempler') {
       userType = Exempler;
     } else if (userData.user.type === 'hiring_manager') {
       userType = HiringManager;
@@ -100,17 +102,7 @@ export class AuthService {
   clearCache() {
     window.localStorage.clear();
     this.token = null;
-    this.redirectUrl = '';
     this.isLoggedIn = false;
-  }
-
-  authenticateViaToken(token: string) {
-    this.isLoggedIn = this.isValidToken(token);
-    if (this.isLoggedIn) {
-      this.saveTokenToCache(token);
-    }
-    this.onAuthChange.emit(this.isLoggedIn);
-    return this.isLoggedIn;
   }
 
   getUserFromToken(token): any {
@@ -145,17 +137,11 @@ export class AuthService {
   // }
 
   logout(): void {
-    /*
-    this.userAuthService.logout().subscribe((response) => {
-        if (!response['error']) {
-            this.clearCache();
-            this.onAuthChange.emit(this.isLoggedIn);
-        }
-    });
-    */
-
+    this.redirectUrl = 'auth/' + (this.getToken() ? 'login/' + this.getToken() : 'access-login');
+    console.log(this.redirectUrl);
     this.clearCache();
-    this.onAuthChange.emit(this.isLoggedIn);
+    this.router.navigate([this.redirectUrl]);
+    this.redirectUrl = '';
   }
 
 }

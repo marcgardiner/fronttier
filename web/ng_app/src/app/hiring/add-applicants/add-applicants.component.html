@@ -46,6 +46,9 @@
                     <div *ngIf="!recipientForm.controls.email.errors?.required && recipientForm.controls.email.errors?.email && recipientForm.controls.email.touched">
                       Please enter a valid email address.
                     </div>
+                    <div *ngIf="duplicateEmailFlag">
+                      Email already exists
+                    </div>
                   </label>
                 </div>
               </div>

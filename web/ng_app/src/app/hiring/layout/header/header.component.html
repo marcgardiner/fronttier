@@ -3,10 +3,13 @@
   
       <div class="row align-items-center">
         <div class="col col-sm-auto col-md-3 col-xl order-sm-1"><a href="#!" class="logo"><img src="assets/img/logo-short.svg" alt=""></a></div>
-        <div class="col col-sm-auto col-md-3 col-xl text-right order-sm-3"><a class="poppins fz-13"><strong>Eric B. &nbsp;</strong><img src="assets/img/chevron-down.svg" alt=""></a></div>
+        <div class="col col-sm-auto col-md-3 col-xl text-right order-sm-3 dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><a class="poppins fz-13"><strong>{{authService.userData.user.first_name}} &nbsp;</strong></a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" routerLink="dashboard" (click)="resetTour()">Welcome Tour</a>
+              <a class="dropdown-item" routerLink="dashboard" (click)="authService.logout()">Logout</a>
+            </div>
+        </div>  
         <div class="col-sm order-sm-2">
-          
-  
         </div>
       </div>
   

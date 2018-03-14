@@ -17,6 +17,7 @@ export class AddApplicantsComponent implements OnInit {
   recipientInput: string;
   listUploaded = false;
   listInvalidEmail = false;
+  duplicateEmailFlag = false;
   recipientsArray = ['chris@charmingbot.com', 'bhatti@charmingbot.com', 'moiz@charmingbot.com', 'hello'];
   constructor(private recipientService: RecipientsService,
     private router: Router,
@@ -44,6 +45,10 @@ export class AddApplicantsComponent implements OnInit {
     reader.readAsText(event.target.files[0]);
     reader.onload = (e: any) => {
       this.recipients = [...this.recipients, ...e.target.result.split(/\r?\n/)];
+      this.recipients = this.recipients.map((email) => {
+        return email.toLowerCase();
+      });
+      console.log(this.recipients);
       this.recipients = Array.from(new Set(this.recipients));
       this.listInvalidEmail = this.checkForInvalidEmail(this.recipients);
     };
@@ -61,7 +66,11 @@ export class AddApplicantsComponent implements OnInit {
   }
 
   saveRecipient() {
-    if (!this.recipientForm.valid || duplicateEmail(this.recipientForm.value.email, this.recipients)) {
+    this.duplicateEmailFlag = false;
+    if (!this.recipientForm.valid) {
+      return;
+    } else if (duplicateEmail(this.recipientForm.value.email, this.recipients)) {
+      this.duplicateEmailFlag = true;
       return;
     }
     this.recipients.push(this.recipientForm.value.email);
@@ -76,15 +85,21 @@ export class AddApplicantsComponent implements OnInit {
   }
 
   sendInvitions() {
+    let userType;
+    if (this.recipientService.usersType.toLowerCase() === 'exemplars') {
+      userType = 'exemplar';
+    } else if (this.recipientService.usersType.toLowerCase() === 'applicants') {
+      userType = 'candidate';
+    }
     const data = {
-      type: this.recipientService.usersType.toLowerCase(),
+      type: userType,
       emails: this.recipientService.usersList,
-      job: 'job_xyz'
+      job: 'job_NDQGPGWStII1AKxM'
     };
     this.invitationsService.sendInvitations(data)
-    .subscribe((res) => {
-      console.log('res', res);
-    });
+      .subscribe((res) => {
+        console.log('res', res);
+      });
   }
 
 }

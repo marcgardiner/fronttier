@@ -22,6 +22,7 @@ export class AllRecipientsModalComponent implements OnInit {
   showEditUserLabel = false;
   usersData = [];
   invalidEmail = false;
+  duplicateEmailFlag = false;
 
 
   @ViewChild('test') test;
@@ -60,7 +61,11 @@ export class AllRecipientsModalComponent implements OnInit {
   }
 
   addnewUser() {
-    if (!this.recipientForm.valid || duplicateEmail(this.recipientForm.value.email, this.recipientService.usersList)) {
+    this.duplicateEmailFlag = false;
+    if (!this.recipientForm.valid) {
+      return;
+    } else if (duplicateEmail(this.recipientForm.value.email, this.recipientService.usersList)) {
+      this.duplicateEmailFlag = true;
       return;
     }
     const data = {
@@ -98,10 +103,16 @@ export class AllRecipientsModalComponent implements OnInit {
   }
 
   sendInvitations() {
+    let userType;
+    if (this.recipientService.usersType.toLowerCase() === 'exemplars') {
+      userType = 'exemplar';
+    } else if (this.recipientService.usersType.toLowerCase() === 'applicants') {
+      userType = 'candidate';
+    }
     const data = {
-      type: this.recipientService.usersType.toLowerCase(),
+      type: userType,
       emails: this.recipientService.usersList,
-      job: 'job_xyz'
+      job: 'job_NDQGPGWStII1AKxM'
     };
     this.invitationsService.sendInvitations(data)
       .subscribe((res) => {
