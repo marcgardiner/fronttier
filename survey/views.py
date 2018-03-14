@@ -9,14 +9,14 @@ from frontier.utils import get_or_404
 from survey.models import Job, Survey, SurveyResponse, SurveyInvitation
 
 
-@restrict(HiringManager, Applicant)
 @json_view(allowed_methods=['GET'])
+@restrict(HiringManager, Applicant)
 def response(request, token):
     return get_or_404(SurveyResponse, token).app_resource()
 
 
-@restrict(HiringManager)
 @json_view(allowed_methods=['POST'])
+@restrict(HiringManager)
 def invite(request):
     emails = request.json['emails']
 

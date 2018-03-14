@@ -2,8 +2,10 @@ from functools import wraps
 import json
 
 from django.conf import settings
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.views import redirect_to_login
 from django.http import HttpResponse, JsonResponse, Http404
+from django.shortcuts import resolve_url
 from django.views.decorators.http import require_http_methods
 
 
@@ -58,15 +60,35 @@ def json_view(allowed_methods=['GET', 'POST']):
 
 
 def restrict(*classes):
-    def test_fn(user):
-        if not user.is_authenticated:
-            return False
-        if not classes:
-            return True
-        hd_user = user.hydrated_user()
-        for klass in classes:
-            if isinstance(hd_user, klass):
-                return True
-        return False
+    def decorator(view_fn):
+        @wraps(view_fn)
+        def wrapper(request, *args, **kwargs):
+            path = request.build_absolute_uri()
+            user = request.user
 
-    return user_passes_test(test_fn)
+            redirect = redirect_to_login(path, resolve_url(
+                settings.LOGIN_URL), REDIRECT_FIELD_NAME)
+
+            if not user.is_authenticated:
+                if hasattr(request, 'json'):
+                    return {
+                        'error': 'user is not logged in'
+                    }, 401
+                else:
+                    return redirect
+
+            request.hd_user = getattr(request, 'hd_user', user.hydrated_user())
+            for klass in classes:
+                if isinstance(request.hd_user, klass):
+                    break
+            else:
+                if hasattr(request, 'json'):
+                    return {
+                        'error': 'user is not allowed access to this endpoint'
+                    }, 403
+                else:
+                    return redirect
+
+            return view_func(request, *args, **kwargs)
+        return wrapper
+    return decorator

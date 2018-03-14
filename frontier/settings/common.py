@@ -118,7 +118,7 @@ SESSION_CACHE_ALIAS = 'default'
 # Authorization
 
 AUTH_USER_MODEL = 'business.User'
-LOGIN_URL = '/web/auth/login'
+LOGIN_URL = '/admin/login'
 
 
 # Sites
