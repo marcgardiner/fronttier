@@ -4,6 +4,16 @@ import { SegmentCompleteComponent } from './segment-complete.component';
 import { AuthService } from '../../../shared/auth.service';
 import { UserAuthService } from '../../../shared/user-auth.service';
 import { AngularDependenciesModule } from '../../../shared/angular-dependencies.module';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from '../../question.routing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { QuestionComponent } from '../../question.component';
+import { QuestionViewverComponent } from '../../question-viewver/question-viewver.component';
+import { HeaderComponent } from '../../layout/header/header.component';
+import { QuestionFieldService } from '../../../shared/question-field.service';
+import { SegmentService } from '../segments.service';
+import { ThinkingStateService } from '../../../shared/thinking-state.service';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('SegmentCompleteComponent', () => {
   let component: SegmentCompleteComponent;
@@ -12,12 +22,23 @@ describe('SegmentCompleteComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        AngularDependenciesModule
+        RouterModule.forRoot(appRoutes),
+        AngularDependenciesModule,
+        BrowserAnimationsModule
       ],
-      declarations: [SegmentCompleteComponent],
+      declarations: [
+        QuestionComponent,
+        QuestionViewverComponent,
+        HeaderComponent,
+        SegmentCompleteComponent
+      ],
       providers: [
+        QuestionFieldService,
+        ThinkingStateService,
+        SegmentService,
         AuthService,
-        UserAuthService
+        UserAuthService,
+        { provide: APP_BASE_HREF, useValue: '/' }
       ]
     })
       .compileComponents();

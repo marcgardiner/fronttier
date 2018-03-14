@@ -13,6 +13,7 @@ import { FooterComponent } from '../layout/footer/footer.component';
 import { HeaderComponent } from '../layout/header/header.component';
 import { APP_BASE_HREF } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { WithoutTokenLoginComponent } from '../without-token-login/without-token-login.component';
 
 describe('LandingPageComponent', () => {
   let component: LandingPageComponent;
@@ -25,23 +26,36 @@ describe('LandingPageComponent', () => {
         HttpClientModule,
         ReactiveFormsModule
       ],
-      declarations: [ LandingPageComponent,
+      declarations: [LandingPageComponent,
         AuthComponent,
         LoginComponent,
         HeaderComponent,
-        FooterComponent ],
+        FooterComponent,
+        WithoutTokenLoginComponent],
       providers: [
         AuthService,
         UserAuthService,
-        { provide: APP_BASE_HREF, useValue : '/' }
+        { provide: APP_BASE_HREF, useValue: '/' }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LandingPageComponent);
     component = fixture.componentInstance;
+    spyOn(component, 'ngOnInit').and.callFake(() => {
+      component.userData = {
+        last_login: true,
+        landing_page: {
+          messages: []
+        },
+        user: {
+          first_name: ''
+        }
+      };
+    });
+    component.ngOnInit();
     fixture.detectChanges();
   });
 

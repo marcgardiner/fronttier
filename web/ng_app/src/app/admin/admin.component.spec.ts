@@ -13,6 +13,8 @@ import { NewEmployeeComponent } from './modals/new-employee/new-employee.compone
 import { JobsComponent } from './jobs/jobs.component';
 import { NewJobComponent } from './modals/new-job/new-job.component';
 import { APP_BASE_HREF } from '@angular/common';
+import { StatsComponent } from './stats/stats.component';
+import { TrackResponsesComponent } from './track-responses/track-responses.component';
 
 describe('AdminComponent', () => {
   let component: AdminComponent;
@@ -30,12 +32,14 @@ describe('AdminComponent', () => {
         EmployeesComponent,
         NewEmployeeComponent,
         JobsComponent,
-        NewJobComponent
+        NewJobComponent,
+        StatsComponent,
+        TrackResponsesComponent
       ],
       imports: [RouterModule.forRoot(appRoutes)],
       providers: [
-        { provide: APP_BASE_HREF, useValue : '/' }
-    ]
+        { provide: APP_BASE_HREF, useValue: '/' }
+      ]
     })
       .compileComponents();
   }));
