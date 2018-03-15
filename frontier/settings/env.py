@@ -1,12 +1,12 @@
 class Environment(object):
-    def __init__(self, name, domain):
+    def __init__(self, name, host):
         self.name = name
-        self.domain = domain
+        self.host = host
 
     def is_dev(self):
         return self.name in ('dev', 'test')
 
 
-DEV = Environment('dev', 'localhost')
-TEST = Environment('test', 'localhost')
-PROD = Environment('prod', 'frontier-web.herokuapp.com')
+DEV = Environment('dev', 'http://localhost:8000')
+TEST = Environment('test', 'http://localhost:8000')
+PROD = Environment('prod', 'https://frontier-web.herokuapp.com')

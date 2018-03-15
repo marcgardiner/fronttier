@@ -22,6 +22,7 @@ def process_email(self, token):
         context['login_link'] = LoginLink.load(context['login_link'])
     else:
         context['login_link'] = email.user.login_link
+    context['host'] = settings.ENV.host
 
     html = render_to_string(email.template, context)
 
