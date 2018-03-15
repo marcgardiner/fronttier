@@ -105,3 +105,6 @@ ENV/
 
 # static
 /static
+
+# vscode
+.vscode
