@@ -18,7 +18,7 @@ def response(request, token):
 @json_view(allowed_methods=['GET'])
 @restrict(HiringManager)
 def jobs(request):
-    jobs = Job.objects.prefetch_related('survey__responses').filter(
+    jobs = Job.objects.prefetch_related('surveys__responses').filter(
         hiring_managers=request.hd_user)
     return {
         'jobs': [job.app_resource() for job in jobs],
