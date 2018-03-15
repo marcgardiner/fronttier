@@ -122,7 +122,31 @@ Same as GET
 }
 ```
 
+### `survey/jobs`
+
+#### `GET`
+
+```
+# Response
+{
+    "jobs": [
+        {
+            "token": "job_xxx",
+            "company": "company_yyy",
+            "type": "intern",
+            "level": "mid",
+            "title": "Lawyer",
+            "description": "Corporate MNA",
+            "state": "open"
+        },
+        ...
+    ]
+}
+```
+
 ### `survey/response/<token>`
+
+#### `GET`
 
 ```
 # Response
