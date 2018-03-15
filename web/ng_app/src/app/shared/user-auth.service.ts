@@ -5,25 +5,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 export class UserAuthService {
   constructor(private http: HttpClient) {}
 
-  register(data: Object) {
-    if (!data["email"]) {
-      throw new Error("Property `email` is required.");
-    }
-    if (!data["name"]) {
-      throw new Error("Property `name` is required.");
-    }
-    if (!data["password"]) {
-      throw new Error("Property `password` is required.");
-    }
-
-    return this.http.post("/auth/register", data);
-  }
-
   login(data): any {
-    // console.log(data);
-    // if (data && !data['email']) { throw new Error('Property `email` is required.'); }
-    // if (data && !data['password']) { throw new Error('Property `password` is required.'); }
-
     const token = data.token;
     delete data.token;
     const options = {
@@ -33,7 +15,6 @@ export class UserAuthService {
   }
 
   getUser(token: string): any {
-    console.log(token);
     if (!token) {
       throw new Error("Token is required.");
     }
