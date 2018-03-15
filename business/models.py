@@ -189,10 +189,20 @@ class LoginLink(BaseModel):
     num_logins = models.IntegerField(default=0)
 
     def app_resource(self):
+        if self.survey_response:
+            survey_response = {
+                'token': self.survey_response.token,
+                'type': self.survey_response.survey.type,
+            }
+        else:
+            survey_response = {
+                'token': None
+            }
+
         return {
             'token': self.token,
             'user': self.user.app_resource(),
             'num_logins': self.num_logins,
             'last_login': self.last_login,
-            'survey_response': token_resource(self.survey_response)
+            'survey_response': survey_response
         }
