@@ -7,16 +7,25 @@ RUN apt-get update && apt-get install -y build-essential postgresql python-pip
 RUN curl -sL https://deb.nodesource.com/setup_9.x | bash
 RUN apt-get install -y nodejs
 
-# Install Python requirements
+# Install Python dependencies
 COPY requirements.txt /tmp
 RUN pip install -r /tmp/requirements.txt
 
+# Install Node dependencies
+RUN mkdir /frontier_ng
+COPY web/ng_app/package* /frontier_ng/
+RUN (cd /frontier_ng && npm install)
+
 # Copy code
-WORKDIR /frontier
 COPY ./ /frontier
+RUN cp -r /frontier/web/ng_app/. /frontier_ng
 
 # Build Angular app
-RUN (make ng_install && make ng_build)
+RUN (cd /frontier_ng && make build)
+RUN ln -s /frontier_ng/dist /frontier/web/static/web
+
+# Set working dir
+WORKDIR /frontier
 
 # Collect static files
 RUN python manage.py collectstatic --noinput --settings=frontier.settings.dev

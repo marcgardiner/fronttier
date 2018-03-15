@@ -4,3 +4,4 @@ Dockerfile.*
 static
 web/ng_app/dist
 web/ng_app/node_modules
+web/static/web

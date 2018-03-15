@@ -3,13 +3,15 @@ FROM phusion/baseimage
 # Install system dependencies
 RUN apt-get update && apt-get install -y build-essential postgresql python-pip
 
-# Install Python requirements
+# Install Python dependencies
 COPY requirements.txt /tmp
 RUN pip install -r /tmp/requirements.txt
 
 # Copy code
-WORKDIR /frontier
 COPY ./ /frontier
+
+# Set working dir
+WORKDIR /frontier
 
 ENV PYTHONUNBUFFERED 1
 CMD celery -A frontier worker -l info
