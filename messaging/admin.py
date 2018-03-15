@@ -3,4 +3,12 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-# Register your models here.
+from frontier.admin import BaseAdmin
+from messaging.models import Email
+
+
+class EmailAdmin(BaseAdmin):
+    list_display = BaseAdmin.list_display + ('user', 'state', 'processed_at')
+
+
+admin.site.register(Email, EmailAdmin)
