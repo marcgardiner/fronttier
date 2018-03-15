@@ -10,6 +10,7 @@ export class RecipientsService {
     user: string;
     welcomeTourReset: Boolean;
     currentSlide: string;
+    jobId: string;
 
     constructor() {
         this.welcomeTourReset = false;

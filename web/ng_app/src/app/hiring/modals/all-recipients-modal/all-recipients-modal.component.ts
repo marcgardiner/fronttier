@@ -4,6 +4,7 @@ import { validateEmail, duplicateEmail } from '../../shared/common/email-validat
 import { RecipientsService } from '../../shared/recipients.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InvitationsService } from '../../../shared/invitations.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-all-recipients-modal',
@@ -27,7 +28,8 @@ export class AllRecipientsModalComponent implements OnInit {
 
   @ViewChild('test') test;
   constructor(private recipientService: RecipientsService,
-    private invitationsService: InvitationsService) {
+    private invitationsService: InvitationsService,
+    private router: Router) {
   }
   @Output() updatedRecipients = new EventEmitter();
 
@@ -57,7 +59,7 @@ export class AllRecipientsModalComponent implements OnInit {
   removeUser(user) {
     this.usersData.splice(this.usersData.indexOf(user), 1);
     this.recipientService.usersList = this.getRecipientsArr();
-    this.invalidEmail  = this.invalidEmails();
+    this.invalidEmail = this.invalidEmails();
   }
 
   addnewUser() {
@@ -95,7 +97,7 @@ export class AllRecipientsModalComponent implements OnInit {
     this.usersData[this.editUser.index].valid = validateEmail(this.editUser.value);
     this.editUser.index = null;
     this.recipientService.usersList = this.getRecipientsArr();
-    this.invalidEmail  = this.invalidEmails();
+    this.invalidEmail = this.invalidEmails();
   }
 
   getRecipientsArr() {
@@ -112,10 +114,11 @@ export class AllRecipientsModalComponent implements OnInit {
     const data = {
       type: userType,
       emails: this.recipientService.usersList,
-      job: 'job_NDQGPGWStII1AKxM'
+      job: this.recipientService.jobId
     };
     this.invitationsService.sendInvitations(data)
       .subscribe((res) => {
+        this.router.navigate(['hiring/dashboard']);
         console.log('res', res);
       });
   }

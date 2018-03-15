@@ -42,4 +42,12 @@ export class UserAuthService {
       this.baseUrl + '/auth/login/' + token);
   }
 
+  getSurveyUser(token: string): any {
+    console.log(token);
+    if (!token) { throw new Error('Token is required.'); }
+
+    return this.http.get(
+      this.baseUrl + '/survey/response/' + token);
+  }
+
 }

@@ -19,7 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/bootstrap/scss/bootstrap.scss",
+        "styles.css",
         "../node_modules/mdbootstrap/css/mdb.css",
         "../node_modules/dragula/dist/dragula.css",
         "../node_modules/material-design-icons/iconfont/material-icons.css",

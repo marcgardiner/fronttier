@@ -9,7 +9,7 @@ import { RecipientsService } from '../../shared/recipients.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
     private recipientService: RecipientsService) { }
 
   ngOnInit() {

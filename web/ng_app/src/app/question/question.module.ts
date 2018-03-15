@@ -22,6 +22,7 @@ import { QuestionTypeaheadComponent } from './question-types/components/question
 import { ThinkingStateService } from '../shared/thinking-state.service';
 import { SegmentCompleteComponent } from './segments/segment-complete/segment-complete.component';
 import { SegmentService } from './segments/segments.service';
+import { QuestionBaseComponent } from './question-types/components/question-base.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { SegmentService } from './segments/segments.service';
     DragulaModule
   ],
   declarations: [
+    QuestionBaseComponent,
     QuestionComponent,
     QuestionViewverComponent,
     HeaderComponent,

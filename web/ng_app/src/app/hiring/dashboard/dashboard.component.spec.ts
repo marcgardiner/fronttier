@@ -17,6 +17,7 @@ import { InvitationsService } from '../../shared/invitations.service';
 import { APP_BASE_HREF } from '@angular/common';
 import { AuthService } from '../../shared/auth.service';
 import { UserAuthService } from '../../shared/user-auth.service';
+import { SurveyService } from '../../shared/survey.service';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -43,6 +44,7 @@ describe('DashboardComponent', () => {
         InvitationsService,
         AuthService,
         UserAuthService,
+        SurveyService,
         { provide: APP_BASE_HREF, useValue: '/' }
       ]
     })

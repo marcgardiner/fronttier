@@ -3,6 +3,8 @@ import { NgbPopoverConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../shared/auth.service';
 import { HiringDashboard } from './dashboard-dictionary';
 import { RecipientsService } from '../shared/recipients.service';
+import { SurveyService } from '../../shared/survey.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +33,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   constructor(popoverConfig: NgbPopoverConfig,
     private authService: AuthService,
-    private recipientService: RecipientsService) {
+    public recipientService: RecipientsService,
+    private surveyService: SurveyService,
+    private router: Router) {
     popoverConfig.container = 'section#dashboard';
   }
 
@@ -58,6 +62,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.recipientService.currentSlide = '';
       }
     });
+  }
+
+  sendInvitations() {
+    this.recipientService.jobId = 'job_NDQGPGWStII1AKxM';
+    this.router.navigate(['hiring/invite']);
   }
 
 }

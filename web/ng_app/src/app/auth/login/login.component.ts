@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2)]),
-    lastname: new FormControl(''),
+    lastname: new FormControl('', [Validators.required, Validators.minLength(2)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(5)])
   });
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   errorFlag = false;
 
   constructor(private router: Router,
-    private authService: AuthService,
+    public authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private userAuthService: UserAuthService) { }
 
@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
       token: this.authService.getToken()
     };
     this.userAuthService.login(data).subscribe((res) => {
+      this.authService.updateUser(res.user);
       if (res.user.type === 'hiring_manager') {
         this.router.navigate(['hiring']);
         return;
@@ -60,11 +61,19 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['admin']);
         return;
       }
-      this.router.navigate(['auth/progress']);
+      if (this.authService.userData.survey_response.token) {
+        this.authService.getApplicantType(this.authService.userData.survey_response.token)
+          .subscribe(() => {
+            this.router.navigate(['auth/progress']);
+          });
+        return;
+      }
+      this.authService.loginErrorFlag = true;
+      return;
+
     }, ((err) => {
       this.errorFlag = true;
       this.errorMsg = err.error.error;
-      console.log('login error', err);
     }));
   }
 

@@ -2,7 +2,7 @@ import { UserDictionaryInterface } from './user-dictionary.interface';
 
 export const HiringManager: UserDictionaryInterface = {
     auth: {
-        login_message: 'Welcome to Frontier Signal – Your Job Fit  Platform.'
+        login_message: 'Welcome to Frontier Signal – Your Job Candidate Fit Platform.'
     },
     landing_page: {
         title: '',

@@ -13,7 +13,7 @@ export const appRoutes: Routes = [
       component: HiringComponent,
       children: [
         { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-        { path: 'invite', component: InviteComponent },
+        { path: 'invite', component: InviteComponent, canActivate: [EditRecipientGuard] },
         { path: 'add', component: AddApplicantsComponent, canActivate: [EditRecipientGuard] },
         { path: 'edit', component: AllRecipientsModalComponent, canActivate: [EditRecipientGuard] },
         { path: 'full-preview', component: FullPreviewComponent },

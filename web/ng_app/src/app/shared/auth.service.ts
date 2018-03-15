@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   isLoggedIn: boolean;
+  loginErrorFlag = false;
   redirectUrl = '';
   loggedInUser = {};
   userData: any = {
@@ -32,7 +33,7 @@ export class AuthService {
 
 
   constructor(private userAuthService: UserAuthService,
-  private router: Router) {
+    private router: Router) {
     console.log('************** init auth service');
     console.log('');
     console.log('/************** init auth service');
@@ -79,11 +80,14 @@ export class AuthService {
 
   getUserType(userData): UserDictionaryInterface {
     let userType;
-    if (userData.user.type === 'applicant') {
+    if (userData.user.type === 'candidate' || userData.user.type === 'applicant') {
+      console.log('candidate');
       userType = Applicant;
-    } else if (userData.user.type === 'exempler') {
+    } else if (userData.user.type === 'exemplar') {
+      console.log('exemplar');
       userType = Exempler;
     } else if (userData.user.type === 'hiring_manager') {
+      console.log('hiring manager');
       userType = HiringManager;
     }
     return Object.assign({}, userData, userType);
@@ -103,6 +107,27 @@ export class AuthService {
     window.localStorage.clear();
     this.token = null;
     this.isLoggedIn = false;
+  }
+
+  updateUser(user) {
+    this.userData.user = user;
+    this.saveUserDataToCache(this.userData);
+  }
+
+  getApplicantType(token) {
+    console.log('updateing applicant');
+    return Observable.create(observer => {
+      this.userAuthService.getSurveyUser(token)
+        .subscribe((response: any) => {
+          console.log('response', response);
+          this.userData.user.type = response.type;
+          this.saveUserDataToCache(this.getUserType(this.userData));
+          observer.next(this.userData);
+          observer.complete();
+        }, (err) => {
+          observer.error(Observable.throw(err));
+        });
+    });
   }
 
   getUserFromToken(token): any {

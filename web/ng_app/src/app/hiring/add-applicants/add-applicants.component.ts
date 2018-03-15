@@ -19,7 +19,7 @@ export class AddApplicantsComponent implements OnInit {
   listInvalidEmail = false;
   duplicateEmailFlag = false;
   recipientsArray = ['chris@charmingbot.com', 'bhatti@charmingbot.com', 'moiz@charmingbot.com', 'hello'];
-  constructor(private recipientService: RecipientsService,
+  constructor(public recipientService: RecipientsService,
     private router: Router,
     private invitationsService: InvitationsService) { }
 
@@ -94,10 +94,11 @@ export class AddApplicantsComponent implements OnInit {
     const data = {
       type: userType,
       emails: this.recipientService.usersList,
-      job: 'job_NDQGPGWStII1AKxM'
+      job: this.recipientService.jobId
     };
     this.invitationsService.sendInvitations(data)
       .subscribe((res) => {
+        this.router.navigate(['hiring/dashboard']);
         console.log('res', res);
       });
   }

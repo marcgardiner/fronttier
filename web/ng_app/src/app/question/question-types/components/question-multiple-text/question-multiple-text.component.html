@@ -7,7 +7,7 @@
 
 <div class="row justify-content-center" [formGroup]="QuestionForm">
   <div class="col-lg-7 text-left" formArrayName="options">
-    <div class="md-form-group" *ngFor="let option of QuestionForm.controls['options'].controls; let k = index">
+    <div class="md-form-group" *ngFor="let option of QuestionForm.controls['options']['controls']; let k = index">
       <div [formGroupName]="k">
         <div formArrayName="fields">
             <div class="md-form" *ngFor="let field of option.controls['fields'].controls; let i = index" >
