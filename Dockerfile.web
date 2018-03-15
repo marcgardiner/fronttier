@@ -15,8 +15,6 @@ COPY ./ /frontier
 RUN pip install -r requirements.txt
 
 # Build Angular app
-RUN rm -rf /frontier/web/ng_app/node_modules
-RUN rm -rf /frontier/web/ng_app/dist
 RUN (make ng_install && make ng_build)
 
 # Collect static files
