@@ -16,6 +16,7 @@ services:
         context: .
         dockerfile: Dockerfile.web
       command: ["./scripts/wait_for_pg.sh", "postgres", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+      # command: ["gunicorn", "--bind", "0.0.0.0:8000", "--preload", "--log-file", "-", "frontier.wsgi"]
       volumes:
         - .:/frontier
       ports:
