@@ -61,6 +61,17 @@ class Job(BaseModel, LocationFields):
     title = models.CharField(max_length=128)
     description = models.TextField(null=True, blank=True)
 
+    def app_resource(self):
+        return {
+            'token': self.token,
+            'company': self.company.token,
+            'type': self.type,
+            'level': self.level,
+            'status': self.status,
+            'title': self.title,
+            'description': self.description
+        }
+
 
 class Survey(BaseModel):
     token_prefix = 'survey'

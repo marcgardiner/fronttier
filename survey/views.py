@@ -15,6 +15,15 @@ def response(request, token):
     return get_or_404(SurveyResponse, token).app_resource()
 
 
+@json_view(allowed_methods=['GET'])
+@restrict(HiringManager)
+def jobs(request):
+    jobs = Job.objects.filter(hiring_managers=request.hd_user)
+    return {
+        'jobs': [job.app_resource() for job in jobs],
+    }
+
+
 @json_view(allowed_methods=['POST'])
 @restrict(HiringManager)
 def invite(request):
