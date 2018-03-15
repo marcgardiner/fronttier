@@ -3,4 +3,4 @@ docker-compose.yml
 Dockerfile.*
 static
 web/ng_app/dist
-web/ng_app/node_module
+web/ng_app/node_modules
