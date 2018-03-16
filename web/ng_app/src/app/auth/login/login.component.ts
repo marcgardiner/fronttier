@@ -42,6 +42,10 @@ export class LoginComponent implements OnInit {
       this.loginForm.controls.email.setValue(this.userData.user.email);
       this.loginForm.controls.email.disable();
     }
+    if (this.userData.user.type === 'administrator') {
+      this.authTitle = '';
+      return;
+    }
     this.authTitle = this.userData.auth.login_message;
   }
 

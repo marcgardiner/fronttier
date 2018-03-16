@@ -20,7 +20,7 @@ export const appRoutes: Routes = [
   {
     path: 'hiring',
     loadChildren: './hiring/hiring.module#HiringModule',
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin',
