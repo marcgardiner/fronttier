@@ -162,7 +162,7 @@ receiver(post_save, sender=HiringManager)(create_login_link)
 
 
 def logo_s3_path(instance, filename):
-    return 'public/%s' % (instance.token, filename)
+    return 'public/business/%s/%s' % (instance.token, filename)
 
 
 class Company(BaseModel, AddressFields):
