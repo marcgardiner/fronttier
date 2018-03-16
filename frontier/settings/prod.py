@@ -58,4 +58,3 @@ EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_PASSWORD')
 # Static
 
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

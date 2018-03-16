@@ -122,7 +122,45 @@ Same as GET
 }
 ```
 
+### `survey/jobs`
+
+#### `GET`
+
+```
+# Response
+{
+    "jobs": [
+        {
+            "token": "job_xxx",
+            "company": "company_yyy",
+            "type": "intern",
+            "level": "mid",
+            "title": "Lawyer",
+            "description": "Corporate MNA",
+            "state": "open",
+            "surveys": {
+                "exemplar": {
+                    "total": 5,
+                    "complete": 1,
+                    "in_progress": 1,
+                    "expired": 3
+                },
+                "candidate": {
+                    "total": 25,
+                    "complete": 12,
+                    "in_progress": 9,
+                    "pending": 4
+                }
+            }
+        },
+        ...
+    ]
+}
+```
+
 ### `survey/response/<token>`
+
+#### `GET`
 
 ```
 # Response

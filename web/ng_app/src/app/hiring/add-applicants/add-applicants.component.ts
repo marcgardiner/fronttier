@@ -1,30 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { validateEmail, duplicateEmail } from '../shared/common/email-validator';
-import { RecipientsService } from '../shared/recipients.service';
-import { Router } from '@angular/router';
-import { InvitationsService } from '../../shared/invitations.service';
-
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import {
+  validateEmail,
+  duplicateEmail,
+  emailListRegex
+} from "../shared/common/email-validator";
+import { RecipientsService } from "../shared/recipients.service";
+import { Router } from "@angular/router";
+import { InvitationsService } from "../../shared/invitations.service";
 
 @Component({
-  selector: 'app-add-applicants',
-  templateUrl: './add-applicants.component.html',
-  styleUrls: ['./add-applicants.component.sass']
+  selector: "app-add-applicants",
+  templateUrl: "./add-applicants.component.html",
+  styleUrls: ["./add-applicants.component.sass"]
 })
 export class AddApplicantsComponent implements OnInit {
-
   recipients = [];
   recipientInput: string;
   listUploaded = false;
   listInvalidEmail = false;
   duplicateEmailFlag = false;
-  recipientsArray = ['chris@charmingbot.com', 'bhatti@charmingbot.com', 'moiz@charmingbot.com', 'hello'];
-  constructor(public recipientService: RecipientsService,
+  invalidEmailErrorFlag = false;
+  recipientsArray = [
+    "chris@charmingbot.com",
+    "bhatti@charmingbot.com",
+    "moiz@charmingbot.com",
+    "hello"
+  ];
+  constructor(
+    private recipientService: RecipientsService,
     private router: Router,
-    private invitationsService: InvitationsService) { }
+    private invitationsService: InvitationsService
+  ) { }
 
   recipientForm: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl("", [Validators.required,
+    Validators.pattern(emailListRegex)])
   });
 
   ngOnInit() {
@@ -35,9 +46,9 @@ export class AddApplicantsComponent implements OnInit {
   }
 
   viewRecipients() {
-    this.recipientService.usersType = 'Applicants';
+    this.recipientService.usersType = "Applicants";
     this.recipientService.usersList = this.recipients;
-    this.router.navigate(['hiring/edit']);
+    this.router.navigate(["hiring/edit"]);
   }
 
   csvUpload(event) {
@@ -45,10 +56,9 @@ export class AddApplicantsComponent implements OnInit {
     reader.readAsText(event.target.files[0]);
     reader.onload = (e: any) => {
       this.recipients = [...this.recipients, ...e.target.result.split(/\r?\n/)];
-      this.recipients = this.recipients.map((email) => {
+      this.recipients = this.recipients.map(email => {
         return email.toLowerCase();
       });
-      console.log(this.recipients);
       this.recipients = Array.from(new Set(this.recipients));
       this.listInvalidEmail = this.checkForInvalidEmail(this.recipients);
     };
@@ -69,12 +79,20 @@ export class AddApplicantsComponent implements OnInit {
     this.duplicateEmailFlag = false;
     if (!this.recipientForm.valid) {
       return;
-    } else if (duplicateEmail(this.recipientForm.value.email, this.recipients)) {
-      this.duplicateEmailFlag = true;
-      return;
     }
-    this.recipients.push(this.recipientForm.value.email);
-    this.recipientForm.reset();
+    let recipients = this.recipientForm.value.email.split(',');
+    recipients = Array.from(new Set(recipients));
+    recipients.forEach((email) => {
+      if (duplicateEmail(email, this.recipients)) {
+        this.duplicateEmailFlag = true;
+        return;
+      }
+    });
+    if (!this.duplicateEmailFlag) {
+      this.recipients = [...this.recipients, ...recipients];
+      this.recipientService.usersList = this.recipients;
+      this.recipientForm.reset();
+    }
   }
 
   remainingEntries() {
@@ -86,21 +104,21 @@ export class AddApplicantsComponent implements OnInit {
 
   sendInvitions() {
     let userType;
-    if (this.recipientService.usersType.toLowerCase() === 'exemplars') {
-      userType = 'exemplar';
-    } else if (this.recipientService.usersType.toLowerCase() === 'applicants') {
-      userType = 'candidate';
+    if (this.recipientService.usersType.toLowerCase() === "exemplars") {
+      userType = "exemplar";
+    } else if (this.recipientService.usersType.toLowerCase() === "applicants") {
+      userType = "candidate";
     }
     const data = {
       type: userType,
       emails: this.recipientService.usersList,
-      job: this.recipientService.jobId
+      job: "job_NDQGPGWStII1AKxM"
     };
-    this.invitationsService.sendInvitations(data)
-      .subscribe((res) => {
-        this.router.navigate(['hiring/dashboard']);
-        console.log('res', res);
-      });
+    this.invitationsService.sendInvitations(data).subscribe(res => {
+      console.log("res", res);
+      this.router.navigate(['hiring/dashboard']);
+    }, ((error) => {
+      this.recipientService.errorFlag = true;
+    }));
   }
-
 }

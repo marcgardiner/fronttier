@@ -9,12 +9,13 @@ export class RecipientsService {
     usersType: string;
     user: string;
     welcomeTourReset: Boolean;
-    currentSlide: string;
+    currentSlide: number;
     jobId: string;
+    errorFlag = false;
 
     constructor() {
         this.welcomeTourReset = false;
-        this.currentSlide = 'ngb-slide-0';
+        this.currentSlide = 0;
     }
 
 

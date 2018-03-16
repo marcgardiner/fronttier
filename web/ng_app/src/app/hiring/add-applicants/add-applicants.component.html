@@ -5,6 +5,12 @@
       <img src="assets/img/X-error.svg" alt="">
     </a>
   </div>
+  <div class="header d-flex justify-content-between p-3" *ngIf="recipientService.errorFlag">
+    <p class="m-0 pl-5">Error sending Email please contact administrator</p>
+    <a class="pr-4">
+      <img src="assets/img/X-error.svg" alt="">
+    </a>
+  </div>
 
   <div class="container">
     <h2 class="invite-heading">
@@ -28,7 +34,7 @@
             </label>
             <label class="pt-1 pl-3">
               <img class="csv-import-btn" src="assets/img/handlebars.svg" alt="">
-              <input type="file" (change)="csvUpload($event)" accept=".csv" style="display: none;">              
+              <input type="file" (change)="csvUpload($event)" accept=".csv" style="display: none;">
             </label>
           </div>
         </div>
@@ -43,7 +49,7 @@
                   <input type="text" [formControl]="recipientForm.controls.email" placeholder="Type individual email address here" id="form1"
                     class="form-control" (keyup.enter)="saveRecipient()">
                   <label class="error">
-                    <div *ngIf="!recipientForm.controls.email.errors?.required && recipientForm.controls.email.errors?.email && recipientForm.controls.email.touched">
+                    <div *ngIf="!recipientForm.controls.email.valid && recipientForm.controls.email.value && !duplicateEmailFlag">
                       Please enter a valid email address.
                     </div>
                     <div *ngIf="duplicateEmailFlag">

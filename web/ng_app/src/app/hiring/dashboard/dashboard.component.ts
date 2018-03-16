@@ -1,19 +1,23 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { NgbPopoverConfig, NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../../shared/auth.service';
 import { HiringDashboard } from './dashboard-dictionary';
 import { RecipientsService } from '../shared/recipients.service';
 import { SurveyService } from '../../shared/survey.service';
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/takeWhile';
+import { NgbSlideEventDirection } from '@ng-bootstrap/ng-bootstrap/carousel/carousel';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.sass']
 })
-export class DashboardComponent implements OnInit, AfterViewInit {
+export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   public progress = 25;
   @ViewChild('carousel') carousel: NgbCarousel;
+
+  active = true;
 
   data = [{
     title: 'Sales Manager - Hiltown Midtown',
@@ -49,24 +53,29 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.content = this.dashboardData.signal.content;
     this.recipientService.welcomeTourReset = this.authService.userData['last_login'] ? true : false;
     if (this.recipientService.welcomeTourReset) {
-      this.recipientService.currentSlide = '';
+      this.recipientService.currentSlide = -1;
     }
-    console.log(this.authService.userData['last_login'] ? true : false);
   }
 
   ngAfterViewInit() {
-    this.carousel.slide.subscribe((slide) => {
-      this.recipientService.currentSlide = slide.current;
-      if (this.recipientService.currentSlide === 'ngb-slide-0' && slide.direction === 'left') {
-        this.recipientService.welcomeTourReset = true;
-        this.recipientService.currentSlide = '';
-      }
-    });
+    this.carousel.slide
+      .takeWhile(() => this.active)
+      .subscribe((slide) => {
+        this.recipientService.currentSlide = parseInt(slide.current, 0);
+        if (this.recipientService.currentSlide === 0 && slide.direction === NgbSlideEventDirection.LEFT) {
+          this.recipientService.welcomeTourReset = true;
+          this.recipientService.currentSlide = -1;
+        }
+      });
   }
 
   sendInvitations() {
     this.recipientService.jobId = 'job_NDQGPGWStII1AKxM';
     this.router.navigate(['hiring/invite']);
+  }
+
+  ngOnDestroy() {
+    this.active = false;
   }
 
 }

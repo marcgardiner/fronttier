@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
 
   resetTour() {
     this.recipientService.welcomeTourReset = false;
-    this.recipientService.currentSlide = 'ngb-slide-0';
+    this.recipientService.currentSlide = 0;
   }
 
 }

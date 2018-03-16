@@ -132,3 +132,34 @@ CELERY_RESULT_BACKEND = 'django-cache'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+
+# Logging
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'loggers': {
+        '': {
+            'level': 'WARNING',
+            'handlers': ['console'],
+        },
+        'django': {
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'ERROR'),
+            'handlers': ['console'],
+        },
+    },
+    'formatters': {
+        'verbose': {
+            'format': '[%(levelname)s] %(asctime)s (%(process)s) '
+                      '%(module)s: %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+}

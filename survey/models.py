@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from collections import defaultdict
 import json
 
 from django.contrib.postgres.fields import ArrayField, JSONField
@@ -61,6 +62,25 @@ class Job(BaseModel, LocationFields):
     title = models.CharField(max_length=128)
     description = models.TextField(null=True, blank=True)
 
+    def app_resource(self):
+        surveys = defaultdict(lambda: defaultdict(int))
+        for survey in self.surveys.all():
+            typ = survey.type
+            for response in survey.responses.all():
+                surveys[typ][response.state] += 1
+                surveys[typ]['total'] += 1
+
+        return {
+            'token': self.token,
+            'company': self.company.token,
+            'type': self.type,
+            'level': self.level,
+            'status': self.status,
+            'title': self.title,
+            'description': self.description,
+            'surveys': surveys,
+        }
+
 
 class Survey(BaseModel):
     token_prefix = 'survey'
@@ -92,9 +112,25 @@ class SurveyResponse(BaseModel):
 
         unique_together = ('user', 'survey')
 
+    class State(object):
+        PENDING = 'pending'
+        IN_PROGRESS = 'in_progress'
+        COMPLETE = 'complete'
+        EXPIRED = 'expired'
+
+        CHOICES = (
+            (PENDING, 'Pending'),
+            (IN_PROGRESS, 'In Progress'),
+            (COMPLETE, 'Complete'),
+            (EXPIRED, 'Expired')
+        )
+
+    state = models.CharField(
+        max_length=16, default=State.PENDING, choices=State.CHOICES)
     survey = models.ForeignKey(
         Survey, on_delete=models.CASCADE, related_name='responses')
-    user = models.ForeignKey('business.User', null=True, blank=True, on_delete=models.SET_NULL,
+    user = models.ForeignKey('business.User', null=True, blank=True,
+                             on_delete=models.SET_NULL,
                              related_name='survey_responses')
 
     def app_resource(self):

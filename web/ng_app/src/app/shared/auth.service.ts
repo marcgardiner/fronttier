@@ -1,25 +1,23 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { UserAuthService } from './user-auth.service';
-import { Applicant } from './dictionary/applicant';
-import { Exempler } from './dictionary/exempler';
-import { HiringManager } from './dictionary/hiring-manager';
-import { decode } from 'jsonwebtoken';
-import { UserDictionaryInterface } from './dictionary/user-dictionary.interface';
-import * as moment from 'moment';
-import { Router } from '@angular/router';
-
+import { Injectable, EventEmitter } from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { UserAuthService } from "./user-auth.service";
+import { Applicant } from "./dictionary/applicant";
+import { Exemplar } from "./dictionary/exemplar";
+import { HiringManager } from "./dictionary/hiring-manager";
+import { decode } from "jsonwebtoken";
+import { UserDictionaryInterface } from "./dictionary/user-dictionary.interface";
+import * as moment from "moment";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthService {
-
   isLoggedIn: boolean;
-  loginErrorFlag = false;
-  redirectUrl = '';
+  redirectUrl = "";
   loggedInUser = {};
+  loginErrorFlag = false;
   userData: any = {
     user: {
-      first_name: ''
+      first_name: ""
     },
     landing_page: {
       messages: []
@@ -31,12 +29,10 @@ export class AuthService {
 
   private token: string = null;
 
-
-  constructor(private userAuthService: UserAuthService,
-    private router: Router) {
-    console.log('************** init auth service');
-    console.log('');
-    console.log('/************** init auth service');
+  constructor(
+    private userAuthService: UserAuthService,
+    private router: Router
+  ) {
     this.userData = this.getUserFromCache();
   }
 
@@ -45,11 +41,11 @@ export class AuthService {
   }
 
   getToken() {
-    return this.token || window.localStorage.getItem('token') || null;
+    return this.token || window.localStorage.getItem("token") || null;
   }
   getUserFromCache() {
     // console.log(JSON.parse(window.localStorage.getItem('user')));
-    return JSON.parse(window.localStorage.getItem('user')) || this.userData;
+    return JSON.parse(window.localStorage.getItem("user")) || this.userData;
   }
 
   parseToken(token: string) {
@@ -58,7 +54,7 @@ export class AuthService {
 
   getTokenExpireDate(token: string): Object {
     const decoded = this.parseToken(token);
-    if (!decoded.hasOwnProperty('exp') || decoded === {}) {
+    if (!decoded.hasOwnProperty("exp") || decoded === {}) {
       return null;
     }
     const date = moment(0);
@@ -71,7 +67,7 @@ export class AuthService {
     if (!date) {
       return false;
     }
-    return (date.valueOf() > (moment().valueOf() + (offsetSeconds * 1000)));
+    return date.valueOf() > moment().valueOf() + offsetSeconds * 1000;
   }
 
   getLoggedInUser(): Object {
@@ -79,28 +75,33 @@ export class AuthService {
   }
 
   getUserType(userData): UserDictionaryInterface {
+    let type;
+    if (userData.survey_response && userData.survey_response.type) {
+      type = userData.survey_response.type;
+    } else {
+      type = userData.user.type;
+    }
+
     let userType;
-    if (userData.user.type === 'candidate' || userData.user.type === 'applicant') {
-      console.log('candidate');
+    if (type === "candidate" || userData.user.type === 'applicant') {
       userType = Applicant;
-    } else if (userData.user.type === 'exemplar') {
-      console.log('exemplar');
-      userType = Exempler;
-    } else if (userData.user.type === 'hiring_manager') {
-      console.log('hiring manager');
+    } else if (type === "exemplar") {
+      userType = Exemplar;
+    } else if (type === "hiring_manager") {
       userType = HiringManager;
     }
+
     return Object.assign({}, userData, userType);
   }
 
   saveTokenToCache(accessToken: string) {
     this.token = accessToken || null;
-    window.localStorage.setItem('token', this.token);
+    window.localStorage.setItem("token", this.token);
   }
 
   saveUserDataToCache(user) {
     this.userData = user;
-    window.localStorage.setItem('user', JSON.stringify(this.userData));
+    window.localStorage.setItem("user", JSON.stringify(this.userData));
   }
 
   clearCache() {
@@ -124,49 +125,39 @@ export class AuthService {
           this.saveUserDataToCache(this.getUserType(this.userData));
           observer.next(this.userData);
           observer.complete();
-        }, (err) => {
-          observer.error(Observable.throw(err));
-        });
+        }, ((err) => {
+          this.router.navigate(['auth/access-login']);
+          this.loginErrorFlag = true;
+        })
+        );
     });
   }
 
   getUserFromToken(token): any {
     return Observable.create(observer => {
-      this.userAuthService.getUser(token)
-        .subscribe((response: any) => {
+      this.userAuthService.getUser(token).subscribe(
+        (response: any) => {
           this.saveTokenToCache(token);
           this.saveUserDataToCache(this.getUserType(response));
           observer.next(this.userData);
           observer.complete();
-        }, (err) => {
-          observer.error(Observable.throw(err));
-        });
+        },
+        ((err) => {
+          this.router.navigate(['auth/access-login']);
+          this.loginErrorFlag = true;
+          observer.complete();
+          // observer.error(Observable.throw(err));
+        })
+      );
     });
   }
 
-  // login(data: { email: string, password: string, isRemember?: boolean } = null): Observable<boolean> {
-
-  // return Observable.create(observer => {
-  //   this.userAuthService.login(data)
-  //     .subscribe((response: any) => {
-  //       this.isLoggedIn = false;
-  //       if (!response['error']) {
-  //         this.authenticateViaToken(response.data.token);
-  //       }
-  //       observer.next(this.isLoggedIn);
-  //       observer.complete();
-  //     }, (err) => {
-  //       observer.error(Observable.throw(err));
-  //     });
-  // });
-  // }
-
   logout(): void {
-    this.redirectUrl = 'auth/' + (this.getToken() ? 'login/' + this.getToken() : 'access-login');
+    this.redirectUrl =
+      "auth/" + (this.getToken() ? "login/" + this.getToken() : "access-login");
     console.log(this.redirectUrl);
     this.clearCache();
     this.router.navigate([this.redirectUrl]);
-    this.redirectUrl = '';
+    this.redirectUrl = "";
   }
-
 }
