@@ -82,7 +82,7 @@ export class AuthService {
     }
 
     let userType;
-    if (type === "candidate") {
+    if (type === "applicant") {
       userType = Applicant;
     } else if (type === "exemplar") {
       userType = Exemplar;

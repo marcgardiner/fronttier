@@ -79,8 +79,8 @@ The `token` is unique for each login URL that we email out to a user to take the
         "email": "bojack@horseman.com",
         "first_name": "Bojack",
         "last_name": "Horseman",
-        "token": "applicant_123",
-        "type": "applicant"
+        "token": "user_123",
+        "type": "result"
     }
 }
 ```
@@ -123,8 +123,8 @@ This endpoint can be used to login a user using their email and password.
     "email": "bojack@horseman.com",
     "first_name": "Bojack",
     "last_name": "Horseman",
-    "token": "applicant_123",
-    "type": "applicant"
+    "token": "user_123",
+    "type": "result"
 }
 ```
 
@@ -183,7 +183,7 @@ Empty response
                     "in_progress": 1,
                     "expired": 3
                 },
-                "candidate": {
+                "result": {
                     "total": 25,
                     "complete": 12,
                     "in_progress": 9,
@@ -210,8 +210,8 @@ Empty response
         "email": "bojack@horseman.com",
         "first_name": "Bojack",
         "last_name": "Horseman",
-        "token": "applicant_123",
-        "type": "applicant"
+        "token": "user_123",
+        "type": "regular"
     },
     "questions": [
         ...
