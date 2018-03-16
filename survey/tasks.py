@@ -1,7 +1,7 @@
 from celery import shared_task
 from django.utils.crypto import get_random_string
 
-from business.models import Applicant, LoginLink
+from business.models import RegularUser, LoginLink, User
 from messaging.models import Email
 from survey.models import Survey, SurveyInvitation, SurveyResponse
 
@@ -20,14 +20,14 @@ def process_survey_invitation(token):
     invitation.save()
 
     for email in invitation.emails:
-        if Applicant.objects.filter(email=email).exists():
+        if User.objects.filter(email=email).exists():
             continue
 
-        applicant = Applicant.objects.create_user(
+        user = RegularUser.objects.create_user(
             get_random_string(), email=email, password=get_random_string())
         sr = SurveyResponse.objects.create(
-            user=applicant, survey=invitation.survey)
-        ll = LoginLink.objects.create(user=applicant, survey_response=sr)
+            user=user, survey=invitation.survey)
+        ll = LoginLink.objects.create(user=user, survey_response=sr)
 
         company_name = invitation.hiring_manager.company.name
 
@@ -37,7 +37,7 @@ def process_survey_invitation(token):
             subject = 'Great News from %s and Frontier Signal' % company_name
 
         email = Email.objects.create(
-            user=applicant,
+            user=user,
             template='messaging/%s_invite.html' % invitation.type,
             context={
                 'subject': subject,

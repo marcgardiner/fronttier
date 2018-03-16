@@ -20,12 +20,12 @@ class User(BaseModel, AbstractUser, AddressFields):
 
     class Type(object):
         ADMINISTRATOR = 'administrator'
-        APPLICANT = 'applicant'
+        REGULAR = 'regular'
         HIRING_MANAGER = 'hiring_manager'
 
         CHOICES = (
             (ADMINISTRATOR, 'Administrator'),
-            (APPLICANT, 'Applicant'),
+            (REGULAR, 'Regular'),
             (HIRING_MANAGER, 'Hiring Manager')
         )
 
@@ -53,8 +53,8 @@ class User(BaseModel, AbstractUser, AddressFields):
     def is_hiring_manager(self):
         return self.type == User.Type.HIRING_MANAGER
 
-    def is_applicant(self):
-        return self.type == User.Type.APPLICANT
+    def is_regular_user(self):
+        return self.type == User.Type.REGULAR
 
     def hydrated_user(self):
         if type(self) is not User:
@@ -62,8 +62,8 @@ class User(BaseModel, AbstractUser, AddressFields):
 
         if self.type == User.Type.ADMINISTRATOR:
             return Administrator.objects.get(token=self.token)
-        elif self.type == User.Type.APPLICANT:
-            return Applicant.objects.get(token=self.token)
+        elif self.type == User.Type.REGULAR:
+            return RegularUser.objects.get(token=self.token)
         elif self.type == User.Type.HIRING_MANAGER:
             return HiringManager.objects.get(token=self.token)
 
@@ -115,26 +115,26 @@ class Administrator(User):
 receiver(post_save, sender=Administrator)(create_login_link)
 
 
-class ApplicantManager(UserManager):
+class RegularUserManager(UserManager):
     def get_queryset(self):
-        return super(ApplicantManager, self).get_queryset().filter(
-            type=User.Type.APPLICANT
+        return super(RegularUserManager, self).get_queryset().filter(
+            type=User.Type.REGULAR
         )
 
 
-class Applicant(User):
-    token_prefix = 'applicant'
-    objects = ApplicantManager()
+class RegularUser(User):
+    token_prefix = 'user'
+    objects = RegularUserManager()
 
     class Meta:
         proxy = True
 
     def save(self, *args, **kwargs):
-        self.type = User.Type.APPLICANT
-        super(Applicant, self).save(*args, **kwargs)
+        self.type = User.Type.REGULAR
+        super(RegularUser, self).save(*args, **kwargs)
 
 
-receiver(post_save, sender=Applicant)(create_login_link)
+receiver(post_save, sender=RegularUser)(create_login_link)
 
 
 class HiringManagerManager(UserManager):
@@ -161,6 +161,10 @@ class HiringManager(User):
 receiver(post_save, sender=HiringManager)(create_login_link)
 
 
+def logo_s3_path(instance, filename):
+    return 'public/business/%s/%s' % (instance.token, filename)
+
+
 class Company(BaseModel, AddressFields):
     token_prefix = 'company'
 
@@ -169,7 +173,14 @@ class Company(BaseModel, AddressFields):
         verbose_name_plural = 'Companies'
 
     name = models.CharField(max_length=64)
-    logo = models.ImageField()
+    logo = models.ImageField(upload_to=logo_s3_path, null=True, blank=True)
+
+    def app_resource(self):
+        return {
+            'token': self.token,
+            'name': self.name,
+            'logo': self.logo.url,
+        }
 
 
 class LoginLink(BaseModel):

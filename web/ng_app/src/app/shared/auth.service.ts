@@ -14,7 +14,6 @@ export class AuthService {
   isLoggedIn: boolean;
   redirectUrl = "";
   loggedInUser = {};
-  loginErrorFlag = false;
   userData: any = {
     user: {
       first_name: ""
@@ -83,7 +82,7 @@ export class AuthService {
     }
 
     let userType;
-    if (type === "candidate" || userData.user.type === 'applicant') {
+    if (type === "applicant") {
       userType = Applicant;
     } else if (type === "exemplar") {
       userType = Exemplar;
@@ -110,29 +109,6 @@ export class AuthService {
     this.isLoggedIn = false;
   }
 
-  updateUser(user) {
-    this.userData.user = user;
-    this.saveUserDataToCache(this.userData);
-  }
-
-  getApplicantType(token) {
-    console.log('updateing applicant');
-    return Observable.create(observer => {
-      this.userAuthService.getSurveyUser(token)
-        .subscribe((response: any) => {
-          console.log('response', response);
-          this.userData.user.type = response.type;
-          this.saveUserDataToCache(this.getUserType(this.userData));
-          observer.next(this.userData);
-          observer.complete();
-        }, ((err) => {
-          this.router.navigate(['auth/access-login']);
-          this.loginErrorFlag = true;
-        })
-        );
-    });
-  }
-
   getUserFromToken(token): any {
     return Observable.create(observer => {
       this.userAuthService.getUser(token).subscribe(
@@ -142,12 +118,9 @@ export class AuthService {
           observer.next(this.userData);
           observer.complete();
         },
-        ((err) => {
-          this.router.navigate(['auth/access-login']);
-          this.loginErrorFlag = true;
-          observer.complete();
-          // observer.error(Observable.throw(err));
-        })
+        err => {
+          observer.error(Observable.throw(err));
+        }
       );
     });
   }

@@ -127,7 +127,7 @@ export class AllRecipientsModalComponent implements OnInit {
     if (this.recipientService.usersType.toLowerCase() === "exemplars") {
       userType = "exemplar";
     } else if (this.recipientService.usersType.toLowerCase() === "applicants") {
-      userType = "candidate";
+      userType = "applicant";
     }
     const data = {
       type: userType,

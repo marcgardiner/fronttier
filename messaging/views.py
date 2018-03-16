@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
-from business.models import HiringManager, Administrator, Applicant
+from business.models import HiringManager, Administrator, RegularUser
 from frontier.decorators import restrict
 
 
@@ -17,21 +17,21 @@ def hm_invite(request):
 
 
 @restrict(Administrator)
-def candidate_invite(request):
-    applicant = Applicant.objects.all()[0]
-    return render(request, 'messaging/candidate_invite.html', {
-        'user': applicant,
+def applicant_invite(request):
+    user = RegularUser.objects.all()[0]
+    return render(request, 'messaging/applicant_invite.html', {
+        'user': user,
         'company': 'The Boring Company',
-        'login_link': applicant.login_link,
+        'login_link': user.login_link,
     })
 
 
 @restrict(Administrator)
 def exemplar_invite(request):
-    applicant = Applicant.objects.all()[0]
+    user = RegularUser.objects.all()[0]
     return render(request, 'messaging/exemplar_invite.html', {
-        'user': applicant,
+        'user': user,
         'company': 'The Boring Company',
         'hiring_manager': 'Elon',
-        'login_link': applicant.login_link,
+        'login_link': user.login_link,
     })

@@ -14,8 +14,8 @@ export class SurveyService {
         first_name: "John",
         last_name: "Doe",
         company: null,
-        token: "applicant_N6tWmbVe7GCEQOMZ",
-        type: "applicant",
+        token: "user_N6tWmbVe7GCEQOMZ",
+        type: "regular",
         email: "john@frontier.com"
       },
       survey_response: {

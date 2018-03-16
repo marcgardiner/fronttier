@@ -30,6 +30,8 @@ INSTALLED_APPS = [
 
     'django_celery_results',
     'django_object_actions',
+    'raven.contrib.django.raven_compat',
+    'storages',
 
     'business',
     'messaging',
@@ -160,6 +162,10 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
-        }
+        },
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',  # noqa
+        },
     },
 }

@@ -8,5 +8,5 @@ class Environment(object):
 
 
 DEV = Environment('dev', 'http://localhost:8000')
-TEST = Environment('test', 'http://localhost:8000')
+CI = Environment('ci', 'http://localhost:8000')
 PROD = Environment('prod', 'https://frontier-web.herokuapp.com')

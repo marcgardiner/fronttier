@@ -59,6 +59,14 @@ def json_view(allowed_methods=['GET', 'POST']):
     return decorator
 
 
+def json_get_view():
+    return json_view(allowed_methods=['GET'])
+
+
+def json_post_view():
+    return json_view(allowed_methods=['POST'])
+
+
 def restrict(*classes):
     def decorator(view_fn):
         @wraps(view_fn)

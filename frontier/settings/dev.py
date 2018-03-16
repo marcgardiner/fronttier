@@ -60,3 +60,9 @@ CELERY_RESULT_SERIALIZER = 'json'
 # Email
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# Storage
+
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  # noqa

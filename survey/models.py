@@ -88,12 +88,12 @@ class Survey(BaseModel):
     class Type(object):
         HIRING_MANAGER = 'hiring_manager'
         EXEMPLAR = 'exemplar'
-        CANDIDATE = 'candidate'
+        APPLICANT = 'applicant'
 
         CHOICES = (
             (HIRING_MANAGER, 'Hiring Manager'),
             (EXEMPLAR, 'Exemplar'),
-            (CANDIDATE, 'Candidate')
+            (APPLICANT, 'Applicant')
         )
 
     job = models.ForeignKey(
@@ -279,7 +279,7 @@ class SurveyInvitation(BaseModel):
     survey = models.ForeignKey('survey.Survey', related_name='invitations')
     type = models.CharField(max_length=16, choices=(
         (Survey.Type.EXEMPLAR, 'Exemplar'),
-        (Survey.Type.CANDIDATE, 'Candidate'))
+        (Survey.Type.APPLICANT, 'Applicant'))
     )
     emails = ArrayField(models.EmailField())
 

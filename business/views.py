@@ -5,12 +5,12 @@ from django.contrib import auth
 from django.utils import timezone
 
 from business.models import User, LoginLink
-from frontier.decorators import json_view
+from frontier.decorators import json_view, json_get_view, json_post_view
 from frontier.utils import get_or_404
 
 
 @json_view()
-def login(request, token=None):
+def login_link(request, token=None):
     login_link = get_or_404(LoginLink, token)
 
     if request.method == 'GET':
@@ -44,6 +44,20 @@ def login(request, token=None):
     return login_link.app_resource()
 
 
-@json_view(allowed_methods=['GET'])
+@json_post_view()
+def login(request):
+    email = request.json.get('email')
+    password = request.json.get('password')
+
+    user = auth.authenticate(email=email, password=password)
+    if user is None:
+        return {'error': 'invalid password'}, 401
+
+    auth.login(request, user)
+
+    return user.app_resource()
+
+
+@json_get_view()
 def logout(request):
     auth.logout(request)

@@ -5,13 +5,13 @@ import os
 
 from django.test import TestCase, Client
 
-from business.models import Applicant, LoginLink
+from business.models import RegularUser, LoginLink
 from frontier.utils import serialize_datetime
 
 
 class LoginLinkTestCase(TestCase):
     def setUp(self):
-        app = Applicant.objects.create_user(
+        app = RegularUser.objects.create_user(
             'user', email='app@test.com', password='pwd')
         self.login_link = LoginLink.objects.create(user=app)
 
@@ -32,7 +32,7 @@ class LoginLinkTestCase(TestCase):
                 'first_name': None,
                 'last_name': None,
                 'token': self.login_link.user.token,
-                'type': 'applicant'
+                'type': 'regular'
             }
         }, json.loads(response.content))
 
@@ -77,6 +77,29 @@ class LoginLinkTestCase(TestCase):
                 'first_name': 'A',
                 'last_name': 'Z',
                 'token': self.login_link.user.token,
-                'type': 'applicant'
+                'type': 'regular'
             }
+        }, json.loads(response.content))
+
+
+class LoginTestCase(TestCase):
+    def setUp(self):
+        self.user = RegularUser.objects.create_user(
+            'user', email='app@test.com', password='pwd')
+
+    def test_get(self):
+        c = Client()
+        response = c.post('/auth/login', json.dumps({
+            'email': self.user.email,
+            'password': 'pwd',
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEquals({
+            'company': None,
+            'email': 'app@test.com',
+            'first_name': None,
+            'last_name': None,
+            'token': self.user.token,
+            'type': 'regular'
         }, json.loads(response.content))
