@@ -77,4 +77,4 @@ AWS_S3_OBJECT_PARAMETERS = {
 RAVEN_CONFIG = {
     'dsn': os.environ.get('SENTRY_DSN')
 }
-LOGGING['loggers'][''].handlers.append('sentry')
+LOGGING['loggers']['']['handlers'].append('sentry')
