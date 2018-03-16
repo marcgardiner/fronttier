@@ -80,3 +80,26 @@ class LoginLinkTestCase(TestCase):
                 'type': 'applicant'
             }
         }, json.loads(response.content))
+
+
+class LoginTestCase(TestCase):
+    def setUp(self):
+        self.user = Applicant.objects.create_user(
+            'user', email='app@test.com', password='pwd')
+
+    def test_get(self):
+        c = Client()
+        response = c.post('/auth/login', json.dumps({
+            'email': self.user.email,
+            'password': 'pwd',
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEquals({
+            'company': None,
+            'email': 'app@test.com',
+            'first_name': None,
+            'last_name': None,
+            'token': self.user.token,
+            'type': 'applicant'
+        }, json.loads(response.content))

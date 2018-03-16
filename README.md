@@ -57,11 +57,13 @@ All API endpoints speak JSON. Clients must set the `CONTENT-TYPE` header to `app
 }
 ```
 
-### `/auth/login/<token>`
+### Authentication
+
+#### `/auth/login/<token>`
 
 The `token` is unique for each login URL that we email out to a user to take the survey.
 
-#### `GET`
+##### `GET`
 
 ```
 # Response
@@ -85,7 +87,7 @@ The `token` is unique for each login URL that we email out to a user to take the
 
 `survey_response` will be `null` if the token is not linked to a survey, e.g. if it's a link for the Hiring Manager to login to their dashboard. `first_name` and `last_name` can be `null` as well, if the user's registration is incomplete.
 
-#### `POST`
+##### `POST`
 
 ```
 # Request
@@ -102,9 +104,45 @@ Same as GET
 
 `password` is self-explanatory. `first_name` and `last_name` must be provided if the user's registration is incomplete. If the provided password is correct, the server will update the user's profile and log them in (by setting auth cookies etc).
 
-### `survey/invite`
+#### `/auth/login`
 
-#### `POST`
+This endpoint can be used to login a user using their email and password.
+
+##### `POST`
+
+```
+# Request
+{
+    "email": "bojack@horseman.com"
+    "password": "yodawg"
+}
+
+# Response
+{
+    "company": null,
+    "email": "bojack@horseman.com",
+    "first_name": "Bojack",
+    "last_name": "Horseman",
+    "token": "applicant_123",
+    "type": "applicant"
+}
+```
+
+#### `/auth/logout`
+
+This endpoint can be used to logout a user.
+
+##### `GET`
+
+```
+Empty response
+```
+
+### Survey
+
+#### `survey/invite`
+
+##### `POST`
 
 ```
 # Request
@@ -122,9 +160,9 @@ Same as GET
 }
 ```
 
-### `survey/jobs`
+#### `survey/jobs`
 
-#### `GET`
+##### `GET`
 
 ```
 # Response
@@ -158,9 +196,9 @@ Same as GET
 }
 ```
 
-### `survey/response/<token>`
+#### `survey/response/<token>`
 
-#### `GET`
+##### `GET`
 
 ```
 # Response
