@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     'django_celery_results',
     'django_object_actions',
+    'storages'
 
     'business',
     'messaging',

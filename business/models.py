@@ -161,6 +161,10 @@ class HiringManager(User):
 receiver(post_save, sender=HiringManager)(create_login_link)
 
 
+def logo_s3_path(instance, filename):
+    return 'public/%s' % (instance.token, filename)
+
+
 class Company(BaseModel, AddressFields):
     token_prefix = 'company'
 
@@ -169,7 +173,7 @@ class Company(BaseModel, AddressFields):
         verbose_name_plural = 'Companies'
 
     name = models.CharField(max_length=64)
-    logo = models.ImageField()
+    logo = models.ImageField(upload_to=logo_s3_path, null=True, blank=True)
 
 
 class LoginLink(BaseModel):
