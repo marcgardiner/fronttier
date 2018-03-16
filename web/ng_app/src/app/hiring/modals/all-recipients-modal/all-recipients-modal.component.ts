@@ -9,11 +9,13 @@ import {
 import { element } from "protractor";
 import {
   validateEmail,
-  duplicateEmail
+  duplicateEmail,
+  emailListRegex
 } from "../../shared/common/email-validator";
 import { RecipientsService } from "../../shared/recipients.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { InvitationsService } from "../../../shared/invitations.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-all-recipients-modal",
@@ -36,12 +38,14 @@ export class AllRecipientsModalComponent implements OnInit {
   @ViewChild("test") test;
   constructor(
     private recipientService: RecipientsService,
-    private invitationsService: InvitationsService
-  ) {}
+    private invitationsService: InvitationsService,
+    private router: Router
+  ) { }
   @Output() updatedRecipients = new EventEmitter();
 
   recipientForm: FormGroup = new FormGroup({
-    email: new FormControl("", [Validators.required, Validators.email])
+    email: new FormControl("", [Validators.required,
+      Validators.pattern(emailListRegex)])
   });
 
   ngOnInit() {
@@ -132,7 +136,11 @@ export class AllRecipientsModalComponent implements OnInit {
     };
     this.invitationsService.sendInvitations(data).subscribe(res => {
       console.log("res", res);
-    });
+      this.router.navigate(['hiring/dashboard']);
+    }, ((error) => {
+      this.recipientService.errorFlag = true;
+      this.router.navigate(['hiring/add']);
+    }));
   }
 
   invalidEmails() {

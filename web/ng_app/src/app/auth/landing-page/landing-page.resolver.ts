@@ -16,9 +16,11 @@ export class LandingPageResolver implements Resolve<any> {
     resolve(route: ActivatedRouteSnapshot) {
         const loggedInUser = this.authService.getUserFromCache();
         if (loggedInUser.user.type === 'hiring_manager') {
-          return this.authService.userData;
+            return this.authService.userData;
         }
-        this.authService.saveUserDataToCache(this.authService.getUserType(this.surveyService.getSurvey()));
-        return this.authService.userData;
+        if (this.authService.userData.survey_response.token) {
+            return this.authService.getApplicantType(this.authService.userData.survey_response.token);
+        }
+        return false;
     }
 }

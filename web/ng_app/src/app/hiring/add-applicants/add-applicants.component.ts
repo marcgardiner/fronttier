@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import {
   validateEmail,
-  duplicateEmail
+  duplicateEmail,
+  emailListRegex
 } from "../shared/common/email-validator";
 import { RecipientsService } from "../shared/recipients.service";
 import { Router } from "@angular/router";
@@ -19,6 +20,7 @@ export class AddApplicantsComponent implements OnInit {
   listUploaded = false;
   listInvalidEmail = false;
   duplicateEmailFlag = false;
+  invalidEmailErrorFlag = false;
   recipientsArray = [
     "chris@charmingbot.com",
     "bhatti@charmingbot.com",
@@ -29,10 +31,11 @@ export class AddApplicantsComponent implements OnInit {
     private recipientService: RecipientsService,
     private router: Router,
     private invitationsService: InvitationsService
-  ) {}
+  ) { }
 
   recipientForm: FormGroup = new FormGroup({
-    email: new FormControl("", [Validators.required, Validators.email])
+    email: new FormControl("", [Validators.required,
+    Validators.pattern(emailListRegex)])
   });
 
   ngOnInit() {
@@ -56,7 +59,6 @@ export class AddApplicantsComponent implements OnInit {
       this.recipients = this.recipients.map(email => {
         return email.toLowerCase();
       });
-      console.log(this.recipients);
       this.recipients = Array.from(new Set(this.recipients));
       this.listInvalidEmail = this.checkForInvalidEmail(this.recipients);
     };
@@ -77,14 +79,20 @@ export class AddApplicantsComponent implements OnInit {
     this.duplicateEmailFlag = false;
     if (!this.recipientForm.valid) {
       return;
-    } else if (
-      duplicateEmail(this.recipientForm.value.email, this.recipients)
-    ) {
-      this.duplicateEmailFlag = true;
-      return;
     }
-    this.recipients.push(this.recipientForm.value.email);
-    this.recipientForm.reset();
+    let recipients = this.recipientForm.value.email.split(',');
+    recipients = Array.from(new Set(recipients));
+    recipients.forEach((email) => {
+      if (duplicateEmail(email, this.recipients)) {
+        this.duplicateEmailFlag = true;
+        return;
+      }
+    });
+    if (!this.duplicateEmailFlag) {
+      this.recipients = [...this.recipients, ...recipients];
+      this.recipientService.usersList = this.recipients;
+      this.recipientForm.reset();
+    }
   }
 
   remainingEntries() {
@@ -108,6 +116,9 @@ export class AddApplicantsComponent implements OnInit {
     };
     this.invitationsService.sendInvitations(data).subscribe(res => {
       console.log("res", res);
-    });
+      this.router.navigate(['hiring/dashboard']);
+    }, ((error) => {
+      this.recipientService.errorFlag = true;
+    }));
   }
 }

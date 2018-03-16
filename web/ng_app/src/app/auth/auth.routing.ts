@@ -12,10 +12,10 @@ export const appRoutes: Routes = [
     path: '',
     component: AuthComponent,
     children: [
-      { path: '', redirectTo: 'login/', pathMatch: 'full' },
+      { path: '', redirectTo: 'access-login', pathMatch: 'full' },
       { path: 'login/:token', component: LoginComponent, resolve: { LoginResolver: LoginResolver} },
       { path: 'access-login', component: WithoutTokenLoginComponent },
-      { path: 'progress', component: LandingPageComponent, resolve: {LandingPageResolver: LandingPageResolver} }
+      { path: 'progress', component: LandingPageComponent }
     ]
   }
 ];

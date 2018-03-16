@@ -21,7 +21,7 @@
                 </tr>
               </thead>
               <tbody formArrayName="options">
-                <tr *ngFor="let option of QuestionForm.get('options').controls; let i = index">
+                <tr *ngFor="let option of QuestionForm.get('options')['controls']; let i = index">
                   <td class="table-descr">{{question.options[i].label}}</td>
                   <td *ngFor="let radio of [0,1,2,3,4]">
                       <label class="radio-wrap">

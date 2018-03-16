@@ -11,13 +11,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LandingPageComponent implements OnInit {
 
   constructor(
-  private router: Router,
-  private activatedRoute: ActivatedRoute) { }
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    public authService: AuthService) { }
   userData: Object;
   returnedUser = false;
 
   ngOnInit() {
-    this.userData = this.activatedRoute.snapshot.data.LandingPageResolver;
+    console.log('landing page');
+    console.log(this.authService.userData);
+    this.userData = this.authService.userData;
     this.returnedUser = this.userData['last_login'] ? true : false;
   }
 

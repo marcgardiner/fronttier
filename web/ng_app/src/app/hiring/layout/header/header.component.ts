@@ -9,7 +9,7 @@ import { RecipientsService } from '../../shared/recipients.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
     private recipientService: RecipientsService) { }
 
   ngOnInit() {
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
 
   resetTour() {
     this.recipientService.welcomeTourReset = false;
-    this.recipientService.currentSlide = 'ngb-slide-0';
+    this.recipientService.currentSlide = 0;
   }
 
 }

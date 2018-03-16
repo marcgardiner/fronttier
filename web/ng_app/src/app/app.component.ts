@@ -9,5 +9,5 @@ import { ThinkingStateService } from './shared/thinking-state.service';
 export class AppComponent {
   title = 'app';
 
-  constructor(private thinkingState: ThinkingStateService) { }
+  constructor(public thinkingState: ThinkingStateService) { }
 }
