@@ -3,7 +3,6 @@
 [![Build Status](https://semaphoreci.com/api/v1/projects/82efddf7-c131-4e8f-ae98-f518b9f7c34a/1850064/badge.svg)](https://semaphoreci.com/frontier-signal/frontier-signal)
 
 ## Getting Started
-
 In order to develop of the Frontier app, you need to install [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/). We've provided a fully-contained Compose environment to run the Frontier app in dev mode.
 
 We first start by first building the Docker image for our Django app:
@@ -82,7 +81,7 @@ The `token` is unique for each login URL that we email out to a user to take the
         "first_name": "Bojack",
         "last_name": "Horseman",
         "token": "user_123",
-        "type": "result"
+        "type": "regular"
     }
 }
 ```
@@ -126,7 +125,7 @@ This endpoint can be used to login a user using their email and password.
     "first_name": "Bojack",
     "last_name": "Horseman",
     "token": "user_123",
-    "type": "result"
+    "type": "regular"
 }
 ```
 
@@ -185,7 +184,7 @@ Empty response
                     "in_progress": 1,
                     "expired": 3
                 },
-                "result": {
+                "applicant": {
                     "total": 25,
                     "complete": 12,
                     "in_progress": 9,
@@ -213,7 +212,7 @@ Empty response
         "first_name": "Bojack",
         "last_name": "Horseman",
         "token": "user_123",
-        "type": "regular"
+        "type": ""
     },
     "questions": [
         ...
