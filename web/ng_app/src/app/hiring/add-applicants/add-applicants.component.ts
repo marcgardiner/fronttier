@@ -28,7 +28,7 @@ export class AddApplicantsComponent implements OnInit {
     "hello"
   ];
   constructor(
-    private recipientService: RecipientsService,
+    public recipientService: RecipientsService,
     private router: Router,
     private invitationsService: InvitationsService
   ) { }
