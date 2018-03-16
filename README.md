@@ -212,7 +212,7 @@ Empty response
         "first_name": "Bojack",
         "last_name": "Horseman",
         "token": "user_123",
-        "type": ""
+        "type": "regular"
     },
     "questions": [
         ...
