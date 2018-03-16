@@ -1,9 +1,9 @@
-from frontier.settings.env import TEST
+from frontier.settings.env import CI
 from frontier.settings.common import *
 
 
 # Environment
-ENV = TEST
+ENV = CI
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'xv4pmh!3rk8rwb+kufl1@!f)o@k&ku6&%0_-s7i_v_$mjn9ey('
@@ -21,10 +21,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-        'USER': 'postgres',
+        'USER': os.environ.get('DATABASE_POSTGRESQL_USERNAME'),
         'HOST': 'localhost',
         'PORT': '5432',
-        'PASSWORD': '',
+        'PASSWORD': os.environ.get('DATABASE_POSTGRESQL_PASSWORD'),
     }
 }
 

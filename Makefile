@@ -23,7 +23,7 @@ console:
 	python manage.py shell --settings=frontier.settings.dev
 
 test:
-	python manage.py test --settings=frontier.settings.test
+	python manage.py test --settings=frontier.settings.dev
 
 testall: test
 	(cd web/ng_app && make test)
