@@ -3,16 +3,21 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
-from business.models import Applicant, HiringManager
+from business.models import RegularUser, HiringManager
 from frontier.decorators import json_view, restrict
 from frontier.utils import get_or_404
 from survey.models import Job, Survey, SurveyResponse, SurveyInvitation
 
 
 @json_view(allowed_methods=['GET'])
-@restrict(HiringManager, Applicant)
+@restrict(HiringManager, RegularUser)
 def response(request, token):
-    return get_or_404(SurveyResponse, token).app_resource()
+    sr = get_or_404(SurveyResponse, token).app_resource()
+    if sr.user.token != request.user.token:
+        return {
+            'error': 'unauthorized'
+        }, 401
+    return sr.app_resource()
 
 
 @json_view(allowed_methods=['GET'])
@@ -31,9 +36,9 @@ def invite(request):
     emails = request.json['emails']
 
     _type = request.json['type']
-    if _type not in (Survey.Type.EXEMPLAR, Survey.Type.CANDIDATE):
+    if _type not in (Survey.Type.EXEMPLAR, Survey.Type.APPLICANT):
         return {
-            'error': 'type must be one of "exemplar" or "candidate"',
+            'error': 'type must be one of "exemplar" or "applicant"',
         }, 400
 
     job = get_or_404(Job, request.json['job'])

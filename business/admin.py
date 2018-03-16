@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django_object_actions import DjangoObjectActions
 
-from business.models import Administrator, Applicant, HiringManager, Company, LoginLink
+from business.models import Administrator, RegularUser, HiringManager, Company, LoginLink
 from frontier.admin import BaseAdmin
 from messaging.models import Email
 
@@ -37,7 +37,7 @@ class AdministratorAdmin(BaseUserAdmin):
     )
 
 
-class ApplicantAdmin(BaseUserAdmin):
+class RegularUserAdmin(BaseUserAdmin):
     fieldsets = user_fieldsets
 
 
@@ -67,7 +67,7 @@ class CompanyAdmin(BaseAdmin):
 
 
 admin.site.register(Administrator, AdministratorAdmin)
-admin.site.register(Applicant, ApplicantAdmin)
+admin.site.register(RegularUser, RegularUserAdmin)
 admin.site.register(HiringManager, HiringManagerAdmin)
 admin.site.register(LoginLink, LoginLinkAdmin)
 admin.site.register(Company, CompanyAdmin)
