@@ -175,6 +175,13 @@ class Company(BaseModel, AddressFields):
     name = models.CharField(max_length=64)
     logo = models.ImageField(upload_to=logo_s3_path, null=True, blank=True)
 
+    def app_resource(self):
+        return {
+            'token': self.token,
+            'name': self.name,
+            'logo': self.logo.url,
+        }
+
 
 class LoginLink(BaseModel):
     token_prefix = 'login'
