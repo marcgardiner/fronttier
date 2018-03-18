@@ -25,9 +25,6 @@ console:
 test:
 	python manage.py test --settings=frontier.settings.dev
 
-testall: test
-	(cd web/ng_app && make test)
-
 images:
 	docker-compose up -d --no-deps --build web
 
@@ -38,6 +35,9 @@ ng_build:
 
 ng_install:
 	(cd web/ng_app && make install)
+
+ng_test:
+	(cd web/ng_app && make test)
 
 deploy:
 	heroku container:push --recursive --app frontier-web

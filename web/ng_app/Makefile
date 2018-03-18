@@ -7,4 +7,4 @@ install:
 	npm install
 
 test:
-	PATH=$$(npm bin):$$PATH ng test
+	PATH=$$(npm bin):$$PATH ng test --watch=false
