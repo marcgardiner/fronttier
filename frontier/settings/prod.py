@@ -1,5 +1,4 @@
 import os
-import raven
 
 import dj_database_url
 
@@ -77,6 +76,5 @@ AWS_S3_OBJECT_PARAMETERS = {
 
 RAVEN_CONFIG = {
     'dsn': os.environ.get('SENTRY_DSN'),
-    'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
 }
 LOGGING['loggers']['']['handlers'].append('sentry')
