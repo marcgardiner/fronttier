@@ -8,11 +8,11 @@ from django.dispatch import receiver
 from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 
-from frontier.models import AddressFields, BaseModel
+from frontier.models import AddressFieldsMixin, BaseModel
 from frontier.utils import token_resource
 
 
-class User(BaseModel, AbstractUser, AddressFields):
+class User(BaseModel, AbstractUser, AddressFieldsMixin):
     token_prefix = 'user'
 
     USERNAME_FIELD = 'email'
@@ -165,7 +165,7 @@ def logo_s3_path(instance, filename):
     return 'public/business/%s/%s' % (instance.token, filename)
 
 
-class Company(BaseModel, AddressFields):
+class Company(BaseModel, AddressFieldsMixin):
     token_prefix = 'company'
 
     class Meta:

@@ -6,16 +6,26 @@ class BaseAdmin(admin.ModelAdmin):
     list_display = ('token', )
     search_fields = ('token', )
 
+    META_FIELDS = set(['disabled', 'storytime', 'metadata',
+                       'created_at', 'updated_at'])
+    LOCATION_FIELDS = set(['address1', 'address2', 'postal_code',
+                           'phone_number', 'city', 'state', 'country'])
+    SKIP_FIELDS = META_FIELDS.union(LOCATION_FIELDS)
+
     def get_fieldsets(self, request, obj=None):
-        meta_fields = ('disabled', 'storytime', 'metadata', 'created_at', 'updated_at')
         fieldsets = super(BaseAdmin, self).get_fieldsets(request, obj)
 
+        location_fields = []
         for name, _dict in fieldsets:
             fields = _dict['fields']
-            _dict['fields'] = filter(lambda f: f not in meta_fields, fields)
+            location_fields = filter(
+                lambda f: f in BaseAdmin.LOCATION_FIELDS, fields)
+            _dict['fields'] = filter(
+                lambda f: f not in BaseAdmin.SKIP_FIELDS, fields)
 
         fieldsets += (
-            ('Metadata', {'fields': meta_fields}),
+            ('Location', {'fields': location_fields}),
+            ('Metadata', {'fields': BaseAdmin.META_FIELDS}),
         )
 
         return fieldsets

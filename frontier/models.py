@@ -9,9 +9,6 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class BaseModel(models.Model):
-    class Meta:
-        abstract = True
-
     def __init__(self, *args, **kwargs):
         if not hasattr(self.__class__, 'token_prefix'):
             raise NotImplementedError('token_prefix missing for %s' %
@@ -28,6 +25,9 @@ class BaseModel(models.Model):
 
     storytime = models.TextField(null=True, blank=True)
     metadata = JSONField(null=True, blank=True)
+
+    class Meta:
+        abstract = True
 
     def set_token(self):
         if not self.token or '_' not in self.token:
@@ -61,15 +61,21 @@ class BaseModel(models.Model):
                 raise
 
 
-class LocationFields(object):
+class LocationFieldsMixin(models.Model):
     city = models.CharField(max_length=128, null=True, blank=True)
     state = models.CharField(max_length=128, null=True, blank=True)
     country = CountryField(null=True, blank=True)
 
+    class Meta:
+        abstract = True
 
-class AddressFields(LocationFields):
+
+class AddressFieldsMixin(LocationFieldsMixin):
     address1 = models.TextField(null=True, blank=True)
     address2 = models.TextField(null=True, blank=True)
     postal_code = models.CharField(null=True, blank=True, max_length=16)
 
     phone_number = PhoneNumberField(null=True, blank=True)
+
+    class Meta:
+        abstract = True

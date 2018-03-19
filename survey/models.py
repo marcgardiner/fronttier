@@ -10,11 +10,11 @@ from django.dispatch import receiver
 from django.template import Template, Context
 from jsonschema import validate
 
-from frontier.models import BaseModel, LocationFields
+from frontier.models import BaseModel, LocationFieldsMixin
 from frontier.utils import token_resource
 
 
-class Job(BaseModel, LocationFields):
+class Job(BaseModel, LocationFieldsMixin):
     token_prefix = 'job'
 
     class Type(object):
