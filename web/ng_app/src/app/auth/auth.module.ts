@@ -12,7 +12,7 @@ import { LoginResolver } from './login/login.resolver';
 import { FooterComponent } from './layout/footer/footer.component';
 import { WithoutTokenLoginComponent } from './without-token-login/without-token-login.component';
 import { LandingPageResolver } from './landing-page/landing-page.resolver';
-import { SurveyService } from '../shared/survey.service';
+import { JobService } from '../shared/job.service';
 
 @NgModule({
   imports: [
@@ -29,7 +29,7 @@ import { SurveyService } from '../shared/survey.service';
     WithoutTokenLoginComponent,
   ],
   providers: [
-    SurveyService,
+    JobService,
     LoginResolver,
     LandingPageResolver
   ],

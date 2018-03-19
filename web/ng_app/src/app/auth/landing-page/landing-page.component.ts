@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../shared/auth.service';
-import { SurveyService } from '../../shared/survey.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

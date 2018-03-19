@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class UserAuthService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(data): any {
     const token = data.token;
@@ -12,6 +12,13 @@ export class UserAuthService {
       headers: new HttpHeaders({ "Content-Type": "application/json" })
     };
     return this.http.post("/auth/login/" + token, data, options);
+  }
+
+  loginUser(data): any {
+    const options = {
+      headers: new HttpHeaders({ "Content-Type": "application/json" })
+    };
+    return this.http.post("/auth/login", data, options);
   }
 
   getUser(token: string): any {

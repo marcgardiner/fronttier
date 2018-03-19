@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-jobs',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class JobsComponent implements OnInit {
 
-  constructor() { }
+  jobs = [];
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.jobs = this.activatedRoute.snapshot.data.JobsResolver;
+    console.log(this.jobs);
   }
 
 }

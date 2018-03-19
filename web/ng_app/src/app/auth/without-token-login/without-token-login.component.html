@@ -6,6 +6,7 @@
       <div class="row justify-content-center">
         <div class="col-md-10 col-lg-7 col-xl-6">
           <p class="poppins fz-38 weight-500">Hello!</p>
+          <p class="fz-19 pb-4" class="login-error" *ngIf="authService.loginErrorFlag">Survey response not found please contact your administrator</p>
           <div class="row justify-content-center">
             <div class="col-md-10">
               <form action="#!" [formGroup]="loginForm">
@@ -39,11 +40,14 @@
                       <a href="#!"> reset your password.</a>
                     </div>
                     <div *ngIf="!loginForm.controls.password.errors?.required && loginForm.controls.password.errors?.minlength && loginForm.controls.password.touched">
-                      Please enter at least 8 characters.
+                      Please enter at least 5 characters.
+                    </div>
+                    <div class="login-error" *ngIf="errorFlag">
+                      <p>{{errorMsg}}</p>
                     </div>
                   </label>
                 </div>
-                <button class="btn btn-dark btn-rounded mt-3">log in</button>
+                <button class="btn btn-dark btn-rounded mt-3" [disabled]="!loginForm.valid" (click)="login()">log in</button>
               </form>
             </div>
           </div>

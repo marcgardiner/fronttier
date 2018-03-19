@@ -6,18 +6,19 @@ import { AddApplicantsComponent } from './add-applicants/add-applicants.componen
 import { AllRecipientsModalComponent } from './modals/all-recipients-modal/all-recipients-modal.component';
 import { EditRecipientGuard } from './shared/edit-recipient.guard';
 import { FullPreviewComponent } from './add-applicants/full-preview/full-preview.component';
+import { DashboardResolver } from './dashboard/dashboard.resolver';
 
 export const appRoutes: Routes = [
-    {
-      path: '',
-      component: HiringComponent,
-      children: [
-        { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-        { path: 'invite', component: InviteComponent, canActivate: [EditRecipientGuard] },
-        { path: 'add', component: AddApplicantsComponent, canActivate: [EditRecipientGuard] },
-        { path: 'edit', component: AllRecipientsModalComponent, canActivate: [EditRecipientGuard] },
-        { path: 'full-preview', component: FullPreviewComponent },
-        { path: 'dashboard', component: DashboardComponent }
-      ]
-    }
-  ];
+  {
+    path: '',
+    component: HiringComponent,
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'invite', component: InviteComponent, canActivate: [EditRecipientGuard] },
+      { path: 'add', component: AddApplicantsComponent, canActivate: [EditRecipientGuard] },
+      { path: 'edit', component: AllRecipientsModalComponent, canActivate: [EditRecipientGuard] },
+      { path: 'full-preview', component: FullPreviewComponent },
+      { path: 'dashboard', component: DashboardComponent, resolve: { DashboardResolver: DashboardResolver } }
+    ]
+  }
+];

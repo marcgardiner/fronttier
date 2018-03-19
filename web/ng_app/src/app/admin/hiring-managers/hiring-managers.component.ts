@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-hiring-managers',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HiringManagersComponent implements OnInit {
 
-  constructor() { }
+  managers = [];
+  constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    this.managers = this.activatedRoute.snapshot.data.HiringManagersResolver;
+    console.log(this.managers);
   }
 
 }

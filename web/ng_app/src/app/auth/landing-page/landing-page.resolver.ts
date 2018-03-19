@@ -5,13 +5,13 @@ import { Resolve } from '@angular/router';
 
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { Router } from '@angular/router';
-import { SurveyService } from '../../shared/survey.service';
+import { JobService } from '../../shared/job.service';
 
 @Injectable()
 export class LandingPageResolver implements Resolve<any> {
     constructor(private authService: AuthService,
         private router: Router,
-        private surveyService: SurveyService) { }
+        private jobService: JobService) { }
 
     resolve(route: ActivatedRouteSnapshot) {
         const loggedInUser = this.authService.getUserFromCache();

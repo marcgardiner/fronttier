@@ -39,38 +39,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>HM1230</td>
-              <td>Bank of America</td>
-              <td>Omar Kiy</td>
-              <td>omarkiy@bofa.com</td>
-              <td>42nd street 6th ave</td>
+            <tr *ngFor="let manager of managers">
+              <td>{{manager.id}}</td>
+              <td>{{manager.name}}</td>
+              <td>{{manager.hm_name}}</td>
+              <td>{{manager.email}}</td>
+              <td>{{manager.address}}</td>
               <td></td>
-              <td>1</td>
-              <td>Invite sent</td>
-              <td><img src="assets/img/admin/t-1.png" alt="" width="30"></td>
-            </tr>
-            <tr>
-              <td>HM1231</td>
-              <td>Bank of America</td>
-              <td>Elizabeth</td>
-              <td>Eliz@bofa.com</td>
-              <td>42nd street 6th ave</td>
-              <td></td>
-              <td>1</td>
-              <td>Active</td>
-              <td><img src="assets/img/admin/t-2.png" alt="" width="30"></td>
-            </tr>
-            <tr>
-              <td>HM1232</td>
-              <td>Bank of America</td>
-              <td>Yi</td>
-              <td>Yi@bofa.com</td>
-              <td>42nd street 6th ave</td>
-              <td></td>
-              <td>1</td>
-              <td>Active</td>
-              <td><img src="assets/img/admin/t-2.png" alt="" width="30"></td>
+              <td>{{manager.open_jobs}}</td>
+              <td>{{manager.status}}</td>
+              <td><img [src]="manager.logo" alt="" width="30"></td>
             </tr>
           </tbody>
         </table>
