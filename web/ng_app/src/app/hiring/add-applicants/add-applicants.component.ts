@@ -21,6 +21,7 @@ export class AddApplicantsComponent implements OnInit {
   listInvalidEmail = false;
   duplicateEmailFlag = false;
   invalidEmailErrorFlag = false;
+  ErrorBannerFlag = false;
   recipientsArray = [
     "chris@charmingbot.com",
     "bhatti@charmingbot.com",
@@ -42,11 +43,13 @@ export class AddApplicantsComponent implements OnInit {
     this.recipients = this.recipientService.usersList;
     if (this.recipients) {
       this.listInvalidEmail = this.checkForInvalidEmail(this.recipients);
+      if (this.listInvalidEmail) {
+        this.ErrorBannerFlag = true;
+      }
     }
   }
 
   viewRecipients() {
-    this.recipientService.usersType = "Applicants";
     this.recipientService.usersList = this.recipients;
     this.router.navigate(["hiring/edit"]);
   }
@@ -61,6 +64,9 @@ export class AddApplicantsComponent implements OnInit {
       });
       this.recipients = Array.from(new Set(this.recipients));
       this.listInvalidEmail = this.checkForInvalidEmail(this.recipients);
+      if (this.listInvalidEmail) {
+        this.ErrorBannerFlag = true;
+      }
     };
   }
 
@@ -80,8 +86,9 @@ export class AddApplicantsComponent implements OnInit {
     if (!this.recipientForm.valid) {
       return;
     }
-    let recipients = this.recipientForm.value.email.split(',');
+    let recipients = this.recipientForm.value.email.split(/[ ,]+/);
     recipients = Array.from(new Set(recipients));
+    console.log(recipients);
     recipients.forEach((email) => {
       if (duplicateEmail(email, this.recipients)) {
         this.duplicateEmailFlag = true;
@@ -104,7 +111,7 @@ export class AddApplicantsComponent implements OnInit {
 
   sendInvitions() {
     let userType;
-    if (this.recipientService.usersType.toLowerCase() === "exemplars") {
+    if (this.recipientService.usersType.toLowerCase() === "employees") {
       userType = "exemplar";
     } else if (this.recipientService.usersType.toLowerCase() === "applicants") {
       userType = "applicant";
@@ -112,10 +119,11 @@ export class AddApplicantsComponent implements OnInit {
     const data = {
       type: userType,
       emails: this.recipientService.usersList,
-      job: "job_NDQGPGWStII1AKxM"
+      job: this.recipientService.jobId
     };
     this.invitationsService.sendInvitations(data).subscribe(res => {
       console.log("res", res);
+      this.recipientService.usersList = [];
       this.router.navigate(['hiring/dashboard']);
     }, ((error) => {
       this.recipientService.errorFlag = true;

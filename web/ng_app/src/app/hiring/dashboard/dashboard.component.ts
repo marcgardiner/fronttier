@@ -92,7 +92,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dashboardData = HiringDashboard;
     this.title = this.dashboardData.signal.heading;
     this.content = this.dashboardData.signal.content;
-    this.recipientService.welcomeTourReset = this.authService.userData['last_login'] ? true : false;
+    if (!this.recipientService.welcomeTourNewUser) {
+      this.recipientService.welcomeTourReset = this.authService.userData['last_login'] ? true : false;
+      this.recipientService.currentSlide = 0;
+    }
     if (this.recipientService.welcomeTourReset) {
       this.recipientService.currentSlide = -1;
     }
@@ -106,6 +109,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.recipientService.currentSlide = parseInt(slide.current, 0);
         if (this.recipientService.currentSlide === 0 && slide.direction === NgbSlideEventDirection.LEFT) {
           this.recipientService.welcomeTourReset = true;
+          this.recipientService.welcomeTourNewUser = true;
           this.recipientService.currentSlide = -1;
         }
       });
@@ -118,6 +122,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.active = false;
+    this.recipientService.currentSlide = 0;
   }
 
 }

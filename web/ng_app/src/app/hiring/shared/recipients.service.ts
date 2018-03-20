@@ -12,6 +12,8 @@ export class RecipientsService {
     currentSlide: number;
     jobId: string;
     errorFlag = false;
+    welcomeTourNewUser = false;
+    welcomeBannerFlag = false;
 
     constructor() {
         this.welcomeTourReset = false;

@@ -1,21 +1,29 @@
 <section>
-  <div class="header d-flex justify-content-between p-3" *ngIf="listInvalidEmail">
-    <p class="m-0 pl-5">List uploaded with errors. Review and resolve them</p>
-    <a class="pr-4">
-      <img src="assets/img/X-error.svg" alt="">
-    </a>
+  <div *ngIf="ErrorBannerFlag">
+    <div class="header d-flex justify-content-between p-3" *ngIf="listInvalidEmail">
+      <p class="m-0 pl-5">List uploaded with errors. Review and resolve them</p>
+      <a class="pr-4" (click)="ErrorBannerFlag = false;">
+        <img src="assets/img/X-error.svg" alt="">
+      </a>
+    </div>
   </div>
   <div class="header d-flex justify-content-between p-3" *ngIf="recipientService.errorFlag">
     <p class="m-0 pl-5">Error sending Email please contact administrator</p>
-    <a class="pr-4">
+    <a class="pr-4" (click)="recipientService.errorFlag = false;">
       <img src="assets/img/X-error.svg" alt="">
     </a>
   </div>
 
   <div class="container">
-    <h2 class="invite-heading">
-      <p class="strong-font">Invite {{recipientService.usersType}}</p>
-    </h2>
+    <div class="d-flex justify-content-between">
+      <h2 class="invite-heading">
+        <p class="strong-font">Invite {{recipientService.usersType}}</p>
+      </h2>
+      <a class="cursor-pointer" routerLink="../dashboard">
+        <img class="pt-4" src="assets/img/chevron-left.svg" alt="">
+      </a>
+    </div>
+
     <div class="row">
       <div class="col-lg-7">
         <div class="card-heading">
@@ -24,16 +32,16 @@
           </h4>
           <div class="d-flex flex-row">
             <p class="p-1">
+              download sample csv
+            </p>
+            <p class="p-1">
               import a list
             </p>
-            <label class="p-1">
-              <img src="assets/img/file-excel-2.svg" alt="">
-            </label>
             <label class="p-1">
               <img src="assets/img/file-format-csv-2.svg" alt="">
             </label>
             <label class="pt-1 pl-3">
-              <img class="csv-import-btn" src="assets/img/handlebars.svg" alt="">
+              <img class="cursor-pointer" src="assets/img/handlebars.svg" alt="">
               <input type="file" (change)="csvUpload($event)" accept=".csv" style="display: none;">
             </label>
           </div>
@@ -51,6 +59,9 @@
                   <label class="error">
                     <div *ngIf="!recipientForm.controls.email.valid && recipientForm.controls.email.value && !duplicateEmailFlag">
                       Please enter a valid email address.
+                    </div>
+                    <div class="enter-add-recipient" *ngIf="recipientForm.controls.email.valid && recipientForm.controls.email.value && !duplicateEmailFlag">
+                        hit enter to add to recipients
                     </div>
                     <div *ngIf="duplicateEmailFlag">
                       Email already exists
