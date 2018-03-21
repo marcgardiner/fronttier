@@ -22,6 +22,7 @@ export class AddApplicantsComponent implements OnInit {
   duplicateEmailFlag = false;
   invalidEmailErrorFlag = false;
   errorBannerFlag = false;
+  invitationServiceData;
   recipientsArray = [
     "chris@charmingbot.com",
     "bhatti@charmingbot.com",
@@ -123,8 +124,9 @@ export class AddApplicantsComponent implements OnInit {
       emails: this.recipientService.usersList,
       job: this.recipientService.jobId
     };
-    this.invitationsService.sendInvitations(data).subscribe(res => {
+    this.invitationServiceData = this.invitationsService.sendInvitations(data).subscribe(res => {
       this.recipientService.usersList = [];
+      this.invitationServiceData.unsubscribe();
       this.router.navigate(['hiring/dashboard']);
     }, ((error) => {
       this.recipientService.errorFlag = true;

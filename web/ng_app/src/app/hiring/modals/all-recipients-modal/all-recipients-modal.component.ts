@@ -34,6 +34,7 @@ export class AllRecipientsModalComponent implements OnInit {
   usersData = [];
   invalidEmail = false;
   duplicateEmailFlag = false;
+  invitationServiceData;
 
   @ViewChild("test") test;
   constructor(
@@ -134,8 +135,9 @@ export class AllRecipientsModalComponent implements OnInit {
       emails: this.recipientService.usersList,
       job: this.recipientService.jobId
     };
-    this.invitationsService.sendInvitations(data).subscribe(res => {
+    this.invitationServiceData = this.invitationsService.sendInvitations(data).subscribe(res => {
       this.recipientService.usersList = [];
+      this.invitationServiceData.unsubscribe();
       this.router.navigate(['hiring/dashboard']);
     }, ((error) => {
       this.recipientService.errorFlag = true;
