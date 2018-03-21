@@ -5,8 +5,8 @@ import os
 
 from django.test import TestCase, Client
 
-from business.models import Company, HiringManager
-from survey.models import Job, Survey, SurveyInvitation
+from business.models import Company, HiringManager, RegularUser
+from survey.models import Job, Survey, SurveyInvitation, SurveyResponse
 
 
 class SurveyInviteTestCase(TestCase):
@@ -74,3 +74,29 @@ class JobsTestCase(TestCase):
         jobs = json.loads(response.content)['jobs']
         self.assertEqual(len(jobs), 2)
         self.assertEqual(jobs, [j.app_resource() for j in self.jobs])
+
+
+class SurveyTestCase(TestCase):
+    def setUp(self):
+        self.company = Company.objects.create(name='The Boring Company')
+        self.user = RegularUser.objects.create_user(
+            'me', email='me@boring.com', password='pwd')
+        self.job = Job.objects.create(
+            company=self.company, type=Job.Type.INTERN,
+            level=Job.Level.MID, title='Boring Engineer')
+        self.survey = Survey.objects.create(
+            job=self.job, expiration_time=1000, type=Survey.Type.EXEMPLAR)
+        self.survey_response = SurveyResponse.objects.create(
+            survey=self.survey,
+            user=self.user,
+        )
+
+    def test_get(self):
+        c = Client()
+        self.assertTrue(c.login(username='me@boring.com', password='pwd'))
+
+        response = c.get('/survey/response/%s' % self.survey_response.token)
+        self.assertEqual(response.status_code, 200)
+
+        resp = json.loads(response.content)
+        self.assertEqual(resp, self.survey_response.app_resource())

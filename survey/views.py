@@ -12,7 +12,7 @@ from survey.models import Job, Survey, SurveyResponse, SurveyInvitation
 @json_view(allowed_methods=['GET'])
 @restrict(HiringManager, RegularUser)
 def response(request, token):
-    sr = get_or_404(SurveyResponse, token).app_resource()
+    sr = get_or_404(SurveyResponse, token)
     if sr.user.token != request.user.token:
         return {
             'error': 'unauthorized'
