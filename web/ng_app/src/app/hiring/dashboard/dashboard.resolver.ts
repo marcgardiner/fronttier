@@ -13,7 +13,6 @@ export class DashboardResolver implements Resolve<any> {
         private jobService: JobService) { }
 
     resolve(route: ActivatedRouteSnapshot) {
-        console.log('resolving');
         return this.jobService.getJobs();
     }
 }

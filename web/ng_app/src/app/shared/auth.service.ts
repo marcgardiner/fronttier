@@ -116,11 +116,9 @@ export class AuthService {
   }
 
   getApplicantType(token) {
-    console.log('updateing applicant');
     return Observable.create(observer => {
       this.userAuthService.getSurveyUser(token)
         .subscribe((response: any) => {
-          console.log('response', response);
           this.userData.user.type = response.type;
           this.saveUserDataToCache(this.getUserType(this.userData));
           observer.next(this.userData);

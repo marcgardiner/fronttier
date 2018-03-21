@@ -99,7 +99,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.recipientService.welcomeTourReset) {
       this.recipientService.currentSlide = -1;
     }
-    console.log(this.jobData);
   }
 
   ngAfterViewInit() {

@@ -17,8 +17,6 @@ export class LandingPageComponent implements OnInit {
   returnedUser = false;
 
   ngOnInit() {
-    console.log('landing page');
-    console.log(this.authService.userData);
     this.userData = this.authService.userData;
     this.returnedUser = this.userData['last_login'] ? true : false;
   }

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { appRoutes } from '../hiring.routing';
 import { AngularDependenciesModule } from '../../shared/angular-dependencies.module';
 import { HeaderComponent } from '../layout/header/header.component';
@@ -23,6 +23,11 @@ describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
 
+  const fakeActivatedRoute = {
+    snapshot: { data: { DashboardResolver: { jobs : [{
+      surveys: {}
+    }]} } }
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -45,6 +50,7 @@ describe('DashboardComponent', () => {
         AuthService,
         UserAuthService,
         JobService,
+        {provide: ActivatedRoute, useValue: fakeActivatedRoute},
         { provide: APP_BASE_HREF, useValue: '/' }
       ]
     })

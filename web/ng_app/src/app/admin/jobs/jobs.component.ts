@@ -13,7 +13,6 @@ export class JobsComponent implements OnInit {
 
   ngOnInit() {
     this.jobs = this.activatedRoute.snapshot.data.JobsResolver;
-    console.log(this.jobs);
   }
 
 }

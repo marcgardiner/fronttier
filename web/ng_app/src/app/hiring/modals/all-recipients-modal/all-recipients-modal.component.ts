@@ -135,7 +135,6 @@ export class AllRecipientsModalComponent implements OnInit {
       job: this.recipientService.jobId
     };
     this.invitationsService.sendInvitations(data).subscribe(res => {
-      console.log("res", res);
       this.recipientService.usersList = [];
       this.router.navigate(['hiring/dashboard']);
     }, ((error) => {

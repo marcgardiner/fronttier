@@ -13,7 +13,6 @@ export class EmployeesComponent implements OnInit {
 
   ngOnInit() {
     this.employees = this.activatedRoute.snapshot.data.EmployeesResolver;
-    console.log(this.employees);
   }
 
 }

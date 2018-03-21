@@ -13,7 +13,6 @@ export class HiringManagersComponent implements OnInit {
 
   ngOnInit() {
     this.managers = this.activatedRoute.snapshot.data.HiringManagersResolver;
-    console.log(this.managers);
   }
 
 }

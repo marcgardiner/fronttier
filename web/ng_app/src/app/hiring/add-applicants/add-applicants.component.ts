@@ -21,7 +21,7 @@ export class AddApplicantsComponent implements OnInit {
   listInvalidEmail = false;
   duplicateEmailFlag = false;
   invalidEmailErrorFlag = false;
-  ErrorBannerFlag = false;
+  errorBannerFlag = false;
   recipientsArray = [
     "chris@charmingbot.com",
     "bhatti@charmingbot.com",
@@ -44,7 +44,7 @@ export class AddApplicantsComponent implements OnInit {
     if (this.recipients) {
       this.listInvalidEmail = this.checkForInvalidEmail(this.recipients);
       if (this.listInvalidEmail) {
-        this.ErrorBannerFlag = true;
+        this.errorBannerFlag = true;
       }
     }
   }
@@ -65,7 +65,7 @@ export class AddApplicantsComponent implements OnInit {
       this.recipients = Array.from(new Set(this.recipients));
       this.listInvalidEmail = this.checkForInvalidEmail(this.recipients);
       if (this.listInvalidEmail) {
-        this.ErrorBannerFlag = true;
+        this.errorBannerFlag = true;
       }
     };
   }
@@ -86,9 +86,11 @@ export class AddApplicantsComponent implements OnInit {
     if (!this.recipientForm.valid) {
       return;
     }
-    let recipients = this.recipientForm.value.email.split(/[ ,]+/);
+    let recipients = this.recipientForm.value.email.split(',');
+    recipients = recipients.map((email) => {
+      return email.trim();
+    });
     recipients = Array.from(new Set(recipients));
-    console.log(recipients);
     recipients.forEach((email) => {
       if (duplicateEmail(email, this.recipients)) {
         this.duplicateEmailFlag = true;
@@ -122,7 +124,6 @@ export class AddApplicantsComponent implements OnInit {
       job: this.recipientService.jobId
     };
     this.invitationsService.sendInvitations(data).subscribe(res => {
-      console.log("res", res);
       this.recipientService.usersList = [];
       this.router.navigate(['hiring/dashboard']);
     }, ((error) => {
