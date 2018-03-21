@@ -25,25 +25,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>A1b345</td>
-              <td>Bank of America</td>
-              <td>John Doe</td>
-              <td>omarkiy@bofa.com</td>
-              <td>42nd street 6th ave</td>
-              <td>7706537399</td>
-              <td><img src="assets/img/admin/logo-1.png" alt="" class="logo-company"></td>
-              <td>3</td>
-            </tr>
-            <tr>
-              <td>as756g</td>
-              <td>Morgan Stanley</td>
-              <td>Jessica Mez</td>
-              <td>JM@morganstan.com</td>
-              <td>123 5th ave</td>
-              <td></td>
-              <td><img src="assets/img/admin/logo-2.png" alt="" class="logo-company"></td>
-              <td>2</td>
+            <tr *ngFor="let company of companies">
+              <td>{{company.id}}</td>
+              <td>{{company.name}}</td>
+              <td>{{company.contact}}</td>
+              <td>{{company.email}}</td>
+              <td>{{company.address}}</td>
+              <td>{{company.phone}}</td>
+              <td><img [src]="company.logo" alt="" class="logo-company"></td>
+              <td>{{company.hiring_manager}}</td>
             </tr>
           </tbody>
         </table>

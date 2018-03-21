@@ -28,15 +28,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>bo546v</td>
-              <td>Financial Analyst</td>
-              <td>full time</td>
-              <td>Entry Level</td>
-              <td>Bank Of America</td>
-              <td><strong>Omar Kiyani</strong></td>
-              <td>NY,Ny</td>
-              <td>Open</td>
+            <tr *ngFor="let employee of employees">
+              <td>{{employee.id}}</td>
+              <td>{{employee.title}}</td>
+              <td>{{employee.type}}</td>
+              <td>{{employee.level}}</td>
+              <td>{{employee.company}}</td>
+              <td><strong>{{employee.hm_manager}}</strong></td>
+              <td>{{employee.location}}</td>
+              <td>{{employee.status}}</td>
             </tr>
           </tbody>
         </table>

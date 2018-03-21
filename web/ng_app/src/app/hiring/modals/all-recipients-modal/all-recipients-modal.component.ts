@@ -34,6 +34,7 @@ export class AllRecipientsModalComponent implements OnInit {
   usersData = [];
   invalidEmail = false;
   duplicateEmailFlag = false;
+  invitationServiceData;
 
   @ViewChild("test") test;
   constructor(
@@ -124,7 +125,7 @@ export class AllRecipientsModalComponent implements OnInit {
 
   sendInvitations() {
     let userType;
-    if (this.recipientService.usersType.toLowerCase() === "exemplars") {
+    if (this.recipientService.usersType.toLowerCase() === "employees") {
       userType = "exemplar";
     } else if (this.recipientService.usersType.toLowerCase() === "applicants") {
       userType = "applicant";
@@ -132,10 +133,11 @@ export class AllRecipientsModalComponent implements OnInit {
     const data = {
       type: userType,
       emails: this.recipientService.usersList,
-      job: "job_NDQGPGWStII1AKxM"
+      job: this.recipientService.jobId
     };
-    this.invitationsService.sendInvitations(data).subscribe(res => {
-      console.log("res", res);
+    this.invitationServiceData = this.invitationsService.sendInvitations(data).subscribe(res => {
+      this.recipientService.usersList = [];
+      this.invitationServiceData.unsubscribe();
       this.router.navigate(['hiring/dashboard']);
     }, ((error) => {
       this.recipientService.errorFlag = true;

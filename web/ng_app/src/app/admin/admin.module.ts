@@ -15,6 +15,11 @@ import { JobsComponent } from './jobs/jobs.component';
 import { NewJobComponent } from './modals/new-job/new-job.component';
 import { StatsComponent } from './stats/stats.component';
 import { TrackResponsesComponent } from './track-responses/track-responses.component';
+import { AdminService } from '../shared/admin.service';
+import { DashboardResolver } from './dashboard/dashboard.resolver';
+import { HiringManagersResolver } from './hiring-managers/hiring-managers.resolver';
+import { EmployeesResolver } from './employees/employees.resolver';
+import { JobsResolver } from './jobs/jobs.resolver';
 
 @NgModule({
   imports: [
@@ -36,6 +41,13 @@ import { TrackResponsesComponent } from './track-responses/track-responses.compo
     JobsComponent,
     NewJobComponent,
     StatsComponent,
-    TrackResponsesComponent]
+    TrackResponsesComponent],
+    providers: [
+      AdminService,
+      DashboardResolver,
+      HiringManagersResolver,
+      EmployeesResolver,
+      JobsResolver
+    ]
 })
 export class AdminModule { }

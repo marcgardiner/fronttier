@@ -16,7 +16,8 @@ import { RecipientsService } from './shared/recipients.service';
 import { EditRecipientGuard } from './shared/edit-recipient.guard';
 import { FullPreviewComponent } from './add-applicants/full-preview/full-preview.component';
 import { InvitationsService } from '../shared/invitations.service';
-import { SurveyService } from '../shared/survey.service';
+import { JobService } from '../shared/job.service';
+import { DashboardResolver } from './dashboard/dashboard.resolver';
 
 @NgModule({
   entryComponents: [
@@ -43,7 +44,8 @@ import { SurveyService } from '../shared/survey.service';
     RecipientsService,
     EditRecipientGuard,
     InvitationsService,
-    SurveyService
+    JobService,
+    DashboardResolver
   ]
 })
 export class HiringModule { }

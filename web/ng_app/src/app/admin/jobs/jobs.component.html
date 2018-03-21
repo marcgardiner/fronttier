@@ -35,26 +35,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>bo546v</td>
-              <td>Financial Analyst</td>
-              <td>Bank of Amarica</td>
-              <td>Omar Kiyani</td>
-              <td>Open</td>
-            </tr>
-            <tr>
-              <td>bo546v</td>
-              <td>Financial Analyst</td>
-              <td>Bank of Amarica</td>
-              <td>YI</td>
-              <td>Open</td>
-            </tr>
-            <tr>
-              <td>bo546v</td>
-              <td>Financial Analyst</td>
-              <td>Bank of Amarica</td>
-              <td>Elizabeth</td>
-              <td>Closed</td>
+            <tr *ngFor="let job of jobs">
+              <td>{{job.id}}</td>
+              <td>{{job.position}}</td>
+              <td>{{job.company}}</td>
+              <td>{{job.hm_manager}}</td>
+              <td>{{job.status}}</td>
             </tr>
           </tbody>
         </table>

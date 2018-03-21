@@ -10,23 +10,27 @@ import { EmployeesComponent } from './employees/employees.component';
 import { JobsComponent } from './jobs/jobs.component';
 import { StatsComponent } from './stats/stats.component';
 import { TrackResponsesComponent } from './track-responses/track-responses.component';
+import { DashboardResolver } from './dashboard/dashboard.resolver';
+import { HiringManagersResolver } from './hiring-managers/hiring-managers.resolver';
+import { EmployeesResolver } from './employees/employees.resolver';
+import { JobsResolver } from './jobs/jobs.resolver';
 
 export const appRoutes: Routes = [
-    {
-      path: '',
-      component: AdminComponent,
-      children: [
-        { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-        { path: 'dashboard', component: DashboardComponent },
-        { path: 'new-company', component: NewCompanyModalComponent },
-        { path: 'hiring-manager', component: HiringManagersComponent },
-        { path: 'new-hiring-manager', component: NewHiringManagerModalComponent },
-        { path: 'employees', component: EmployeesComponent },
-        { path: 'new-employee', component: NewEmployeeComponent },
-        { path: 'jobs', component: JobsComponent },
-        { path: 'new-job', component: NewJobComponent },
-        { path: 'stats', component: StatsComponent },
-        { path: 'track-responses', component: TrackResponsesComponent }
-      ]
-    }
-  ];
+  {
+    path: '',
+    component: AdminComponent,
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent, resolve: { DashboardResolver: DashboardResolver } },
+      { path: 'new-company', component: NewCompanyModalComponent },
+      { path: 'hiring-manager', component: HiringManagersComponent, resolve: { HiringManagersResolver: HiringManagersResolver } },
+      { path: 'new-hiring-manager', component: NewHiringManagerModalComponent },
+      { path: 'employees', component: EmployeesComponent, resolve: { EmployeesResolver: EmployeesResolver } },
+      { path: 'new-employee', component: NewEmployeeComponent },
+      { path: 'jobs', component: JobsComponent, resolve: {JobsResolver: JobsResolver} },
+      { path: 'new-job', component: NewJobComponent },
+      { path: 'stats', component: StatsComponent },
+      { path: 'track-responses', component: TrackResponsesComponent }
+    ]
+  }
+];

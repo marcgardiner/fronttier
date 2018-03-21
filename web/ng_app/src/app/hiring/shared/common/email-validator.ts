@@ -4,7 +4,7 @@ export function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
-export const emailListRegex = /^[A-Z0-9\._%-]+@[A-Z0-9]+\.[A-Z]{2,4}(?:[,;][A-Z0-9\._%-]+@[A-Z0-9]+\.[A-Z]{2,4})*$/i;
+export const emailListRegex = /^[A-Z0-9\._%-]+@[A-Z0-9]+\.[A-Z]{2,4}(?:[,][ A-Z0-9\._%-]+@[A-Z0-9]+\.[A-Z]{2,4})*$/i;
 
 export function duplicateEmail(email, recipients): Boolean {
     let dupFlag = false;
