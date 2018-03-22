@@ -27,7 +27,7 @@ describe("DashboardComponent", () => {
     snapshot: {
       data: {
         DashboardResolver: {
-          job: [
+          data: [
             {
               surveys: {}
             }
