@@ -6,6 +6,6 @@ export class JobService {
   constructor(private http: HttpClient) {}
 
   getJobs(): any {
-    return this.http.get("/survey/jobs");
+    return this.http.get("/survey/job");
   }
 }
