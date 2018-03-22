@@ -79,6 +79,7 @@ class Job(BaseModel, LocationFieldsMixin):
             'title': self.title,
             'description': self.description,
             'surveys': surveys,
+            'location': self.location_resource(),
         }
 
 

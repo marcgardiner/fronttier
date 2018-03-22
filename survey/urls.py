@@ -6,6 +6,6 @@ from survey.views import invite, response, jobs
 
 urlpatterns = [
     url(r'invite/?', invite, name='survey.invite'),
-    url(r'jobs/?', jobs, name='survey.jobs'),
+    url(r'job/?', jobs, name='survey.jobs'),
     url(append_token(r'response'), response, name='survey.response'),
 ]

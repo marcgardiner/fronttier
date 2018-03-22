@@ -46,7 +46,7 @@ class SurveyInviteTestCase(TestCase):
         self.assertEqual(invitation.emails, ['bojack@horseman.com'])
 
 
-class JobsTestCase(TestCase):
+class JobTestCase(TestCase):
     def setUp(self):
         self.company = Company.objects.create(name='The Boring Company')
         self.hm = HiringManager.objects.create_user(
@@ -64,14 +64,14 @@ class JobsTestCase(TestCase):
             job.hiring_managers.add(self.hm)
             job.save()
 
-    def test_get(self):
+    def test_get_many(self):
         c = Client()
         self.assertTrue(c.login(username='elon@boring.com', password='pwd'))
 
-        response = c.get('/survey/jobs')
+        response = c.get('/survey/job')
         self.assertEqual(response.status_code, 200)
 
-        jobs = json.loads(response.content)['jobs']
+        jobs = json.loads(response.content)['data']
         self.assertEqual(len(jobs), 2)
         self.assertEqual(jobs, [j.app_resource() for j in self.jobs])
 

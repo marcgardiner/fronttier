@@ -5,7 +5,7 @@ import os
 
 from django.test import TestCase, Client
 
-from business.models import RegularUser, LoginLink
+from business.models import RegularUser, LoginLink, Administrator, Company
 from frontier.utils import serialize_datetime
 
 
@@ -103,3 +103,17 @@ class LoginTestCase(TestCase):
             'token': self.user.token,
             'type': 'regular'
         }, json.loads(response.content))
+
+
+class CompanyTestCase(TestCase):
+    def setUp(self):
+        self.company = Company.objects.create(name='The Boring Company')
+        self.user = Administrator.objects.create_user(
+            'elon', email='elon@boring.com', password='pwd')
+
+    def test_get_many(self):
+        c = Client()
+        self.assertTrue(c.login(username='elon@boring.com', password='pwd'))
+
+        response = c.get('/auth/company')
+        self.assertEqual(response.status_code, 200)

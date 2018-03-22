@@ -3,6 +3,7 @@
 [![Build Status](https://semaphoreci.com/api/v1/projects/82efddf7-c131-4e8f-ae98-f518b9f7c34a/1850064/badge.svg)](https://semaphoreci.com/frontier-signal/frontier-signal)
 
 ## Getting Started
+
 In order to develop of the Frontier app, you need to install [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/). We've provided a fully-contained Compose environment to run the Frontier app in dev mode.
 
 We first start by first building the Docker image for our Django app:
@@ -133,6 +134,32 @@ This endpoint can be used to login a user using their email and password.
 
 This endpoint can be used to logout a user.
 
+#### `auth/company`
+
+##### `GET`
+
+```
+# Response
+{
+    "data": [
+        {
+            "token": "company_UMBBESMmPICpMEDw",
+            "name": "The Boring Company",
+            "logo": "http://boring.com/logo.jpg    ",
+            "location": {
+                "address1": "100 Van Ness Ave",
+                "address2": "#525",
+                "city": "San Francisco",
+                "state": "CA",
+                "postal_code": "94123",
+                "phone_number": "+11234567890"
+            }
+        },
+        ...
+    ]
+}
+```
+
 ##### `GET`
 
 ```
@@ -161,14 +188,14 @@ Empty response
 }
 ```
 
-#### `survey/jobs`
+#### `survey/job`
 
 ##### `GET`
 
 ```
 # Response
 {
-    "jobs": [
+    "data": [
         {
             "token": "job_xxx",
             "company": "company_yyy",

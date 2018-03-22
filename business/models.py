@@ -176,10 +176,15 @@ class Company(BaseModel, AddressFieldsMixin):
     logo = models.ImageField(upload_to=logo_s3_path, null=True, blank=True)
 
     def app_resource(self):
+        if self.logo.name:
+            logo_url = self.logo.url
+        else:
+            logo_url = None
         return {
             'token': self.token,
             'name': self.name,
-            'logo': self.logo.url,
+            'logo': logo_url,
+            'location': self.location_resource(),
         }
 
 

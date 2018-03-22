@@ -26,7 +26,7 @@ def jobs(request):
     jobs = Job.objects.prefetch_related('surveys__responses').filter(
         hiring_managers=request.hd_user)
     return {
-        'jobs': [job.app_resource() for job in jobs],
+        'data': [job.app_resource() for job in jobs],
     }
 
 

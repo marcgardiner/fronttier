@@ -69,6 +69,13 @@ class LocationFieldsMixin(models.Model):
     class Meta:
         abstract = True
 
+    def location_resource(self):
+        return {
+            'city': self.city,
+            'state': self.state,
+            'country': self.country.code,
+        }
+
 
 class AddressFieldsMixin(LocationFieldsMixin):
     address1 = models.TextField(null=True, blank=True)
@@ -79,3 +86,13 @@ class AddressFieldsMixin(LocationFieldsMixin):
 
     class Meta:
         abstract = True
+
+    def location_resource(self):
+        res = super(AddressFieldsMixin, self).location_resource()
+        res.update({
+            'address1': self.address1,
+            'address2': self.address2,
+            'postal_code': self.postal_code,
+            'phone_number': self.phone_number,
+        })
+        return res

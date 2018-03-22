@@ -4,8 +4,9 @@ from __future__ import unicode_literals
 from django.contrib import auth
 from django.utils import timezone
 
-from business.models import User, LoginLink
-from frontier.decorators import json_view, json_get_view, json_post_view
+from business.models import User, LoginLink, Administrator, Company
+from frontier.decorators import (
+    json_view, json_get_view, json_post_view, restrict)
 from frontier.utils import get_or_404
 
 
@@ -61,3 +62,11 @@ def login(request):
 @json_get_view()
 def logout(request):
     auth.logout(request)
+
+
+@json_get_view()
+@restrict(Administrator)
+def companies(request):
+    return {
+        'data': map(lambda c: c.app_resource(), Company.objects.all())
+    }
