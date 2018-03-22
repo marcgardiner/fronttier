@@ -39,7 +39,6 @@ class BaseModel(models.Model):
 
     def save(self, *args, **kwargs):
         self.set_token()
-        self.validate()
         super(BaseModel, self).save(*args, **kwargs)
 
     def serialize(self, fields=None):
