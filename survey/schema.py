@@ -4,24 +4,42 @@ from survey.models import QuestionTemplate
 Type = QuestionTemplate.Type
 
 
+METADATA = {
+    'type': 'objects',
+    'properties': {
+        'type': {
+            'type': 'string'
+        },
+        'group': {
+            'type': 'integer'
+        },
+        'optional': {
+            'type': 'boolean'
+        }
+    }
+}
+
+ITEMS = {
+    'type': 'array',
+    'items': {
+        'type': 'object',
+        'properties': {
+            'value': {
+                'type': 'string',
+            },
+            'key': {
+                'type': 'string',
+            },
+            'metadata': METADATA,
+        },
+        'required': ['value', 'key']
+    }
+}
+
 SIMPLE_ITEMS_ONLY = {
     'type': 'object',
     'properties': {
-        'items': {
-            'type': 'array',
-            'items': {
-                'type': 'object',
-                'properties': {
-                    'value': {
-                        'type': 'string',
-                    },
-                    'key': {
-                        'type': 'string',
-                    }
-                },
-                'required': ['value', 'key']
-            }
-        }
+        'items': ITEMS,
     },
     'required': ['items']
 }
@@ -29,21 +47,7 @@ SIMPLE_ITEMS_ONLY = {
 SIMPLE_ITEMS_AND_NUM_ALLOWED = {
     'type': 'object',
     'properties': {
-        'items': {
-            'type': 'array',
-            'items': {
-                'type': 'object',
-                'properties': {
-                    'value': {
-                        'type': 'string',
-                    },
-                    'key': {
-                        'type': 'string',
-                    }
-                },
-                'required': ['value', 'key']
-            }
-        },
+        'items': ITEMS,
         'num_allowed': {
             'type': 'integer'
         }
@@ -58,76 +62,16 @@ QUESTION_SCHEMA = {
         'type': 'object',
         'properties': {}
     },
-    Type.OPEN_ENDED_MULTI_FIELDS: {
-        'type': 'object',
-        'properties': {
-            'items': {
-                'type': 'array',
-                'items': {
-                    'type': 'object',
-                    'properties': {
-                        'value': {
-                            'type': 'string',
-                        },
-                        'key': {
-                            'type': 'string',
-                        },
-                        'optional': {
-                            'type': 'boolean'
-                        }
-                    },
-                    'required': ['value', 'key']
-                }
-            }
-        },
-        'required': ['items']
-    },
+    Type.OPEN_ENDED_MULTI_FIELDS: SIMPLE_ITEMS_ONLY,
     Type.REORDER: SIMPLE_ITEMS_ONLY,
     Type.DRAG_DROP: SIMPLE_ITEMS_AND_NUM_ALLOWED,
-    Type.TYPE_AHEAD: {
-        'type': 'object',
-        'properties': {
-            'items': {
-                'type': 'array',
-                'items': {
-                    'type': 'object',
-                    'properties': {
-                        'value': {
-                            'type': 'string',
-                        },
-                        'key': {
-                            'type': 'string',
-                        },
-                        'type': {
-                            'type': 'string'
-                        }
-                    },
-                    'required': ['value', 'key', 'type']
-                }
-            }
-        },
-        'required': ['items']
-    },
+    Type.TYPE_AHEAD: SIMPLE_ITEMS_ONLY,
     Type.DROPDOWN: SIMPLE_ITEMS_ONLY,
     Type.RANK_ORDER_TABLE: SIMPLE_ITEMS_ONLY,
     Type.RANK_ORDER_MATRIX: {
         'type': 'object',
         'properties': {
-            'items': {
-                'type': 'array',
-                'items': {
-                    'type': 'object',
-                    'properties': {
-                        'value': {
-                            'type': 'string',
-                        },
-                        'key': {
-                            'type': 'string',
-                        }
-                    },
-                    'required': ['value', 'key']
-                }
-            },
+            'items': ITEMS,
             'choices': {
                 'type': 'array',
                 'items': {
@@ -227,5 +171,5 @@ ANSWER_SCHEMA = {
     Type.TYPE_AHEAD: MULTIPLE_ANSWER_FREE_FORM,
     Type.DROPDOWN: SINGLE_ANSWER,
     Type.RANK_ORDER_TABLE: MULTIPLE_ANSWER,
-    Type.RANK_ORDER_MATRIX: MULTIPLE_ANSWER,
+    Type.RANK_ORDER_MATRIX: MULTIPLE_ANSWER_FREE_FORM,
 }

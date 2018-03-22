@@ -34,8 +34,12 @@ class BaseModel(models.Model):
             self.token = '%s_%s' % (
                 self.__class__.token_prefix, get_random_string(length=16))
 
+    def validate(self):
+        pass
+
     def save(self, *args, **kwargs):
         self.set_token()
+        self.validate()
         super(BaseModel, self).save(*args, **kwargs)
 
     def serialize(self, fields=None):

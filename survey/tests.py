@@ -3,10 +3,12 @@ from __future__ import unicode_literals
 import json
 import os
 
+from django.core.exceptions import ValidationError
 from django.test import TestCase, Client
 
 from business.models import Company, HiringManager, RegularUser
-from survey.models import Job, Survey, SurveyInvitation, SurveyResponse
+from survey.models import (
+    Job, Survey, SurveyInvitation, SurveyResponse, QuestionTemplate)
 
 
 class SurveyInviteTestCase(TestCase):
@@ -100,3 +102,93 @@ class SurveyTestCase(TestCase):
 
         resp = json.loads(response.content)
         self.assertEqual(resp, self.survey_response.app_resource())
+
+
+class QuestionTemplateTestCase(TestCase):
+    def test_validation(self):
+        datas = [
+            (
+                QuestionTemplate.Type.MULTI_CHOICE_SINGLE_SELECT,
+                # Unique keys
+                {
+                    'items': [
+                        {
+                            'value': 'a',
+                            'key': 'a'
+                        },
+                        {
+                            'value': 'b',
+                            'key': 'a'
+                        },
+                    ]
+                },
+                True
+            ),
+            (
+                QuestionTemplate.Type.MULTI_CHOICE_SINGLE_SELECT,
+                # Invalid key
+                {
+                    'items': [
+                        {
+                            'value': 'a',
+                            'key': '#a'
+                        }
+                    ]
+                },
+                True
+            ),
+            (
+                QuestionTemplate.Type.MULTI_CHOICE_MULTI_SELECT,
+                # Invalid key
+                {
+                    'items': [
+                        {
+                            'value': 'a',
+                            'key': '#a'
+                        }
+                    ]
+                },
+                True
+            ),
+            (
+                QuestionTemplate.Type.MULTI_CHOICE_MULTI_SELECT,
+                # Invalid key
+                {
+                    'items': [
+                        {
+                            'value': 'a',
+                            'key': 'a'
+                        }
+                    ],
+                    'num_items': 2
+                },
+                True
+            ),
+            (
+                QuestionTemplate.Type.MULTI_CHOICE_MULTI_SELECT,
+                # Invalid key
+                {
+                    'items': [
+                        {
+                            'value': 'a',
+                            'key': 'a'
+                        }
+                    ],
+                    'num_items': 1
+                },
+                False
+            ),
+        ]
+        for typ, data, should_fail in datas:
+            try:
+                QuestionTemplate.objects.create(
+                    name='a',
+                    type=typ,
+                    prompt='yo',
+                    data=data
+                )
+                failed = False
+            except ValidationError as e:
+                failed = True
+            finally:
+                self.assertTrue(failed == should_fail)

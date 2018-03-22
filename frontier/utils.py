@@ -42,3 +42,19 @@ def serialize_datetime(o):
         return r
     else:
         raise ValueError('Object is not of a timestamp like type.')
+
+
+def collect_values(d, key):
+    values = []
+    for k, v in d.iteritems():
+        if isinstance(v, dict):
+            values.extend(collect_values(v, key))
+            continue
+        if isinstance(v, list):
+            for e in v:
+                if isinstance(e, dict):
+                    values.extend(collect_values(e, key))
+        if k != key:
+            continue
+        values.append(v)
+    return values

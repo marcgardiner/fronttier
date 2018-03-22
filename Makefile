@@ -19,8 +19,11 @@ migrate:
 	python manage.py makemigrations --settings=frontier.settings.dev
 	python manage.py migrate --settings=frontier.settings.dev
 
-console:
+shell:
 	python manage.py shell --settings=frontier.settings.dev
+
+dbshell:
+	python manage.py dbshell --settings=frontier.settings.dev
 
 test:
 	python manage.py test --settings=frontier.settings.dev

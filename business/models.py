@@ -128,6 +128,8 @@ class RegularUser(User):
 
     class Meta:
         proxy = True
+        verbose_name = 'Regular User'
+        verbose_name_plural = 'Regular Users'
 
     def save(self, *args, **kwargs):
         self.type = User.Type.REGULAR
