@@ -14,10 +14,6 @@ from survey.models import Job, Survey, SurveyResponse, SurveyInvitation
 @restrict(HiringManager, RegularUser)
 def response(request, token):
     sr = get_or_4xx(SurveyResponse, token)
-    if sr.user.token != request.user.token:
-        return {
-            'error': 'unauthorized'
-        }, 401
     return sr.app_resource()
 
 
