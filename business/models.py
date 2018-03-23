@@ -29,7 +29,7 @@ class User(BaseModel, AbstractUser, AddressFieldsMixin):
             (HIRING_MANAGER, 'Hiring Manager')
         )
 
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username', 'type']
     REGISTRATION_FIELDS = ['first_name', 'last_name']
 
     type = models.CharField(choices=Type.CHOICES, max_length=16)
