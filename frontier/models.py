@@ -85,17 +85,19 @@ def BaseModelForm(model_cls, fields=None, exclude=[], token_fields={}):
             fields = f
             exclude = ex
 
-        def __init__(self, data, *args, **kwargs):
-            for key, value in data.items():
-                if key not in token_fields:
-                    continue
-                klass = token_fields[key]
-                if isinstance(value, list):
-                    data[key] = [get_or_4xx(klass, t).pk for t in value]
-                else:
-                    data[key] = get_or_4xx(klass, value).pk
+        def __init__(self, *args, **kwargs):
+            if args:
+                data = args[0]
+                for key, value in data.items():
+                    if key not in token_fields:
+                        continue
+                    klass = token_fields[key]
+                    if isinstance(value, list):
+                        data[key] = [get_or_4xx(klass, t).pk for t in value]
+                    else:
+                        data[key] = get_or_4xx(klass, value).pk
 
-            super(BaseModelFormImpl, self).__init__(data, *args, **kwargs)
+            super(BaseModelFormImpl, self).__init__(*args, **kwargs)
 
             # If there is any initial data present, use that as the fallback
             # value.

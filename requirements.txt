@@ -13,6 +13,7 @@ gunicorn==19.7.1
 jsonschema==2.6.0
 pillow==5.0.0
 pip==9.0.1
+django-prettyjson==0.3.0
 psycopg2==2.7.3.2
 raven==6.6.0
 redis==2.10.6

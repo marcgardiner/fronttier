@@ -30,6 +30,7 @@ INSTALLED_APPS = [
 
     'django_celery_results',
     'django_object_actions',
+    'prettyjson',
     'raven.contrib.django.raven_compat',
     'storages',
 
@@ -154,7 +155,7 @@ LOGGING = {
     },
     'formatters': {
         'verbose': {
-            'format': '[%(levelname)s] %(asctime)s (%(process)s) '
+            'format': '[%(levelname)s] %(asctime)s (cp%(process)s) '
                       '%(module)s: %(message)s'
         },
     },

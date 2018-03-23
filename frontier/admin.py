@@ -1,10 +1,16 @@
 from django.contrib import admin
+from django.contrib.postgres.fields import JSONField
+from prettyjson import PrettyJSONWidget
 
 
 class BaseAdmin(admin.ModelAdmin):
     readonly_fields = ('token', 'created_at', 'updated_at')
     list_display = ('token', )
     search_fields = ('token', )
+
+    formfield_overrides = {
+        JSONField: {'widget': PrettyJSONWidget}
+    }
 
     META_FIELDS = set(['disabled', 'storytime', 'metadata',
                        'created_at', 'updated_at'])

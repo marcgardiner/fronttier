@@ -28,7 +28,8 @@ QuestionTemplateForm = BaseModelForm(QuestionTemplate)
 
 class QuestionTemplateAdmin(BaseAdmin):
     form = QuestionTemplateForm
-    list_display = BaseAdmin.list_display + ('name', 'type', 'prompt')
+    list_display = BaseAdmin.list_display + \
+        ('name', 'type', 'segment', 'prompt')
 
 
 class QuestionAdmin(BaseAdmin):
