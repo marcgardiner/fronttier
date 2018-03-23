@@ -67,6 +67,8 @@ class User(BaseModel, AbstractUser, AddressFieldsMixin):
         elif self.type == User.Type.HIRING_MANAGER:
             return HiringManager.objects.get(token=self.token)
 
+        raise Exception('Weird user type: ' % self.type)
+
     def is_complete(self):
         for attr in User.REGISTRATION_FIELDS:
             if getattr(self, attr) is None:
