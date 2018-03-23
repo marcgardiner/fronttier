@@ -76,7 +76,7 @@ class User(BaseModel, AbstractUser, AddressFieldsMixin):
         return True
 
     def app_resource(self):
-        return {
+        res = {
             'token': self.token,
             'type': self.type,
             'first_name': self.first_name,
@@ -84,6 +84,8 @@ class User(BaseModel, AbstractUser, AddressFieldsMixin):
             'email': self.email,
             'company': getattr(self.company, 'token', None),
         }
+        res.update(self.location_resource())
+        return res
 
 
 def create_login_link(sender, instance=None, created=False, **kwargs):

@@ -32,7 +32,14 @@ class LoginLinkTestCase(TestCase):
                 'first_name': None,
                 'last_name': None,
                 'token': self.login_link.user.token,
-                'type': 'regular'
+                'type': 'regular',
+                'city': None,
+                'address1': None,
+                'address2': None,
+                'postal_code': None,
+                'state': None,
+                'country': None,
+                'phone_number': None,
             }
         }, json.loads(response.content))
 
@@ -77,7 +84,14 @@ class LoginLinkTestCase(TestCase):
                 'first_name': 'A',
                 'last_name': 'Z',
                 'token': self.login_link.user.token,
-                'type': 'regular'
+                'type': 'regular',
+                'city': None,
+                'address1': None,
+                'address2': None,
+                'postal_code': None,
+                'state': None,
+                'country': None,
+                'phone_number': None,
             }
         }, json.loads(response.content))
 
@@ -101,7 +115,14 @@ class LoginTestCase(TestCase):
             'first_name': None,
             'last_name': None,
             'token': self.user.token,
-            'type': 'regular'
+            'type': 'regular',
+            'city': None,
+            'address1': None,
+            'address2': None,
+            'postal_code': None,
+            'state': None,
+            'country': None,
+            'phone_number': None,
         }, json.loads(response.content))
 
 
