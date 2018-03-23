@@ -52,3 +52,6 @@ loaddata:
 	python manage.py loaddata --settings=frontier.settings.dev scripts/db.json
 
 bootstrap: loaddata
+
+resync:
+	heroku run python manage.py dumpdata --indent=2  > scripts/db.json
