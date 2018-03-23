@@ -145,15 +145,13 @@ This endpoint can be used to logout a user.
         {
             "token": "company_UMBBESMmPICpMEDw",
             "name": "The Boring Company",
-            "logo": "http://boring.com/logo.jpg    ",
-            "location": {
-                "address1": "100 Van Ness Ave",
-                "address2": "#525",
-                "city": "San Francisco",
-                "state": "CA",
-                "postal_code": "94123",
-                "phone_number": "+11234567890"
-            }
+            "logo": "http://boring.com/logo.jpg",
+            "address1": "100 Van Ness Ave",
+            "address2": "#525",
+            "city": "San Francisco",
+            "state": "CA",
+            "postal_code": "94123",
+            "phone_number": "+11234567890"
         },
         ...
     ]
