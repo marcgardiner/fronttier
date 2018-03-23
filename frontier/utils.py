@@ -1,6 +1,7 @@
 import datetime
 import os
 
+from django.forms import ModelForm
 from django.http import Http404
 from django.utils.timezone import is_aware
 
@@ -16,11 +17,28 @@ def append_token(path):
     return os.path.join(path, TOKEN_REGEX)
 
 
-def get_or_404(klass, token):
+class Http403(Exception):
+    pass
+
+
+class Http400(Exception):
+    pass
+
+
+class Http401(Exception):
+    pass
+
+
+def get_or_4xx(klass, token, user=None):
     try:
-        return klass.objects.get(token=token, disabled=False)
+        obj = klass.objects.get(token=token, disabled=False)
     except klass.DoesNotExist:
         raise Http404('%s does not exist' % token)
+
+    if not user or user.is_admin() or obj.has_access(user):
+        return obj
+
+    raise Http403('%s access is forbidden')
 
 
 def serialize_datetime(o):

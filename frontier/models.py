@@ -3,9 +3,12 @@ import json
 from django.contrib.postgres.fields import JSONField
 from django.core import serializers
 from django.db import models
+from django.forms import ModelForm
 from django.utils.crypto import get_random_string
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
+
+from frontier.utils import get_or_4xx
 
 
 class BaseModel(models.Model):
@@ -62,6 +65,41 @@ class BaseModel(models.Model):
         except cls.DoesNotExist:
             if not safe:
                 raise
+
+    @classmethod
+    def clean_form(cls, form):
+        pass
+
+    def has_access(self, user):
+        return True
+
+
+def BaseModelForm(model_cls, fields=None, exclude=[], token_fields={}):
+    ex = exclude
+    ex.extend(['token'])
+    f = fields
+
+    class BaseModelFormImpl(ModelForm):
+        class Meta:
+            model = model_cls
+            fields = f
+            exclude = ex
+
+        def __init__(self, data, *args, **kwargs):
+            for key, value in data.items():
+                if key not in token_fields:
+                    continue
+                klass = token_fields[key]
+                if isinstance(value, list):
+                    data[key] = [get_or_4xx(klass, t).pk for t in value]
+                else:
+                    data[key] = get_or_4xx(klass, value).pk
+            super(BaseModelFormImpl, self).__init__(data, *args, **kwargs)
+
+        def clean(self):
+            model_cls.clean_form_data(self.cleaned_data)
+
+    return BaseModelFormImpl
 
 
 class LocationFieldsMixin(models.Model):

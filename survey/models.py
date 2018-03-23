@@ -6,11 +6,10 @@ import jsonschema
 import re
 
 from django.contrib.postgres.fields import ArrayField, JSONField
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.signals import post_save
+from django.forms import ValidationError
 from django.dispatch import receiver
-from django import forms
 from django.template import Template, Context
 
 from frontier.models import BaseModel, LocationFieldsMixin
@@ -56,7 +55,7 @@ class Job(BaseModel, LocationFieldsMixin):
     company = models.ForeignKey(
         'business.Company', on_delete=models.CASCADE, related_name='jobs')
     hiring_managers = models.ManyToManyField(
-        'business.HiringManager', related_name='jobs')
+        'business.HiringManager', related_name='jobs', blank=True)
     type = models.CharField(max_length=16, choices=Type.CHOICES)
     level = models.CharField(max_length=16, choices=Level.CHOICES)
     status = models.CharField(
@@ -64,6 +63,34 @@ class Job(BaseModel, LocationFieldsMixin):
 
     title = models.CharField(max_length=128)
     description = models.TextField(null=True, blank=True)
+
+    hard_skills = JSONField()
+    soft_skills = JSONField()
+
+    @classmethod
+    def clean_form_data(cls, data):
+        required = ['city', 'country', 'state']
+        for f in required:
+            if not data.get(f):
+                raise ValidationError('%s if a required field' % f)
+
+        hard_skills = data.get('hard_skills', [])
+        if len(hard_skills) < 3:
+            raise ValidationError('Must provide at least 3 hard skills')
+        for skill, tools in hard_skills.iteritems():
+            if len(tools) < 3:
+                raise ValidationError(
+                    'Must provide at least 3 tools for %s' % skill)
+
+        soft_skills = data.get('soft_skills', [])
+        if len(soft_skills) < 3:
+            raise ValidationError('Must provide at least 3 soft skills')
+        for skill, tools in soft_skills.iteritems():
+            if len(tools) < 3:
+                raise ValidationError(
+                    'Must provide at least 3 tasks for %s' % skill)
+
+        return data
 
     def app_resource(self):
         surveys = defaultdict(lambda: defaultdict(int))
@@ -73,7 +100,7 @@ class Job(BaseModel, LocationFieldsMixin):
                 surveys[typ][response.state] += 1
                 surveys[typ]['total'] += 1
 
-        return {
+        res = {
             'token': self.token,
             'company': self.company.token,
             'type': self.type,
@@ -82,8 +109,11 @@ class Job(BaseModel, LocationFieldsMixin):
             'title': self.title,
             'description': self.description,
             'surveys': surveys,
-            'location': self.location_resource(),
+            'hard_skills': self.hard_skills,
+            'soft_skills': self.soft_skills,
         }
+        res.update(self.location_resource())
+        return res
 
 
 class Survey(BaseModel):
@@ -198,31 +228,31 @@ class QuestionTemplate(BaseModel):
     KEY_RE = re.compile(r'^[a-z][a-z0-9_]*$')
 
     @classmethod
-    def clean_form(cls, form):
+    def clean_clean_data(cls, data):
         from survey.schema import QUESTION_SCHEMA
 
-        schema = QUESTION_SCHEMA[form.cleaned_data.get('type')]
-        data = form.cleaned_data.get('data')
+        schema = QUESTION_SCHEMA[data.get('type')]
+        data = data.get('data')
         try:
             jsonschema.validate(schema, data)
         except jsonschema.exceptions.ValidationError as e:
-            raise form.ValidationError(e.message)
+            raise ValidationError(e.message)
 
         keys = collect_values(data, 'key')
 
         for key in keys:
             if not QuestionTemplate.KEY_RE.match(key):
-                raise forms.ValidationError('invalid key: %s' % key)
+                raise ValidationError('invalid key: %s' % key)
 
         if len(keys) != len(set(keys)):
-            raise forms.ValidationError('keys must be unique: %s' % keys)
+            raise ValidationError('keys must be unique: %s' % keys)
 
         if 'num_items' in data:
             n = data['num_items']
             if n > len(data.get('items', [])) or n < 0:
-                raise forms.ValidationError('invalid num_items: %s' % n)
+                raise ValidationError('invalid num_items: %s' % n)
 
-        return form.cleaned_data
+        return data
 
 
 class Question(BaseModel):

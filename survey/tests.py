@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import json
+import os
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase, Client
@@ -19,7 +20,8 @@ class SurveyInviteTestCase(TestCase):
         self.hm.save()
         self.job = Job.objects.create(
             company=self.company, type=Job.Type.INTERN,
-            level=Job.Level.MID, title='Boring Engineer')
+            level=Job.Level.MID, title='Boring Engineer', hard_skills={},
+            soft_skills={})
         self.survey = Survey.objects.create(
             job=self.job, expiration_time=1000, type=Survey.Type.EXEMPLAR)
 
@@ -56,10 +58,12 @@ class JobTestCase(TestCase):
         self.hm.save()
         job1 = Job.objects.create(
             company=self.company, type=Job.Type.INTERN,
-            level=Job.Level.MID, title='Boring Engineer')
+            level=Job.Level.MID, title='Boring Engineer', hard_skills={},
+            soft_skills={})
         job2 = Job.objects.create(
             company=self.company, type=Job.Type.FULL_TIME,
-            level=Job.Level.ENTRY, title='Lawyer')
+            level=Job.Level.ENTRY, title='Lawyer', hard_skills={},
+            soft_skills={})
         self.jobs = [job1, job2]
         for job in self.jobs:
             job.hiring_managers.add(self.hm)
@@ -76,6 +80,59 @@ class JobTestCase(TestCase):
         self.assertEqual(len(jobs), 2)
         self.assertEqual(jobs, [j.app_resource() for j in self.jobs])
 
+    def test_post(self):
+        c = Client()
+        self.assertTrue(c.login(username='elon@boring.com', password='pwd'))
+
+        response = c.post(
+            '/survey/job',
+            json.dumps({
+                'company': self.company.token,
+                'type': Job.Type.INTERN,
+                'level': Job.Level.MID,
+                'title': 'Data Scientist',
+                'description': 'YOLO!',
+                'hard_skills': {
+                    'skill1': ['tool1', 'tool2', 'tool3'],
+                    'skill2': ['tool1', 'tool2', 'tool3'],
+                    'skill3': ['tool1', 'tool2', 'tool3'],
+                },
+                'soft_skills': {
+                    'skill1': ['task1', 'task2', 'task3'],
+                    'skill2': ['task1', 'task2', 'task3'],
+                    'skill3': ['task1', 'task2', 'task3'],
+                },
+                'status': 'open',
+                'city': 'San Francisco',
+                'state': 'CA',
+                'country': 'US',
+            }),
+            content_type='application/json'
+        )
+
+        self.assertEqual(response.status_code, 200)
+        token = json.loads(response.content)['token']
+        job = Job.load(token)
+
+        self.assertEqual(job.company, self.company)
+        res = job.app_resource()
+
+        response = c.post(
+            os.path.join('/survey/job', job.token),
+            json.dumps({
+                'type': Job.Type.FULL_TIME,
+                'hiring_managers': [self.hm.token]
+            }),
+            content_type='application/json'
+        )
+        # print response.content
+        # self.assertEqual(response.status_code, 200)
+        # self.assertEqual(json.loads(response.content)['token'], job.token)
+
+        # job.refresh_from_db()
+
+        # print job.app_resource()
+
 
 class SurveyTestCase(TestCase):
     def setUp(self):
@@ -84,7 +141,8 @@ class SurveyTestCase(TestCase):
             'me', email='me@boring.com', password='pwd')
         self.job = Job.objects.create(
             company=self.company, type=Job.Type.INTERN,
-            level=Job.Level.MID, title='Boring Engineer')
+            level=Job.Level.MID, title='Boring Engineer', hard_skills={},
+            soft_skills={})
         self.survey = Survey.objects.create(
             job=self.job, expiration_time=1000, type=Survey.Type.EXEMPLAR)
         self.survey_response = SurveyResponse.objects.create(

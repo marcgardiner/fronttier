@@ -7,7 +7,7 @@ from business.models import HiringManager, Administrator, RegularUser
 from frontier.decorators import restrict
 
 
-@restrict(Administrator)
+@restrict()
 def hm_invite(request):
     hm = HiringManager.objects.all()[0]
     return render(request, 'messaging/hm_invite.html', {
@@ -16,7 +16,7 @@ def hm_invite(request):
     })
 
 
-@restrict(Administrator)
+@restrict()
 def applicant_invite(request):
     user = RegularUser.objects.all()[0]
     return render(request, 'messaging/applicant_invite.html', {
@@ -26,7 +26,7 @@ def applicant_invite(request):
     })
 
 
-@restrict(Administrator)
+@restrict()
 def exemplar_invite(request):
     user = RegularUser.objects.all()[0]
     return render(request, 'messaging/exemplar_invite.html', {

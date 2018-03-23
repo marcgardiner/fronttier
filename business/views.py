@@ -7,12 +7,12 @@ from django.utils import timezone
 from business.models import User, LoginLink, Administrator, Company
 from frontier.decorators import (
     json_view, json_get_view, json_post_view, restrict)
-from frontier.utils import get_or_404
+from frontier.utils import get_or_4xx, Http401
 
 
 @json_view()
 def login_link(request, token=None):
-    login_link = get_or_404(LoginLink, token)
+    login_link = get_or_4xx(LoginLink, token)
 
     if request.method == 'GET':
         return login_link.app_resource()
@@ -70,3 +70,10 @@ def companies(request):
     return {
         'data': map(lambda c: c.app_resource(), Company.objects.all())
     }
+
+
+@json_get_view()
+def me(request):
+    if not request.user.is_authenticated:
+        raise Http401
+    return request.user.app_resource()

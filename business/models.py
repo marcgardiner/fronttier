@@ -47,7 +47,7 @@ class User(BaseModel, AbstractUser, AddressFieldsMixin):
     def __repr__(self):
         return '<User: %s [%s]>' % (self.email, self.type)
 
-    def is_administrator(self):
+    def is_admin(self):
         return self.type == User.Type.ADMINISTRATOR
 
     def is_hiring_manager(self):
@@ -186,12 +186,13 @@ class Company(BaseModel, AddressFieldsMixin):
             logo_url = self.logo.url
         else:
             logo_url = None
-        return {
+        res = {
             'token': self.token,
             'name': self.name,
             'logo': logo_url,
-            'location': self.location_resource(),
         }
+        res.update(self.location_resource())
+        return res
 
 
 class LoginLink(BaseModel):

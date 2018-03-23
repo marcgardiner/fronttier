@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django import forms
 from django.contrib import admin
 
 from frontier.admin import BaseAdmin
+from frontier.models import BaseModelForm
 from survey.models import (Job, Survey, SurveyResponse,
                            QuestionTemplate, Question, Answer,
                            SurveyInvitation)
@@ -23,13 +23,7 @@ class SurveyResponseAdmin(BaseAdmin):
     list_display = BaseAdmin.list_display + ('survey', 'user')
 
 
-class QuestionTemplateForm(forms.ModelForm):
-    class Meta:
-        model = QuestionTemplate
-        exclude = []
-
-    def clean(self):
-        return QuestionTemplate.clean_form(self)
+QuestionTemplateForm = BaseModelForm(QuestionTemplate)
 
 
 class QuestionTemplateAdmin(BaseAdmin):

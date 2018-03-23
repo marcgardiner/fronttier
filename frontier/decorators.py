@@ -1,5 +1,6 @@
 from functools import wraps
 import json
+import logging
 
 from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
@@ -7,6 +8,11 @@ from django.contrib.auth.views import redirect_to_login
 from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import resolve_url
 from django.views.decorators.http import require_http_methods
+
+from frontier.utils import Http403, Http400, Http401
+
+
+log = logging.getLogger(__name__)
 
 
 def json_view(allowed_methods=['GET', 'POST']):
@@ -35,9 +41,16 @@ def json_view(allowed_methods=['GET', 'POST']):
                 r = view_fn(request, *args, **kwargs)
             except Http404 as e:
                 r = ({'error': e.message}, 404)
-            except:
+            except Http403 as e:
+                r = ({'error': e.message}, 403)
+            except Http400 as e:
+                r = ({'error': e.message}, 400)
+            except Http401:
+                r = ({'error': 'user is not logged in'}, 401)
+            except Exception as e:
                 if settings.ENV.is_dev():
                     raise
+                log.exception(e.message)
                 r = ({'error': 'server borked'}, 500)
 
             # If we don't return a tuple, assume status = OK
@@ -62,6 +75,11 @@ def json_post_view():
 
 
 def restrict(*classes):
+    from business.models import Administrator
+
+    classes = set(classes)
+    classes.add(Administrator)
+
     def decorator(view_fn):
         @wraps(view_fn)
         def wrapper(request, *args, **kwargs):
@@ -73,9 +91,7 @@ def restrict(*classes):
 
             if not user.is_authenticated:
                 if hasattr(request, 'json'):
-                    return {
-                        'error': 'user is not logged in'
-                    }, 401
+                    raise Http401
                 else:
                     return redirect
 
