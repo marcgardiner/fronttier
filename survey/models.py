@@ -111,6 +111,9 @@ class Job(BaseModel, LocationFieldsMixin):
             'surveys': surveys,
             'hard_skills': self.hard_skills,
             'soft_skills': self.soft_skills,
+            'hiring_managers': [
+                hm.token for hm in self.hiring_managers.all()
+            ],
         }
         res.update(self.location_resource())
         return res

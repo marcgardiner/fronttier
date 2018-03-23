@@ -217,11 +217,145 @@ Empty response
                     "in_progress": 9,
                     "pending": 4
                 }
-            }
+            },
+            "city": "San Francisco",
+            "country": "US",
+            "state": "CA"
         },
         ...
     ]
 }
+```
+
+##### `POST`
+
+This endpoint can be used to create a new job object. The response will include the token of the newly created job object.
+
+```
+# Request
+{
+  "status": "open",
+  "description": "YOLO!",
+  "company": "company_aR0xncJDmPRkoOVM",
+  "hard_skills": {
+    "skill3": [
+      "tool1",
+      "tool2",
+      "tool3"
+    ],
+    "skill2": [
+      "tool1",
+      "tool2",
+      "tool3"
+    ],
+    "skill1": [
+      "tool1",
+      "tool2",
+      "tool3"
+    ]
+  },
+  "soft_skills": {
+    "skill3": [
+      "task1",
+      "task2",
+      "task3"
+    ],
+    "skill2": [
+      "task1",
+      "task2",
+      "task3"
+    ],
+    "skill1": [
+      "task1",
+      "task2",
+      "task3"
+    ]
+  },
+  "city": "San Francisco",
+  "level": "mid",
+  "country": "US",
+  "title": "Data Scientist",
+  "state": "CA",
+  "type": "intern"
+}
+
+# Response
+{
+  "status": "open",
+  "city": "San Francisco",
+  "surveys": {
+
+  },
+  "description": "YOLO!",
+  "level": "mid",
+  "country": "US",
+  "company": "company_OC7MUNiEJQSUFc6e",
+  "title": "Data Scientist",
+  "state": "CA",
+  "token": "job_FfRvQHX8U5nLxate",
+  "hiring_managers": [],
+  "hard_skills": {
+    "skill3": [
+      "tool1",
+      "tool2",
+      "tool3"
+    ],
+    "skill2": [
+      "tool1",
+      "tool2",
+      "tool3"
+    ],
+    "skill1": [
+      "tool1",
+      "tool2",
+      "tool3"
+    ]
+  },
+  "type": "intern",
+  "soft_skills": {
+    "skill3": [
+      "task1",
+      "task2",
+      "task3"
+    ],
+    "skill2": [
+      "task1",
+      "task2",
+      "task3"
+    ],
+    "skill1": [
+      "task1",
+      "task2",
+      "task3"
+    ]
+  }
+}
+```
+
+#### `survey/job/<token>`
+
+##### `GET`
+
+You can look up details for a specific job using its token.
+
+```
+# Response
+Same as response for POST /survey/job
+```
+
+##### `POST`
+
+This endpoint can be used to update properties for an existing job object.
+
+```
+# Request
+{
+    "type": "full_time",
+    "hiring_managers": ["hm_OC7MUNiEJQSUFc6e"]
+}
+
+# Response
+Same as GET
 ```
 
 #### `survey/response/<token>`
