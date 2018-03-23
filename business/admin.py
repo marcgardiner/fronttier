@@ -13,12 +13,15 @@ from messaging.models import Email
 class BaseUserAdmin(DjangoObjectActions, UserAdmin):
     list_display = ('email', 'first_name', 'last_name', 'is_active')
     search_fields = ('email', 'first_name', 'last_name')
+    readonly_fields = ('token', )
 
     add_fieldsets = UserAdmin.add_fieldsets + \
         (('Personal', {'fields': ('first_name', 'last_name', 'email')}), )
 
 
-user_fieldsets = []
+user_fieldsets = [
+    ('Credentials', {'fields': ('token', )}),
+]
 for fieldset in UserAdmin.fieldsets:
     name, meta = fieldset
     if name == 'Permissions':
@@ -30,7 +33,8 @@ user_fieldsets = tuple(user_fieldsets) + (
 
 
 class AdministratorAdmin(BaseUserAdmin):
-    readonly_fields = ('is_superuser', 'is_staff')
+    readonly_fields = BaseUserAdmin.readonly_fields + (
+        'is_superuser', 'is_staff')
 
     fieldsets = user_fieldsets + (
         ('SU Bits', {'fields': ('is_superuser', 'is_staff')}),
