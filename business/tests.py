@@ -138,3 +138,38 @@ class CompanyTestCase(TestCase):
 
         response = c.get('/auth/company')
         self.assertEqual(response.status_code, 200)
+
+    def test_post(self):
+        c = Client()
+        self.assertTrue(c.login(username='elon@boring.com', password='pwd'))
+
+        response = c.post(
+            '/auth/company',
+            json.dumps({
+                'name': 'Space X',
+                'logo': 'abc',
+                'city': 'San Francisco',
+                'state': 'CA',
+                'country': 'US',
+            }),
+            content_type='application/json'
+        )
+
+        self.assertEqual(response.status_code, 200)
+        token = json.loads(response.content)['token']
+        company = Company.load(token)
+
+        self.assertEqual(company.name, 'Space X')
+
+        response = c.post(
+            os.path.join('/auth/company', company.token),
+            json.dumps({
+                'name': 'Tesla',
+            }),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['token'], company.token)
+
+        company.refresh_from_db()
+        self.assertEqual(company.name, 'Tesla')

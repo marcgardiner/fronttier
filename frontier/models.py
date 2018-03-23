@@ -67,8 +67,8 @@ class BaseModel(models.Model):
                 raise
 
     @classmethod
-    def clean_form(cls, form):
-        pass
+    def clean_form_data(cls, data):
+        return data
 
     def has_access(self, user):
         return True

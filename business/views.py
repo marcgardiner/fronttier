@@ -7,7 +7,8 @@ from django.utils import timezone
 from business.models import User, LoginLink, Administrator, Company
 from frontier.decorators import (
     json_view, json_get_view, json_post_view, restrict)
-from frontier.utils import get_or_4xx, Http401
+from frontier.models import BaseModelForm
+from frontier.utils import get_or_4xx, Http401, Http400
 
 
 @json_view()
@@ -25,7 +26,7 @@ def login_link(request, token=None):
 
     # Update the user profile with any fields that may be provided
     for attr in User.REGISTRATION_FIELDS:
-        if not attr in request.json:
+        if attr not in request.json:
             continue
         setattr(user, attr, request.json[attr])
 
@@ -64,12 +65,39 @@ def logout(request):
     auth.logout(request)
 
 
-@json_get_view()
+CompanyForm = BaseModelForm(Company)
+
+
+@json_view()
 @restrict(Administrator)
 def companies(request):
-    return {
-        'data': map(lambda c: c.app_resource(), Company.objects.all())
-    }
+    if request.method == 'GET':
+        companies = Company.objects.all()
+        return {
+            'data': [c.app_resource() for c in companies]
+        }
+
+    f = CompanyForm(request.json)
+    if not f.is_valid():
+        raise Http400(f.errors)
+
+    company = f.save()
+
+    return company.app_resource()
+
+
+@json_view()
+@restrict(Administrator)
+def company(request, token):
+    company = get_or_4xx(Company, token)
+
+    if request.method == 'POST':
+        f = CompanyForm(request.json, instance=company)
+        if not f.is_valid():
+            raise Http400(f.errors)
+        company = f.save()
+
+    return company.app_resource()
 
 
 @json_get_view()

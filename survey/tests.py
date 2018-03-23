@@ -236,15 +236,11 @@ class QuestionTemplateTestCase(TestCase):
             ),
         ]
 
-        class DummyForm(object):
-            def __init__(self, data):
-                self.cleaned_data = data
-
         for typ, data, valid in datas:
             try:
-                QuestionTemplate.clean_form(DummyForm({
+                QuestionTemplate.clean_form_data({
                     'type': typ,
                     'data': data,
-                }))
+                })
             except ValidationError:
                 self.assertFalse(valid)

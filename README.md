@@ -134,6 +134,12 @@ This endpoint can be used to login a user using their email and password.
 
 This endpoint can be used to logout a user.
 
+##### `GET`
+
+```
+Empty response
+```
+
 #### `auth/company`
 
 ##### `GET`
@@ -158,10 +164,52 @@ This endpoint can be used to logout a user.
 }
 ```
 
+##### `POST`
+
+This endpoint can be used to create a new company object.
+
+```
+# Request
+{
+  "logo": "abc",
+  "state": "CA",
+  "country": "US",
+  "name": "Space X",
+  "city": "San Francisco"
+}
+
+# Response
+{
+  "token": "company_UMBBESMmPICpMEDw",
+  "logo": "abc",
+  "state": "CA",
+  "country": "US",
+  "name": "Space X",
+  "city": "San Francisco"
+}
+```
+
+#### `auth/company/<token>`
+
 ##### `GET`
 
 ```
-Empty response
+# Response
+Same as POST /auth/company
+```
+
+##### `POST`
+
+This endpoint can be used to update the properties of an existing company object.
+
+```
+# Request
+{
+    "name": "Tesla"
+}
+
+# Response
+Same as GET
 ```
 
 ### Survey
