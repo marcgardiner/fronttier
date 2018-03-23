@@ -57,6 +57,8 @@ def job(request, token):
 
     if request.method == 'POST':
         f = JobForm(request.json, instance=job)
+        if not f.is_valid():
+            raise Http400(f.errors)
         job = f.save()
 
     return job.app_resource()

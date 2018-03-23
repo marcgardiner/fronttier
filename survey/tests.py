@@ -115,7 +115,7 @@ class JobTestCase(TestCase):
         job = Job.load(token)
 
         self.assertEqual(job.company, self.company)
-        res = job.app_resource()
+        self.assertEqual(job.type, Job.Type.INTERN)
 
         response = c.post(
             os.path.join('/survey/job', job.token),
@@ -125,13 +125,12 @@ class JobTestCase(TestCase):
             }),
             content_type='application/json'
         )
-        # print response.content
-        # self.assertEqual(response.status_code, 200)
-        # self.assertEqual(json.loads(response.content)['token'], job.token)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(json.loads(response.content)['token'], job.token)
 
-        # job.refresh_from_db()
-
-        # print job.app_resource()
+        job.refresh_from_db()
+        self.assertEqual(job.type, Job.Type.FULL_TIME)
+        self.assertEqual(job.hiring_managers.count(), 1)
 
 
 class SurveyTestCase(TestCase):

@@ -94,7 +94,14 @@ def BaseModelForm(model_cls, fields=None, exclude=[], token_fields={}):
                     data[key] = [get_or_4xx(klass, t).pk for t in value]
                 else:
                     data[key] = get_or_4xx(klass, value).pk
+
             super(BaseModelFormImpl, self).__init__(data, *args, **kwargs)
+
+            # If there is any initial data present, use that as the fallback
+            # value.
+            data = self.initial.copy()
+            data.update(self.data)
+            self.data = data
 
         def clean(self):
             model_cls.clean_form_data(self.cleaned_data)
