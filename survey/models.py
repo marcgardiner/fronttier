@@ -135,7 +135,7 @@ class Survey(BaseModel):
 
     job = models.ForeignKey(
         Job, on_delete=models.CASCADE, related_name='surveys')
-    expiration_time = models.IntegerField()  # in seconds
+    expiration_time = models.IntegerField(default=7 * 24 * 60 * 60)
     type = models.CharField(max_length=16, choices=Type.CHOICES)
     version = models.IntegerField(default=1)
 
@@ -185,7 +185,7 @@ class SurveyResponse(BaseModel):
         return {
             'token': self.token,
             'type': self.survey.type,
-            'user': token_resource(self.user),
+            'user': self.user.app_resource(),
             'questions': questions
         }
 
@@ -229,6 +229,9 @@ class QuestionTemplate(BaseModel):
     segment = models.IntegerField(default=1)
     data = JSONField(default={}, blank=True)
 
+    def __repr__(self):
+        return '<%s: %s>' % (self.__class__.__name__, self.name)
+
     KEY_RE = re.compile(r'^[a-z][a-z0-9_]*$')
 
     @classmethod
@@ -270,6 +273,14 @@ class Question(BaseModel):
         QuestionTemplate, on_delete=models.CASCADE, related_name='questions')
     context = JSONField(default={}, blank=True)
 
+    @property
+    def segment(self):
+        return self.template.segment
+
+    @property
+    def prompt(self):
+        return self.template.prompt
+
     def app_resource(self):
         t = Template(json.dumps(self.template.data))
         c = self.context
@@ -279,7 +290,7 @@ class Question(BaseModel):
             'token': self.token,
             'segment': self.segment,
             'index': self.index,
-            'prompt': self.template.prompt,
+            'prompt': self.prompt,
             'note': self.template.note,
             'data': data,
         }

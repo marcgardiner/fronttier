@@ -33,7 +33,8 @@ class QuestionTemplateAdmin(BaseAdmin):
 
 
 class QuestionAdmin(BaseAdmin):
-    list_display = BaseAdmin.list_display + ('survey', 'template')
+    list_display = BaseAdmin.list_display + \
+        ('survey', 'prompt', 'segment', 'index')
 
 
 class AnswerAdmin(BaseAdmin):
