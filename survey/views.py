@@ -24,7 +24,7 @@ def response(request, token):
 @restrict(HiringManager)
 def jobs(request):
     jobs = Job.objects.prefetch_related('surveys__responses').filter(
-        hiring_managers=request.hd_user)
+        hiring_managers=request.user)
     return {
         'data': [job.app_resource() for job in jobs],
     }
@@ -57,7 +57,7 @@ def invite(request):
     survey = surveys[0]
 
     invitation = SurveyInvitation.objects.create(
-        hiring_manager=request.hd_user,
+        hiring_manager=request.user,
         type=_type,
         survey=survey,
         emails=emails

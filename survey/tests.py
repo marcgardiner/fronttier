@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import json
-import os
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase, Client
@@ -122,7 +121,7 @@ class QuestionTemplateTestCase(TestCase):
                         },
                     ]
                 },
-                True
+                False
             ),
             (
                 QuestionTemplate.Type.MULTI_CHOICE_SINGLE_SELECT,
@@ -135,7 +134,7 @@ class QuestionTemplateTestCase(TestCase):
                         }
                     ]
                 },
-                True
+                False
             ),
             (
                 QuestionTemplate.Type.MULTI_CHOICE_MULTI_SELECT,
@@ -148,7 +147,7 @@ class QuestionTemplateTestCase(TestCase):
                         }
                     ]
                 },
-                True
+                False
             ),
             (
                 QuestionTemplate.Type.MULTI_CHOICE_MULTI_SELECT,
@@ -162,7 +161,7 @@ class QuestionTemplateTestCase(TestCase):
                     ],
                     'num_items': 2
                 },
-                True
+                False
             ),
             (
                 QuestionTemplate.Type.MULTI_CHOICE_MULTI_SELECT,
@@ -176,19 +175,19 @@ class QuestionTemplateTestCase(TestCase):
                     ],
                     'num_items': 1
                 },
-                False
+                True
             ),
         ]
-        for typ, data, should_fail in datas:
+
+        class DummyForm(object):
+            def __init__(self, data):
+                self.cleaned_data = data
+
+        for typ, data, valid in datas:
             try:
-                QuestionTemplate.objects.create(
-                    name='a',
-                    type=typ,
-                    prompt='yo',
-                    data=data
-                )
-                failed = False
-            except ValidationError as e:
-                failed = True
-            finally:
-                self.assertTrue(failed == should_fail)
+                QuestionTemplate.clean_form(DummyForm({
+                    'type': typ,
+                    'data': data,
+                }))
+            except ValidationError:
+                self.assertFalse(valid)
