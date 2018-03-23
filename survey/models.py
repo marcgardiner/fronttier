@@ -226,7 +226,6 @@ class QuestionTemplate(BaseModel):
     type = models.CharField(max_length=32, choices=Type.CHOICES)
     prompt = models.TextField()
     note = models.TextField(null=True, blank=True)
-    segment = models.IntegerField(default=1)
     data = JSONField(default={}, blank=True)
 
     def __repr__(self):
@@ -267,6 +266,7 @@ class Question(BaseModel):
 
     survey = models.ForeignKey(
         Survey, on_delete=models.CASCADE, related_name='questions')
+    segment = models.IntegerField()
     index = models.IntegerField()
 
     template = models.ForeignKey(
@@ -276,10 +276,6 @@ class Question(BaseModel):
     @property
     def type(self):
         return self.segment.type
-
-    @property
-    def segment(self):
-        return self.template.segment
 
     @property
     def prompt(self):
