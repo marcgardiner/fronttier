@@ -226,6 +226,7 @@ class QuestionTemplate(BaseModel):
     type = models.CharField(max_length=32, choices=Type.CHOICES)
     prompt = models.TextField()
     note = models.TextField(null=True, blank=True)
+    segment = models.IntegerField(default=1)
     data = JSONField(default={}, blank=True)
 
     KEY_RE = re.compile(r'^[a-z][a-z0-9_]*$')
@@ -261,12 +262,8 @@ class QuestionTemplate(BaseModel):
 class Question(BaseModel):
     token_prefix = 'question'
 
-    class Meta:
-        unique_together = ('survey', 'segment', 'index')
-
     survey = models.ForeignKey(
         Survey, on_delete=models.CASCADE, related_name='questions')
-    segment = models.IntegerField()
     index = models.IntegerField()
 
     template = models.ForeignKey(
