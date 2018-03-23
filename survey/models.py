@@ -274,6 +274,10 @@ class Question(BaseModel):
     context = JSONField(default={}, blank=True)
 
     @property
+    def type(self):
+        return self.segment.type
+
+    @property
     def segment(self):
         return self.template.segment
 
@@ -288,6 +292,7 @@ class Question(BaseModel):
 
         return {
             'token': self.token,
+            'type': self.type,
             'segment': self.segment,
             'index': self.index,
             'prompt': self.prompt,
