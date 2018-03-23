@@ -275,7 +275,7 @@ class Question(BaseModel):
 
     @property
     def type(self):
-        return self.segment.type
+        return self.template.type
 
     @property
     def prompt(self):
